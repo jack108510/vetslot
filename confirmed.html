@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Confirmed — VetSlot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            teal: { 50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',800:'#115e59',900:'#134e4a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in { animation: fadeInUp 0.4s ease forwards; }
+    .animate-in-delay-1 { animation: fadeInUp 0.4s 0.1s ease both; }
+    .animate-in-delay-2 { animation: fadeInUp 0.4s 0.2s ease both; }
+    .animate-in-delay-3 { animation: fadeInUp 0.4s 0.3s ease both; }
+    .animate-in-delay-4 { animation: fadeInUp 0.4s 0.4s ease both; }
+  </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="bg-white border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </div>
+          <span class="text-lg font-bold text-slate-900">Vet<span class="text-teal-600">Slot</span></span>
+        </a>
+        <a href="browse.html" class="text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg text-sm font-medium transition-colors">Browse Slots</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- No reservation fallback -->
+  <div id="no-reservation" class="hidden max-w-lg mx-auto px-4 py-24 text-center">
+    <h2 class="text-xl font-bold text-slate-900 mb-3">No reservation found</h2>
+    <p class="text-slate-500 mb-6">It looks like you arrived here directly. Browse available slots to book an appointment.</p>
+    <a href="browse.html" class="bg-teal-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors">Browse all slots</a>
+  </div>
+
+  <!-- Confirmation Content -->
+  <main id="confirmation-content" class="hidden max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-20">
+
+    <!-- Success Header -->
+    <div class="text-center mb-10 animate-in">
+      <div class="w-20 h-20 bg-teal-50 border-4 border-teal-100 rounded-full flex items-center justify-center mx-auto mb-5">
+        <svg class="w-9 h-9 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+        </svg>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-2">You're confirmed!</h1>
+      <p class="text-slate-500 text-lg">Your appointment is locked in. We'll see you there.</p>
+    </div>
+
+    <!-- Booking Reference Card -->
+    <div class="bg-teal-600 rounded-2xl p-6 text-white text-center mb-6 animate-in-delay-1">
+      <p class="text-teal-200 text-sm font-medium mb-2 uppercase tracking-wider">Booking Reference</p>
+      <p id="booking-ref" class="text-4xl font-extrabold tracking-widest mb-3"></p>
+      <p class="text-teal-200 text-sm">Save this number — you'll need it if you need to make changes.</p>
+    </div>
+
+    <!-- Appointment Details -->
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden mb-6 animate-in-delay-2">
+      <div class="p-5 border-b border-slate-100 flex items-center gap-2">
+        <svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+        </svg>
+        <h2 class="font-bold text-slate-900">Appointment Details</h2>
+      </div>
+      <div class="p-5 grid grid-cols-2 sm:grid-cols-3 gap-5">
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Pet</p>
+          <p id="confirm-pet" class="font-bold text-slate-900"></p>
+          <p id="confirm-species" class="text-sm text-slate-500 capitalize"></p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Procedure</p>
+          <p id="confirm-procedure" class="font-bold text-slate-900"></p>
+          <p id="confirm-species-type" class="text-sm text-slate-500"></p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Date &amp; Time</p>
+          <p id="confirm-date" class="font-bold text-slate-900"></p>
+          <p id="confirm-time" class="text-sm text-slate-500"></p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Clinic</p>
+          <p id="confirm-clinic" class="font-bold text-slate-900"></p>
+          <p id="confirm-address" class="text-sm text-slate-500"></p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Owner</p>
+          <p id="confirm-owner" class="font-bold text-slate-900"></p>
+          <p id="confirm-email" class="text-sm text-slate-500"></p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Payment</p>
+          <p id="confirm-deposit" class="font-bold text-teal-600"></p>
+          <p id="confirm-balance" class="text-sm text-slate-500"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- What to Bring -->
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden mb-6 animate-in-delay-3">
+      <div class="p-5 border-b border-slate-100 flex items-center gap-2">
+        <svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <h2 class="font-bold text-slate-900">What to bring</h2>
+      </div>
+      <div class="p-5">
+        <ul id="confirm-bring" class="space-y-3"></ul>
+        <div class="mt-5 pt-4 border-t border-slate-100">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Pre-op Instructions</p>
+          <p id="confirm-prep" class="text-slate-600 text-sm leading-relaxed"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clinic Contact -->
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden mb-8 animate-in-delay-3">
+      <div class="p-5 border-b border-slate-100 flex items-center gap-2">
+        <svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+        </svg>
+        <h2 class="font-bold text-slate-900">Clinic contact</h2>
+      </div>
+      <div class="p-5 flex flex-col sm:flex-row gap-4">
+        <a id="confirm-phone-link" href="#" class="flex-1 flex items-center gap-3 p-4 border border-slate-200 rounded-xl hover:border-teal-300 hover:bg-teal-50 transition-all group">
+          <div class="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center group-hover:bg-teal-100 transition-colors shrink-0">
+            <svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs text-slate-400 font-medium">Call clinic</p>
+            <p id="confirm-phone-text" class="font-bold text-slate-900 text-sm"></p>
+          </div>
+        </a>
+        <a id="confirm-email-link" href="#" class="flex-1 flex items-center gap-3 p-4 border border-slate-200 rounded-xl hover:border-teal-300 hover:bg-teal-50 transition-all group">
+          <div class="w-10 h-10 bg-teal-50 rounded-xl flex items-center justify-center group-hover:bg-teal-100 transition-colors shrink-0">
+            <svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+            </svg>
+          </div>
+          <div>
+            <p class="text-xs text-slate-400 font-medium">Email clinic</p>
+            <p id="confirm-email-text" class="font-bold text-slate-900 text-sm"></p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-col sm:flex-row gap-3 animate-in-delay-4">
+      <button onclick="addToCalendar()" class="flex-1 flex items-center justify-center gap-2 border border-slate-200 bg-white text-slate-700 py-3 px-5 rounded-xl font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
+        <svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+        </svg>
+        Add to Calendar
+      </button>
+      <a href="browse.html" class="flex-1 flex items-center justify-center gap-2 bg-teal-600 text-white py-3 px-5 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors">
+        Browse more slots
+      </a>
+    </div>
+
+    <div class="text-center mt-8 animate-in-delay-4">
+      <p class="text-slate-400 text-sm">Need to cancel?
+        <button onclick="cancelReservation()" class="text-slate-500 underline hover:text-red-500 transition-colors ml-1">Cancel this reservation</button>
+      </p>
+    </div>
+
+  </main>
+
+  <!-- Cancel Modal -->
+  <div id="cancel-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeCancelModal()"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
+      <h3 class="text-lg font-extrabold text-slate-900 mb-2">Cancel reservation?</h3>
+      <p class="text-slate-500 text-sm mb-6">Please call the clinic directly to cancel — they'll need your booking reference: <strong id="cancel-ref" class="text-slate-800"></strong></p>
+      <div class="flex gap-3">
+        <button onclick="closeCancelModal()" class="flex-1 border border-slate-200 text-slate-700 py-2.5 rounded-xl font-semibold text-sm hover:bg-slate-50 transition-colors">Keep it</button>
+        <a id="cancel-phone" href="#" class="flex-1 bg-red-500 text-white py-2.5 rounded-xl font-semibold text-sm hover:bg-red-600 transition-colors text-center">Call to cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    let reservation = null;
+
+    try {
+      reservation = JSON.parse(localStorage.getItem('vetslot_last_reservation'));
+    } catch (e) {}
+
+    if (!reservation) {
+      document.getElementById('no-reservation').classList.remove('hidden');
+    } else {
+      document.getElementById('confirmation-content').classList.remove('hidden');
+
+      const slot = reservation.slot;
+      const clinic = reservation.clinic;
+      const balance = slot.price - slot.deposit;
+
+      document.title = `Confirmed: ${reservation.bookingRef} — VetSlot`;
+
+      document.getElementById('booking-ref').textContent = reservation.bookingRef;
+      document.getElementById('confirm-pet').textContent = reservation.petName;
+      document.getElementById('confirm-species').textContent = reservation.petSpecies;
+      document.getElementById('confirm-procedure').textContent = procedureLabel(slot.procedureType);
+      document.getElementById('confirm-species-type').textContent = speciesLabel(slot.species);
+      document.getElementById('confirm-date').textContent = formatDateShort(slot.date);
+      document.getElementById('confirm-time').textContent = slot.time;
+      document.getElementById('confirm-clinic').textContent = clinic.name;
+      document.getElementById('confirm-address').textContent = `${clinic.city}, ${clinic.province}`;
+      document.getElementById('confirm-owner').textContent = reservation.ownerName;
+      document.getElementById('confirm-email').textContent = reservation.ownerEmail;
+      document.getElementById('confirm-deposit').textContent = `${formatPrice(slot.deposit)} paid`;
+      document.getElementById('confirm-balance').textContent = `${formatPrice(balance)} due at clinic`;
+      document.getElementById('confirm-prep').textContent = clinic.prepInstructions;
+
+      document.getElementById('confirm-bring').innerHTML = clinic.whatToBring.map(item => `
+        <li class="flex items-start gap-2.5 text-sm text-slate-700">
+          <svg class="w-4 h-4 text-teal-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+          ${item}
+        </li>
+      `).join('');
+
+      const phoneEl = document.getElementById('confirm-phone-link');
+      phoneEl.href = 'tel:' + clinic.phone.replace(/\D/g, '');
+      document.getElementById('confirm-phone-text').textContent = clinic.phone;
+
+      const emailEl = document.getElementById('confirm-email-link');
+      emailEl.href = 'mailto:' + clinic.email;
+      document.getElementById('confirm-email-text').textContent = clinic.email;
+
+      document.getElementById('cancel-ref').textContent = reservation.bookingRef;
+      document.getElementById('cancel-phone').href = 'tel:' + clinic.phone.replace(/\D/g, '');
+    }
+
+    function addToCalendar() {
+      if (!reservation) return;
+      const slot = reservation.slot;
+      const clinic = reservation.clinic;
+
+      const date = slot.date.replace(/-/g, '');
+      const [time, ampm] = slot.time.split(' ');
+      const [h, m] = time.split(':');
+      let hour = parseInt(h);
+      if (ampm === 'PM' && hour !== 12) hour += 12;
+      if (ampm === 'AM' && hour === 12) hour = 0;
+      const startTime = `${date}T${String(hour).padStart(2,'0')}${m}00`;
+      const endHour = (hour + 2) % 24;
+      const endTime = `${date}T${String(endHour).padStart(2,'0')}${m}00`;
+
+      const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'BEGIN:VEVENT',
+        `DTSTART:${startTime}`,
+        `DTEND:${endTime}`,
+        `SUMMARY:${procedureLabel(slot.procedureType)} — ${reservation.petName} at ${clinic.shortName}`,
+        `DESCRIPTION:Booking ref: ${reservation.bookingRef}\\nClinic: ${clinic.name}\\nPhone: ${clinic.phone}`,
+        `LOCATION:${clinic.address}, ${clinic.city}, ${clinic.province}`,
+        `STATUS:CONFIRMED`,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      const blob = new Blob([ics], { type: 'text/calendar' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `vetslot-${reservation.bookingRef}.ics`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function cancelReservation() {
+      document.getElementById('cancel-modal').classList.remove('hidden');
+    }
+
+    function closeCancelModal() {
+      document.getElementById('cancel-modal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

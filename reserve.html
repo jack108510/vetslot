@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reserve a Slot — VetSlot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            teal: { 50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',800:'#115e59',900:'#134e4a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .input-field {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 0.75rem;
+      font-size: 0.9375rem;
+      color: #0f172a;
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+      font-family: inherit;
+    }
+    .input-field:focus {
+      border-color: #0d9488;
+      box-shadow: 0 0 0 3px rgba(13,148,136,0.12);
+    }
+    .input-field.error {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.08);
+    }
+    .input-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.375rem;
+    }
+    .input-error {
+      font-size: 0.8125rem;
+      color: #ef4444;
+      margin-top: 0.3rem;
+      display: none;
+    }
+    .input-error.show { display: block; }
+  </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="bg-white border-b border-slate-100 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </div>
+          <span class="text-lg font-bold text-slate-900">Vet<span class="text-teal-600">Slot</span></span>
+        </a>
+        <div class="flex items-center gap-1 sm:gap-2">
+          <a href="browse.html" class="text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg text-sm font-medium transition-colors">Browse Slots</a>
+          <a href="clinic.html" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-teal-700 transition-colors">Post a Slot</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Back link -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+    <a href="browse.html" class="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 font-medium transition-colors">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+      </svg>
+      Back to Browse
+    </a>
+  </div>
+
+  <!-- Error state (hidden by default) -->
+  <div id="error-state" class="hidden max-w-2xl mx-auto px-4 py-20 text-center">
+    <div class="w-16 h-16 bg-red-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+      <svg class="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+      </svg>
+    </div>
+    <h2 class="text-xl font-bold text-slate-900 mb-2">Slot not found</h2>
+    <p class="text-slate-500 mb-6">This slot may have been filled or removed.</p>
+    <a href="browse.html" class="bg-teal-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors">Browse all slots</a>
+  </div>
+
+  <!-- Full slot not available (hidden by default) -->
+  <div id="full-state" class="hidden max-w-2xl mx-auto px-4 py-20 text-center">
+    <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+      <svg class="w-8 h-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+      </svg>
+    </div>
+    <h2 class="text-xl font-bold text-slate-900 mb-2">This slot is full</h2>
+    <p class="text-slate-500 mb-6">It was just reserved. Check other available slots.</p>
+    <a href="browse.html" class="bg-teal-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors">Browse other slots</a>
+  </div>
+
+  <!-- Main Content -->
+  <main id="main-content" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+
+      <!-- Left: Slot Details -->
+      <div class="lg:col-span-3 space-y-6">
+        <!-- Slot Card -->
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+          <div class="p-6 border-b border-slate-100">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <div class="flex gap-2 flex-wrap">
+                <span id="procedure-badge" class="px-3 py-1.5 rounded-full text-sm font-semibold"></span>
+                <span id="species-badge" class="px-3 py-1.5 rounded-full text-sm font-semibold bg-slate-100 text-slate-600"></span>
+              </div>
+              <span id="spots-badge" class="text-sm font-medium shrink-0"></span>
+            </div>
+            <h1 id="clinic-name" class="text-xl font-extrabold text-slate-900 mb-1"></h1>
+            <div class="flex items-center gap-1.5 text-slate-500 text-sm">
+              <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+              </svg>
+              <span id="clinic-address"></span>
+            </div>
+          </div>
+          <div class="p-6 grid grid-cols-2 gap-4 border-b border-slate-100">
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Date</p>
+              <p id="slot-date" class="font-bold text-slate-900"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Time</p>
+              <p id="slot-time" class="font-bold text-slate-900"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Phone</p>
+              <p id="clinic-phone" class="font-semibold text-teal-600 text-sm"></p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Email</p>
+              <p id="clinic-email" class="font-semibold text-teal-600 text-sm"></p>
+            </div>
+          </div>
+          <div id="notes-section" class="p-6 border-b border-slate-100 hidden">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Procedure Notes</p>
+            <p id="slot-notes" class="text-slate-600 text-sm leading-relaxed"></p>
+          </div>
+          <div class="p-6">
+            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Pre-op Instructions</p>
+            <p id="clinic-prep" class="text-slate-600 text-sm leading-relaxed"></p>
+          </div>
+        </div>
+
+        <!-- What to Bring -->
+        <div class="bg-teal-50 border border-teal-100 rounded-2xl p-6">
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="w-5 h-5 text-teal-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+            <h3 class="font-bold text-teal-900 text-sm">What to bring on the day</h3>
+          </div>
+          <ul id="what-to-bring" class="space-y-2"></ul>
+        </div>
+      </div>
+
+      <!-- Right: Reservation Form -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden sticky top-24">
+          <!-- Price Summary -->
+          <div class="bg-slate-900 p-6 text-white">
+            <p class="text-slate-400 text-sm font-medium mb-1">Procedure price</p>
+            <div class="flex items-baseline gap-2 mb-4">
+              <span id="price-display" class="text-4xl font-extrabold"></span>
+              <span class="text-slate-400 text-sm">total</span>
+            </div>
+            <div class="flex items-center justify-between py-3 border-t border-slate-700">
+              <span class="text-slate-400 text-sm">Due today (deposit)</span>
+              <span id="deposit-display" class="font-bold text-teal-400"></span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-slate-400 text-sm">Due at clinic</span>
+              <span id="balance-display" class="font-bold text-white"></span>
+            </div>
+          </div>
+
+          <!-- Form -->
+          <form id="reserve-form" class="p-6 space-y-5" novalidate>
+            <div>
+              <h2 class="text-lg font-extrabold text-slate-900 mb-1">Reserve this slot</h2>
+              <p class="text-slate-500 text-sm">Enter your pet's info to lock in this appointment.</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="col-span-2 sm:col-span-1">
+                <label class="input-label" for="pet-name">Pet's name</label>
+                <input class="input-field" type="text" id="pet-name" placeholder="e.g. Luna" autocomplete="off">
+                <div class="input-error" id="err-pet-name">Required</div>
+              </div>
+              <div class="col-span-2 sm:col-span-1">
+                <label class="input-label" for="pet-species">Pet type</label>
+                <select class="input-field" id="pet-species">
+                  <option value="">Select...</option>
+                  <option value="cat">Cat</option>
+                  <option value="dog">Dog</option>
+                </select>
+                <div class="input-error" id="err-pet-species">Required</div>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label" for="owner-name">Your name</label>
+              <input class="input-field" type="text" id="owner-name" placeholder="Full name" autocomplete="name">
+              <div class="input-error" id="err-owner-name">Required</div>
+            </div>
+
+            <div>
+              <label class="input-label" for="owner-email">Email address</label>
+              <input class="input-field" type="email" id="owner-email" placeholder="you@email.com" autocomplete="email">
+              <div class="input-error" id="err-owner-email">Enter a valid email</div>
+            </div>
+
+            <div>
+              <label class="input-label" for="owner-phone">Phone number</label>
+              <input class="input-field" type="tel" id="owner-phone" placeholder="(780) 555-0000" autocomplete="tel">
+              <div class="input-error" id="err-owner-phone">Enter a valid phone number</div>
+            </div>
+
+            <div class="pt-1">
+              <button type="submit" class="w-full bg-teal-600 text-white py-3.5 rounded-xl font-bold text-base hover:bg-teal-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                </svg>
+                Reserve &amp; Pay Deposit
+              </button>
+              <p class="text-center text-xs text-slate-400 mt-3">
+                <svg class="w-3.5 h-3.5 inline mr-1 -mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                </svg>
+                Secure mock checkout — no real payment today
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="data.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const slotId = params.get('id');
+    const slots = getSessionSlots();
+    const slot = slots.find(s => s.id === slotId);
+
+    function init() {
+      if (!slot) {
+        document.getElementById('error-state').classList.remove('hidden');
+        return;
+      }
+      if (slot.status === 'full' || slotsAvailable(slot) <= 0) {
+        document.getElementById('full-state').classList.remove('hidden');
+        return;
+      }
+
+      const clinic = getClinic(slot.clinicId);
+      document.getElementById('main-content').classList.remove('hidden');
+
+      // Populate slot details
+      const badge = document.getElementById('procedure-badge');
+      badge.textContent = procedureLabel(slot.procedureType);
+      badge.className = 'px-3 py-1.5 rounded-full text-sm font-semibold ' + procedureBadgeClass(slot.procedureType);
+
+      document.getElementById('species-badge').textContent = speciesLabel(slot.species);
+
+      const available = slotsAvailable(slot);
+      const spotsEl = document.getElementById('spots-badge');
+      spotsEl.textContent = available === 1 ? '1 spot left' : `${available} spots left`;
+      spotsEl.className = 'text-sm font-medium shrink-0 ' + (available <= 1 ? 'text-amber-600' : 'text-slate-400');
+
+      document.getElementById('clinic-name').textContent = clinic.name;
+      document.getElementById('clinic-address').textContent = `${clinic.address}, ${clinic.city}, ${clinic.province}`;
+      document.getElementById('slot-date').textContent = formatDate(slot.date);
+      document.getElementById('slot-time').textContent = slot.time;
+      document.getElementById('clinic-phone').textContent = clinic.phone;
+      document.getElementById('clinic-email').textContent = clinic.email;
+      document.getElementById('clinic-prep').textContent = clinic.prepInstructions;
+
+      if (slot.notes) {
+        document.getElementById('notes-section').classList.remove('hidden');
+        document.getElementById('slot-notes').textContent = slot.notes;
+      }
+
+      // What to bring
+      const bringEl = document.getElementById('what-to-bring');
+      bringEl.innerHTML = clinic.whatToBring.map(item => `
+        <li class="flex items-start gap-2 text-sm text-teal-800">
+          <svg class="w-4 h-4 text-teal-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+          ${item}
+        </li>
+      `).join('');
+
+      // Price
+      const balance = slot.price - slot.deposit;
+      document.getElementById('price-display').textContent = formatPrice(slot.price);
+      document.getElementById('deposit-display').textContent = formatPrice(slot.deposit);
+      document.getElementById('balance-display').textContent = formatPrice(balance);
+
+      // Update page title
+      document.title = `Reserve — ${clinic.shortName} ${procedureLabel(slot.procedureType)} — VetSlot`;
+    }
+
+    function validateField(id, errId, validator) {
+      const el = document.getElementById(id);
+      const errEl = document.getElementById(errId);
+      const valid = validator(el.value.trim());
+      el.classList.toggle('error', !valid);
+      errEl.classList.toggle('show', !valid);
+      return valid;
+    }
+
+    document.getElementById('reserve-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const v1 = validateField('pet-name', 'err-pet-name', v => v.length > 0);
+      const v2 = validateField('pet-species', 'err-pet-species', v => v !== '');
+      const v3 = validateField('owner-name', 'err-owner-name', v => v.length > 1);
+      const v4 = validateField('owner-email', 'err-owner-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      const v5 = validateField('owner-phone', 'err-owner-phone', v => v.replace(/\D/g, '').length >= 10);
+
+      // Remove error on input
+      ['pet-name', 'pet-species', 'owner-name', 'owner-email', 'owner-phone'].forEach(id => {
+        document.getElementById(id).addEventListener('input', function() {
+          this.classList.remove('error');
+          const errId = 'err-' + id;
+          const el = document.getElementById(errId);
+          if (el) el.classList.remove('show');
+        }, { once: true });
+      });
+
+      if (!v1 || !v2 || !v3 || !v4 || !v5) return;
+
+      // Build reservation object
+      const reservation = {
+        bookingRef: generateBookingRef(),
+        slotId: slot.id,
+        slot: { ...slot },
+        clinic: getClinic(slot.clinicId),
+        petName: document.getElementById('pet-name').value.trim(),
+        petSpecies: document.getElementById('pet-species').value,
+        ownerName: document.getElementById('owner-name').value.trim(),
+        ownerEmail: document.getElementById('owner-email').value.trim(),
+        ownerPhone: document.getElementById('owner-phone').value.trim(),
+        depositAmount: slot.deposit,
+        status: 'confirmed',
+        createdAt: new Date().toISOString()
+      };
+
+      // Persist reservation and update slot
+      localStorage.setItem('vetslot_last_reservation', JSON.stringify(reservation));
+      updateSessionSlot(slot.id);
+
+      // Show loading state briefly then redirect
+      const btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.innerHTML = `
+        <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        Confirming reservation...
+      `;
+      setTimeout(() => { window.location.href = 'confirmed.html'; }, 900);
+    });
+
+    // Clear error on change for inputs
+    ['pet-name', 'owner-name', 'owner-email', 'owner-phone'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function() {
+        this.classList.remove('error');
+        const errEl = document.getElementById('err-' + id);
+        if (errEl) errEl.classList.remove('show');
+      });
+    });
+    document.getElementById('pet-species').addEventListener('change', function() {
+      this.classList.remove('error');
+      document.getElementById('err-pet-species').classList.remove('show');
+    });
+
+    init();
+  </script>
+</body>
+</html>

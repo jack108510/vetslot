@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VetSlot — Last-Minute Surgery Slots for Your Pet</title>
+  <meta name="description" content="Book a last-minute spay or neuter for your pet. Connect with vet clinics posting available surgery slots in your area.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            teal: { 50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',800:'#115e59',900:'#134e4a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .hero-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #0f2a3a 50%, #0f4a4a 100%);
+    }
+    .hero-grid {
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+      background-size: 32px 32px;
+    }
+    .card-hover { transition: box-shadow 0.2s ease, transform 0.2s ease; }
+    .card-hover:hover { box-shadow: 0 10px 40px -8px rgba(0,0,0,0.12); transform: translateY(-2px); }
+  </style>
+</head>
+<body class="font-sans bg-white text-slate-900 antialiased">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </div>
+          <span class="text-lg font-bold text-slate-900">Vet<span class="text-teal-600">Slot</span></span>
+        </a>
+        <div class="flex items-center gap-1 sm:gap-2">
+          <a href="browse.html" class="text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg text-sm font-medium transition-colors">Browse Slots</a>
+          <a href="clinic.html" class="hidden sm:block text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg text-sm font-medium transition-colors">For Clinics</a>
+          <a href="clinic.html" class="bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-teal-700 transition-colors">Post a Slot</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero-bg hero-grid pt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 bg-teal-600/20 border border-teal-500/30 text-teal-300 px-3 py-1.5 rounded-full text-xs font-semibold mb-6 uppercase tracking-wide">
+          <span class="w-1.5 h-1.5 bg-teal-400 rounded-full animate-pulse"></span>
+          Slots available now in Edmonton &amp; Calgary
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+          Book last-minute surgery<br>
+          <span class="text-teal-400">for your pet.</span><br>
+          Skip the wait.
+        </h1>
+        <p class="text-lg sm:text-xl text-slate-300 mb-10 max-w-xl leading-relaxed">
+          Vet clinics post their available surgery slots. You reserve in minutes — no phone tag, no month-long waitlists.
+        </p>
+
+        <!-- Search Bar -->
+        <div class="bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2 shadow-2xl max-w-2xl">
+          <select id="search-city" class="flex-1 px-4 py-3 text-slate-700 bg-slate-50 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500 border-0">
+            <option value="">All Cities</option>
+            <option value="Edmonton">Edmonton, AB</option>
+            <option value="Calgary">Calgary, AB</option>
+          </select>
+          <select id="search-procedure" class="flex-1 px-4 py-3 text-slate-700 bg-slate-50 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500 border-0">
+            <option value="">Any Procedure</option>
+            <option value="spay">Spay</option>
+            <option value="neuter">Neuter</option>
+            <option value="both">Spay &amp; Neuter</option>
+          </select>
+          <button onclick="doSearch()" class="bg-teal-600 hover:bg-teal-700 text-white px-7 py-3 rounded-xl font-semibold text-sm transition-colors whitespace-nowrap flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+            Find Slots
+          </button>
+        </div>
+      </div>
+
+      <!-- Trust bar -->
+      <div class="mt-14 flex flex-wrap gap-8">
+        <div class="text-slate-300">
+          <span class="text-2xl font-bold text-white">3</span>
+          <span class="ml-2 text-sm">clinics on platform</span>
+        </div>
+        <div class="text-slate-300">
+          <span class="text-2xl font-bold text-white">47+</span>
+          <span class="ml-2 text-sm">surgeries completed</span>
+        </div>
+        <div class="text-slate-300">
+          <span class="text-2xl font-bold text-white">4.9★</span>
+          <span class="ml-2 text-sm">average clinic rating</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-20 sm:py-28 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <p class="text-teal-600 font-semibold text-sm uppercase tracking-widest mb-3">Simple process</p>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">How VetSlot works</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-teal-50 border-2 border-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+          </div>
+          <div class="w-8 h-8 bg-slate-900 text-white text-sm font-bold rounded-full flex items-center justify-center mx-auto mb-4">1</div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Browse available slots</h3>
+          <p class="text-slate-500 leading-relaxed">See real-time availability from clinics in your city. Filter by procedure type, date, price, and species.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-teal-50 border-2 border-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          </div>
+          <div class="w-8 h-8 bg-slate-900 text-white text-sm font-bold rounded-full flex items-center justify-center mx-auto mb-4">2</div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Reserve your spot</h3>
+          <p class="text-slate-500 leading-relaxed">Enter your pet's info and pay a small deposit to lock in the slot. No account needed — just your email.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-teal-50 border-2 border-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <svg class="w-7 h-7 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+            </svg>
+          </div>
+          <div class="w-8 h-8 bg-slate-900 text-white text-sm font-bold rounded-full flex items-center justify-center mx-auto mb-4">3</div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">Show up &amp; let the experts work</h3>
+          <p class="text-slate-500 leading-relaxed">Get a confirmation with everything you need to know. Show up on the day and your pet is in good hands.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Slots -->
+  <section class="py-20 sm:py-28 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+        <div>
+          <p class="text-teal-600 font-semibold text-sm uppercase tracking-widest mb-3">Available now</p>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Featured surgery slots</h2>
+        </div>
+        <a href="browse.html" class="text-teal-600 font-semibold text-sm hover:text-teal-700 flex items-center gap-1 shrink-0">
+          Browse all slots
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+      <div id="featured-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <div class="text-center mt-12">
+        <a href="browse.html" class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-7 py-3.5 rounded-xl font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
+          View all available slots
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="py-16 bg-teal-600">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-extrabold text-white mb-4">Are you a vet clinic?</h2>
+      <p class="text-teal-100 text-lg mb-8 max-w-lg mx-auto">Post your available slots and fill your surgical calendar. Takes 2 minutes to set up.</p>
+      <a href="clinic.html" class="inline-block bg-white text-teal-700 px-8 py-4 rounded-xl font-bold text-base hover:bg-teal-50 transition-colors shadow-lg">
+        Get started — it's free
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
+        <div>
+          <a href="index.html" class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </div>
+            <span class="text-lg font-bold text-white">Vet<span class="text-teal-400">Slot</span></span>
+          </a>
+          <p class="text-slate-400 text-sm max-w-xs leading-relaxed">Connecting pet owners with vet clinics that have available surgery slots.</p>
+        </div>
+        <div class="flex gap-12">
+          <div>
+            <p class="text-slate-300 font-semibold text-sm mb-4">Pet Owners</p>
+            <div class="flex flex-col gap-2">
+              <a href="browse.html" class="text-slate-400 hover:text-white text-sm transition-colors">Browse Slots</a>
+              <a href="browse.html" class="text-slate-400 hover:text-white text-sm transition-colors">How It Works</a>
+            </div>
+          </div>
+          <div>
+            <p class="text-slate-300 font-semibold text-sm mb-4">Clinics</p>
+            <div class="flex flex-col gap-2">
+              <a href="clinic.html" class="text-slate-400 hover:text-white text-sm transition-colors">Post a Slot</a>
+              <a href="clinic.html" class="text-slate-400 hover:text-white text-sm transition-colors">Clinic Login</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <p class="text-slate-500 text-sm">© 2026 VetSlot. All rights reserved.</p>
+        <p class="text-slate-500 text-sm">Built for Alberta pet owners 🐾</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script>
+    function doSearch() {
+      const city = document.getElementById('search-city').value;
+      const procedure = document.getElementById('search-procedure').value;
+      const params = new URLSearchParams();
+      if (city) params.set('city', city);
+      if (procedure) params.set('procedure', procedure);
+      window.location.href = 'browse.html' + (params.toString() ? '?' + params.toString() : '');
+    }
+
+    document.getElementById('search-city').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+    document.getElementById('search-procedure').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+    function renderSlotCard(slot) {
+      const clinic = getClinic(slot.clinicId);
+      const available = slotsAvailable(slot);
+      const badgeClass = procedureBadgeClass(slot.procedureType);
+      const spotsText = available === 1 ? '1 spot left' : `${available} spots left`;
+      const spotsColor = available === 1 ? 'text-amber-600' : 'text-slate-400';
+
+      return `
+        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm card-hover overflow-hidden flex flex-col">
+          <div class="p-5 pb-4 flex-1">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex gap-2 flex-wrap">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">${procedureLabel(slot.procedureType)}</span>
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">${speciesLabel(slot.species)}</span>
+              </div>
+              <span class="text-xs font-medium ${spotsColor}">${spotsText}</span>
+            </div>
+            <h3 class="font-bold text-slate-900 text-base mb-1">${clinic.name}</h3>
+            <div class="flex items-center gap-1 text-slate-500 text-sm">
+              <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+              </svg>
+              <span>${clinic.city}, ${clinic.province}</span>
+            </div>
+          </div>
+          <div class="px-5 py-3 bg-slate-50 border-y border-slate-100">
+            <div class="flex items-center gap-3 text-slate-700 text-sm">
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                </svg>
+                <span class="font-medium">${formatDateShort(slot.date)}</span>
+              </div>
+              <span class="text-slate-300">·</span>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <span class="font-medium">${slot.time}</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-5 pt-4 flex items-center justify-between">
+            <div>
+              <span class="text-2xl font-extrabold text-slate-900">${formatPrice(slot.price)}</span>
+              <div class="text-xs text-slate-400 mt-0.5">${formatPrice(slot.deposit)} deposit to reserve</div>
+            </div>
+            <a href="reserve.html?id=${slot.id}" class="bg-teal-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-700 active:scale-95 transition-all">
+              Reserve
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    const slots = getSessionSlots().filter(s => s.status === 'open');
+    const featured = slots.slice(0, 6);
+    document.getElementById('featured-cards').innerHTML = featured.map(renderSlotCard).join('');
+  </script>
+</body>
+</html>
