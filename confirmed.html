@@ -51,6 +51,15 @@
     </div>
   </nav>
 
+  <!-- Loading state -->
+  <div id="loading-state" class="max-w-lg mx-auto px-4 py-24 text-center">
+    <svg class="w-9 h-9 animate-spin mx-auto mb-4 text-teal-400" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+    </svg>
+    <p class="text-slate-400 font-medium">Loading your confirmation...</p>
+  </div>
+
   <!-- No reservation fallback -->
   <div id="no-reservation" class="hidden max-w-lg mx-auto px-4 py-24 text-center">
     <h2 class="text-xl font-bold text-slate-900 mb-3">No reservation found</h2>
@@ -187,7 +196,7 @@
 
     <div class="text-center mt-8 animate-in-delay-4">
       <p class="text-slate-400 text-sm">Need to cancel?
-        <button onclick="cancelReservation()" class="text-slate-500 underline hover:text-red-500 transition-colors ml-1">Cancel this reservation</button>
+        <button onclick="openCancelModal()" class="text-slate-500 underline hover:text-red-500 transition-colors ml-1">Cancel this reservation</button>
       </p>
     </div>
 
@@ -206,41 +215,69 @@
     </div>
   </div>
 
-  <script src="data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
-    let reservation = null;
+    let reservationData = null;
 
-    try {
-      reservation = JSON.parse(localStorage.getItem('vetslot_last_reservation'));
-    } catch (e) {}
+    async function init() {
+      const params = new URLSearchParams(window.location.search);
+      const reservationId = params.get('ref');
 
-    if (!reservation) {
-      document.getElementById('no-reservation').classList.remove('hidden');
-    } else {
-      document.getElementById('confirmation-content').classList.remove('hidden');
+      if (!reservationId) {
+        showState('no-reservation');
+        return;
+      }
 
-      const slot = reservation.slot;
-      const clinic = reservation.clinic;
-      const balance = slot.price - slot.deposit;
+      try {
+        const reservation = await VetSlotAPI.getReservation(reservationId);
+        if (!reservation) {
+          showState('no-reservation');
+          return;
+        }
 
-      document.title = `Confirmed: ${reservation.bookingRef} — VetSlot`;
+        reservationData = reservation;
+        populateConfirmation(reservation);
+        showState('confirmation-content');
+      } catch (err) {
+        console.error(err);
+        showState('no-reservation');
+      }
+    }
 
-      document.getElementById('booking-ref').textContent = reservation.bookingRef;
-      document.getElementById('confirm-pet').textContent = reservation.petName;
-      document.getElementById('confirm-species').textContent = reservation.petSpecies;
-      document.getElementById('confirm-procedure').textContent = procedureLabel(slot.procedureType);
+    function showState(state) {
+      document.getElementById('loading-state').classList.add('hidden');
+      document.getElementById('no-reservation').classList.add('hidden');
+      document.getElementById('confirmation-content').classList.add('hidden');
+      document.getElementById(state).classList.remove('hidden');
+    }
+
+    function populateConfirmation(reservation) {
+      const slot = reservation.slot || {};
+      const clinic = slot.clinic || {};
+      const deposit = reservation.deposit_amount || 50;
+      const balance = (slot.price || 0) - deposit;
+      const bookingRef = 'VS-' + reservation.id.replace(/-/g, '').toUpperCase().slice(0, 8);
+
+      document.title = `Confirmed: ${bookingRef} — VetSlot`;
+
+      document.getElementById('booking-ref').textContent = bookingRef;
+      document.getElementById('confirm-pet').textContent = reservation.pet_name || '';
+      document.getElementById('confirm-species').textContent = reservation.pet_species || '';
+      document.getElementById('confirm-procedure').textContent = procedureLabel(slot.procedure_type);
       document.getElementById('confirm-species-type').textContent = speciesLabel(slot.species);
-      document.getElementById('confirm-date').textContent = formatDateShort(slot.date);
-      document.getElementById('confirm-time').textContent = slot.time;
-      document.getElementById('confirm-clinic').textContent = clinic.name;
-      document.getElementById('confirm-address').textContent = `${clinic.city}, ${clinic.province}`;
-      document.getElementById('confirm-owner').textContent = reservation.ownerName;
-      document.getElementById('confirm-email').textContent = reservation.ownerEmail;
-      document.getElementById('confirm-deposit').textContent = `${formatPrice(slot.deposit)} paid`;
+      document.getElementById('confirm-date').textContent = slot.date ? formatDate(slot.date) : '—';
+      document.getElementById('confirm-time').textContent = slot.time ? formatTime(slot.time) : '—';
+      document.getElementById('confirm-clinic').textContent = clinic.name || 'Vet Clinic';
+      document.getElementById('confirm-address').textContent = [clinic.city, clinic.province].filter(Boolean).join(', ') || 'Edmonton, AB';
+      document.getElementById('confirm-owner').textContent = reservation.owner_name || '';
+      document.getElementById('confirm-email').textContent = reservation.owner_email || '';
+      document.getElementById('confirm-deposit').textContent = `${formatPrice(deposit)} paid`;
       document.getElementById('confirm-balance').textContent = `${formatPrice(balance)} due at clinic`;
-      document.getElementById('confirm-prep').textContent = clinic.prepInstructions;
+      document.getElementById('confirm-prep').textContent = getPrepInstructions(clinic);
 
-      document.getElementById('confirm-bring').innerHTML = clinic.whatToBring.map(item => `
+      const items = getWhatToBring(clinic);
+      document.getElementById('confirm-bring').innerHTML = items.map(item => `
         <li class="flex items-start gap-2.5 text-sm text-slate-700">
           <svg class="w-4 h-4 text-teal-500 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
@@ -249,32 +286,46 @@
         </li>
       `).join('');
 
-      const phoneEl = document.getElementById('confirm-phone-link');
-      phoneEl.href = 'tel:' + clinic.phone.replace(/\D/g, '');
-      document.getElementById('confirm-phone-text').textContent = clinic.phone;
+      const phone = clinic.phone || '';
+      document.getElementById('confirm-phone-link').href = phone ? 'tel:' + phone.replace(/\D/g, '') : '#';
+      document.getElementById('confirm-phone-text').textContent = phone || 'Contact clinic';
 
-      const emailEl = document.getElementById('confirm-email-link');
-      emailEl.href = 'mailto:' + clinic.email;
-      document.getElementById('confirm-email-text').textContent = clinic.email;
+      const email = clinic.email || '';
+      document.getElementById('confirm-email-link').href = email ? 'mailto:' + email : '#';
+      document.getElementById('confirm-email-text').textContent = email || 'Contact clinic';
 
-      document.getElementById('cancel-ref').textContent = reservation.bookingRef;
-      document.getElementById('cancel-phone').href = 'tel:' + clinic.phone.replace(/\D/g, '');
+      document.getElementById('cancel-ref').textContent = bookingRef;
+      document.getElementById('cancel-phone').href = phone ? 'tel:' + phone.replace(/\D/g, '') : '#';
     }
 
     function addToCalendar() {
-      if (!reservation) return;
-      const slot = reservation.slot;
-      const clinic = reservation.clinic;
+      if (!reservationData) return;
+      const slot = reservationData.slot || {};
+      const clinic = slot.clinic || {};
+      const deposit = reservationData.deposit_amount || 50;
+      const bookingRef = 'VS-' + reservationData.id.replace(/-/g, '').toUpperCase().slice(0, 8);
 
-      const date = slot.date.replace(/-/g, '');
-      const [time, ampm] = slot.time.split(' ');
-      const [h, m] = time.split(':');
-      let hour = parseInt(h);
-      if (ampm === 'PM' && hour !== 12) hour += 12;
-      if (ampm === 'AM' && hour === 12) hour = 0;
-      const startTime = `${date}T${String(hour).padStart(2,'0')}${m}00`;
+      const dateStr = (slot.date || '').replace(/-/g, '');
+      const timeStr = slot.time || '09:00';
+      let hour = 9, min = '00';
+
+      if (/[AP]M/i.test(timeStr)) {
+        const [t, ampm] = timeStr.trim().split(' ');
+        const [h, m] = t.split(':');
+        hour = parseInt(h);
+        min = m || '00';
+        if (/PM/i.test(ampm) && hour !== 12) hour += 12;
+        if (/AM/i.test(ampm) && hour === 12) hour = 0;
+      } else {
+        const parts = timeStr.split(':');
+        hour = parseInt(parts[0]);
+        min = parts[1] || '00';
+      }
+
+      const startTime = `${dateStr}T${String(hour).padStart(2,'0')}${min}00`;
       const endHour = (hour + 2) % 24;
-      const endTime = `${date}T${String(endHour).padStart(2,'0')}${m}00`;
+      const endTime = `${dateStr}T${String(endHour).padStart(2,'0')}${min}00`;
+      const address = [clinic.address, clinic.city, clinic.province].filter(Boolean).join(', ');
 
       const ics = [
         'BEGIN:VCALENDAR',
@@ -282,9 +333,9 @@
         'BEGIN:VEVENT',
         `DTSTART:${startTime}`,
         `DTEND:${endTime}`,
-        `SUMMARY:${procedureLabel(slot.procedureType)} — ${reservation.petName} at ${clinic.shortName}`,
-        `DESCRIPTION:Booking ref: ${reservation.bookingRef}\\nClinic: ${clinic.name}\\nPhone: ${clinic.phone}`,
-        `LOCATION:${clinic.address}, ${clinic.city}, ${clinic.province}`,
+        `SUMMARY:${procedureLabel(slot.procedure_type)} — ${reservationData.pet_name} at ${clinic.name || 'Vet Clinic'}`,
+        `DESCRIPTION:Booking ref: ${bookingRef}\\nClinic: ${clinic.name || ''}\\nPhone: ${clinic.phone || ''}`,
+        `LOCATION:${address}`,
         `STATUS:CONFIRMED`,
         'END:VEVENT',
         'END:VCALENDAR'
@@ -294,18 +345,20 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `vetslot-${reservation.bookingRef}.ics`;
+      a.download = `vetslot-${bookingRef}.ics`;
       a.click();
       URL.revokeObjectURL(url);
     }
 
-    function cancelReservation() {
+    function openCancelModal() {
       document.getElementById('cancel-modal').classList.remove('hidden');
     }
 
     function closeCancelModal() {
       document.getElementById('cancel-modal').classList.add('hidden');
     }
+
+    init();
   </script>
 </body>
 </html>

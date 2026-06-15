@@ -170,7 +170,16 @@
           </svg>
         </a>
       </div>
-      <div id="featured-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      <div id="featured-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Loading skeleton -->
+        <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12 text-slate-400">
+          <svg class="w-8 h-8 animate-spin mx-auto mb-3 text-teal-400" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+          <p class="text-sm font-medium">Loading available slots...</p>
+        </div>
+      </div>
       <div class="text-center mt-12">
         <a href="browse.html" class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-7 py-3.5 rounded-xl font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm">
           View all available slots
@@ -232,7 +241,8 @@
     </div>
   </footer>
 
-  <script src="data.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script>
     function doSearch() {
       const city = document.getElementById('search-city').value;
@@ -247,29 +257,30 @@
     document.getElementById('search-procedure').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
 
     function renderSlotCard(slot) {
-      const clinic = getClinic(slot.clinicId);
-      const available = slotsAvailable(slot);
-      const badgeClass = procedureBadgeClass(slot.procedureType);
+      const clinic = slot.clinic || {};
+      const available = slot.capacity - slot.booked_count;
+      const badgeClass = procedureBadgeClass(slot.procedure_type);
       const spotsText = available === 1 ? '1 spot left' : `${available} spots left`;
       const spotsColor = available === 1 ? 'text-amber-600' : 'text-slate-400';
+      const deposit = slot.deposit_amount || slot.deposit || 50;
 
       return `
         <div class="bg-white rounded-2xl border border-slate-100 shadow-sm card-hover overflow-hidden flex flex-col">
           <div class="p-5 pb-4 flex-1">
             <div class="flex items-center justify-between mb-3">
               <div class="flex gap-2 flex-wrap">
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">${procedureLabel(slot.procedureType)}</span>
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">${procedureLabel(slot.procedure_type)}</span>
                 <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">${speciesLabel(slot.species)}</span>
               </div>
               <span class="text-xs font-medium ${spotsColor}">${spotsText}</span>
             </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1">${clinic.name}</h3>
+            <h3 class="font-bold text-slate-900 text-base mb-1">${clinic.name || 'Vet Clinic'}</h3>
             <div class="flex items-center gap-1 text-slate-500 text-sm">
               <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
               </svg>
-              <span>${clinic.city}, ${clinic.province}</span>
+              <span>${clinic.city || ''}, ${clinic.province || 'AB'}</span>
             </div>
           </div>
           <div class="px-5 py-3 bg-slate-50 border-y border-slate-100">
@@ -278,21 +289,21 @@
                 <svg class="w-4 h-4 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
                 </svg>
-                <span class="font-medium">${formatDateShort(slot.date)}</span>
+                <span class="font-medium">${formatDate(slot.date)}</span>
               </div>
               <span class="text-slate-300">·</span>
               <div class="flex items-center gap-1.5">
                 <svg class="w-4 h-4 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
-                <span class="font-medium">${slot.time}</span>
+                <span class="font-medium">${formatTime(slot.time)}</span>
               </div>
             </div>
           </div>
           <div class="p-5 pt-4 flex items-center justify-between">
             <div>
               <span class="text-2xl font-extrabold text-slate-900">${formatPrice(slot.price)}</span>
-              <div class="text-xs text-slate-400 mt-0.5">${formatPrice(slot.deposit)} deposit to reserve</div>
+              <div class="text-xs text-slate-400 mt-0.5">${formatPrice(deposit)} deposit to reserve</div>
             </div>
             <a href="reserve.html?id=${slot.id}" class="bg-teal-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-700 active:scale-95 transition-all">
               Reserve
@@ -302,9 +313,25 @@
       `;
     }
 
-    const slots = getSessionSlots().filter(s => s.status === 'open');
-    const featured = slots.slice(0, 6);
-    document.getElementById('featured-cards').innerHTML = featured.map(renderSlotCard).join('');
+    VetSlotAPI.getSlots().then(slots => {
+      const grid = document.getElementById('featured-cards');
+      if (!slots || slots.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
+            <p class="text-slate-500 font-medium">No slots available right now — check back soon.</p>
+            <a href="browse.html" class="mt-4 inline-block text-teal-600 font-semibold text-sm hover:text-teal-700">Browse all slots →</a>
+          </div>
+        `;
+        return;
+      }
+      grid.innerHTML = slots.slice(0, 6).map(renderSlotCard).join('');
+    }).catch(() => {
+      document.getElementById('featured-cards').innerHTML = `
+        <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
+          <p class="text-red-400 font-medium">Could not load slots. Please refresh and try again.</p>
+        </div>
+      `;
+    });
   </script>
 </body>
 </html>
