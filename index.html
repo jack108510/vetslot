@@ -3,539 +3,324 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpenSlot — Skip the Wait. Book Vet Surgery Today.</title>
-  <meta name="description" content="Book a last-minute spay or neuter for your pet. Vet clinics post open slots — you book in minutes. No waitlist, no phone tag.">
+  <title>OpenSlot — Discounted Vet Surgery Near You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-          colors: {
-            teal: { 50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',800:'#115e59',900:'#134e4a' }
-          }
-        }
-      }
-    }
-  </script>
   <style>
-    .hero-bg { background: linear-gradient(135deg, #0f172a 0%, #0c2635 55%, #0a3d3d 100%); }
-    .hero-grid { background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0); background-size: 30px 30px; }
-    .card-hover { transition: box-shadow 0.2s ease, transform 0.2s ease; }
-    .card-hover:hover { box-shadow: 0 20px 60px -12px rgba(0,0,0,0.14); transform: translateY(-3px); }
-    .path-card { transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s; }
-    .path-card:hover { box-shadow: 0 24px 64px -16px rgba(13,148,136,0.18); transform: translateY(-4px); }
-    .logo-mark { background: linear-gradient(135deg, #0d9488, #0f766e); }
-    @keyframes floatA { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-10px) rotate(-1deg)} }
-    @keyframes floatB { 0%,100%{transform:translateY(0) rotate(1.5deg)} 50%{transform:translateY(-8px) rotate(1.5deg)} }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #0f172a; color: #fff; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    /* Nav */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 64px; border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; background: rgba(15,23,42,0.95); backdrop-filter: blur(12px); z-index: 50; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,#0d9488,#0f766e); display: flex; align-items: center; justify-content: center; }
+    .nav-logo-text { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
+    .nav-logo-text span { color: #14b8a6; }
+    .nav-clinic-link { font-size: 14px; font-weight: 600; color: #94a3b8; text-decoration: none; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; transition: all 0.15s; }
+    .nav-clinic-link:hover { color: #fff; border-color: rgba(255,255,255,0.25); }
+
+    /* Hero */
+    .hero { max-width: 1100px; margin: 0 auto; padding: 80px 24px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    @media (max-width: 768px) { .hero { grid-template-columns: 1fr; gap: 48px; padding: 48px 20px 40px; } }
+
+    .hero-left {}
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.25); color: #14b8a6; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 100px; margin-bottom: 24px; }
+    .hero-title { font-size: clamp(36px, 5vw, 56px); font-weight: 900; line-height: 1.08; letter-spacing: -1.5px; color: #fff; margin-bottom: 20px; }
+    .hero-title span { color: #14b8a6; }
+    .hero-subtitle { font-size: 18px; color: #94a3b8; line-height: 1.6; margin-bottom: 40px; max-width: 460px; }
+
+    /* Signup form */
+    .signup-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 32px; }
+    .signup-card h2 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .signup-card p { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .form-group label { font-size: 13px; font-weight: 600; color: #94a3b8; }
+    .form-control { width: 100%; padding: 11px 14px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.15s; }
+    .form-control::placeholder { color: #475569; }
+    .form-control:focus { border-color: #14b8a6; background: rgba(20,184,166,0.06); }
+    select.form-control option { background: #1e293b; color: #fff; }
+    .submit-btn { width: 100%; padding: 14px; background: #14b8a6; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: all 0.15s; font-family: inherit; }
+    .submit-btn:hover { background: #0d9488; transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .success-msg { display: none; text-align: center; padding: 24px 16px; }
+    .success-msg svg { width: 48px; height: 48px; color: #14b8a6; margin: 0 auto 12px; display: block; }
+    .success-msg h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .success-msg p { font-size: 14px; color: #64748b; }
+
+    /* Right: floating cards */
+    .hero-right { position: relative; }
+    @media (max-width: 768px) { .hero-right { display: none; } }
+    .float-cards { position: relative; height: 420px; }
+    .slot-card { position: absolute; background: rgba(30,41,59,0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; width: 280px; backdrop-filter: blur(20px); }
+    .slot-card:nth-child(1) { top: 20px; left: 20px; animation: floatA 5s ease-in-out infinite; }
+    .slot-card:nth-child(2) { top: 140px; right: 0; animation: floatB 6.5s ease-in-out infinite 0.8s; }
+    .slot-card:nth-child(3) { bottom: 20px; left: 40px; animation: floatC 4.5s ease-in-out infinite 1.6s; }
+    @keyframes floatA { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-14px) rotate(-1deg)} }
+    @keyframes floatB { 0%,100%{transform:translateY(0) rotate(1.5deg)} 50%{transform:translateY(-10px) rotate(1.5deg)} }
     @keyframes floatC { 0%,100%{transform:translateY(0) rotate(-0.5deg)} 50%{transform:translateY(-12px) rotate(-0.5deg)} }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
-    .float-a { animation: floatA 5s ease-in-out infinite; }
-    .float-b { animation: floatB 6s ease-in-out infinite 0.8s; }
-    .float-c { animation: floatC 4.5s ease-in-out infinite 1.6s; }
-    .fade-up { animation: fadeUp 0.7s ease both; }
-    .fade-up-1 { animation: fadeUp 0.7s ease 0.1s both; }
-    .fade-up-2 { animation: fadeUp 0.7s ease 0.25s both; }
-    .fade-up-3 { animation: fadeUp 0.7s ease 0.4s both; }
-    .fade-up-4 { animation: fadeUp 0.7s ease 0.55s both; }
-    .glow-blob { background: radial-gradient(ellipse at center, rgba(13,148,136,0.25) 0%, transparent 70%); }
-    .slot-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(16px); }
-    .slot-card-available { background: rgba(13,148,136,0.12); border: 1px solid rgba(45,212,191,0.25); }
+    .card-clinic { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .card-procedure { font-size: 12px; color: #64748b; margin-bottom: 12px; }
+    .card-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+    .card-price { font-size: 26px; font-weight: 800; color: #14b8a6; }
+    .card-orig { font-size: 14px; color: #475569; text-decoration: line-through; }
+    .card-save { font-size: 12px; font-weight: 700; color: #34d399; background: rgba(52,211,153,0.1); padding: 2px 8px; border-radius: 100px; }
+    .card-date { font-size: 12px; color: #475569; }
+    .wave-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: #f59e0b; background: rgba(245,158,11,0.12); padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+
+    /* Stats bar */
+    .stats { display: flex; gap: 40px; margin-top: 32px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06); }
+    @media (max-width: 480px) { .stats { gap: 24px; } }
+    .stat-value { font-size: 22px; font-weight: 800; color: #fff; }
+    .stat-label { font-size: 12px; color: #475569; margin-top: 2px; }
+
+    /* How it works */
+    .section { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
+    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #14b8a6; margin-bottom: 12px; }
+    .section-title { font-size: clamp(28px, 4vw, 40px); font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 48px; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; gap: 24px; } }
+    .step { }
+    .step-num { width: 36px; height: 36px; border-radius: 10px; background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #14b8a6; margin-bottom: 16px; }
+    .step h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .step p { font-size: 14px; color: #64748b; line-height: 1.6; }
+
+    /* Clinic CTA */
+    .clinic-cta { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    @media (max-width: 640px) { .clinic-cta { grid-template-columns: 1fr; padding: 36px 24px; } }
+    .clinic-cta h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 800; color: #fff; letter-spacing: -0.5px; margin-bottom: 10px; }
+    .clinic-cta p { font-size: 15px; color: #64748b; line-height: 1.6; max-width: 480px; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #0f172a; font-size: 15px; font-weight: 700; padding: 14px 28px; border-radius: 12px; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
+    .cta-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
+
+    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 24px; text-align: center; color: #334155; font-size: 13px; }
+    footer a { color: #475569; text-decoration: none; }
+    footer a:hover { color: #94a3b8; }
   </style>
 </head>
-<body class="font-sans bg-white text-slate-900 antialiased">
+<body>
 
-  <!-- Navigation -->
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/96 backdrop-blur-md border-b border-slate-100 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <a href="index.html" class="flex items-center gap-2.5">
-          <div class="w-8 h-8 logo-mark rounded-lg flex items-center justify-center shadow-sm">
-            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-            </svg>
-          </div>
-          <span class="text-lg font-bold tracking-tight text-slate-900">Open<span class="text-teal-600">Slot</span></span>
-        </a>
-        <div class="flex items-center gap-1">
-          <a href="browse.html" class="hidden sm:flex items-center gap-1.5 text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg text-sm font-medium transition-colors">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-            Browse Slots
-          </a>
-          <a href="clinic.html" class="hidden md:block text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg text-sm font-medium transition-colors">For Clinics</a>
-          <a href="clinic.html" class="ml-1 bg-teal-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-teal-700 transition-colors shadow-sm">Post a Slot</a>
-        </div>
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+        </svg>
       </div>
-    </div>
+      <span class="nav-logo-text">Open<span>Slot</span></span>
+    </a>
+    <a href="clinic.html" class="nav-clinic-link">For Clinics</a>
   </nav>
 
   <!-- Hero -->
-  <section class="hero-bg hero-grid pt-16 overflow-hidden" style="background-color:#0f172a;min-height:92vh;display:flex;align-items:center;">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-
-        <!-- Left: Copy -->
-        <div>
-          <div class="fade-up inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-8 uppercase tracking-widest" style="background:rgba(20,184,166,0.15);border:1px solid rgba(45,212,191,0.3);color:#5eead4;">
-            <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#2dd4bf;"></span>
-            Discounted vet surgery — Edmonton &amp; Calgary
-          </div>
-          <h1 class="fade-up-1 font-extrabold leading-[1.06] mb-6 tracking-tight" style="font-size:clamp(2.6rem,5vw,4rem);color:#ffffff;">
-            Save on your<br>pet's surgery.
-            <span style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-image:linear-gradient(90deg,#2dd4bf,#5eead4);display:inline;"> Book today.</span>
-          </h1>
-          <p class="fade-up-2 mb-10 max-w-lg leading-relaxed" style="font-size:1.125rem;color:#94a3b8;">
-            Vet clinics post open slots in their schedule at discounted rates — slots that would otherwise sit empty. You get a real spay or neuter at a fraction of the price.
-          </p>
-
-          <!-- Search Bar -->
-          <div class="fade-up-3 bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2 max-w-xl mb-10" style="box-shadow:0 24px 64px -12px rgba(0,0,0,0.5);">
-            <select id="search-city" style="flex:1;padding:0.875rem 1rem;color:#334155;background:#f8fafc;border-radius:0.75rem;font-size:0.9rem;font-weight:500;border:none;outline:none;cursor:pointer;">
-              <option value="">All Cities</option>
-              <option value="Edmonton">Edmonton, AB</option>
-              <option value="Calgary">Calgary, AB</option>
-            </select>
-            <select id="search-procedure" style="flex:1;padding:0.875rem 1rem;color:#334155;background:#f8fafc;border-radius:0.75rem;font-size:0.9rem;font-weight:500;border:none;outline:none;cursor:pointer;">
-              <option value="">Any Procedure</option>
-              <option value="spay">Spay</option>
-              <option value="neuter">Neuter</option>
-              <option value="both">Spay &amp; Neuter</option>
-            </select>
-            <button onclick="doSearch()" style="background:#0d9488;color:#fff;padding:0.875rem 1.5rem;border-radius:0.75rem;font-weight:700;font-size:0.9rem;border:none;cursor:pointer;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='#0f766e'" onmouseout="this.style.background='#0d9488'">
-              Find Slots →
-            </button>
-          </div>
-
-          <!-- Trust stats -->
-          <div class="fade-up-4 flex flex-wrap gap-8">
-            <div>
-              <div class="text-3xl font-extrabold" style="color:#2dd4bf;">Up to 40%</div>
-              <div class="text-sm mt-0.5" style="color:#64748b;">Off regular clinic rates</div>
-            </div>
-            <div style="width:1px;background:rgba(255,255,255,0.08);"></div>
-            <div>
-              <div class="text-3xl font-extrabold" style="color:#2dd4bf;">47+</div>
-              <div class="text-sm mt-0.5" style="color:#64748b;">Surgeries booked</div>
-            </div>
-            <div style="width:1px;background:rgba(255,255,255,0.08);"></div>
-            <div>
-              <div class="text-3xl font-extrabold" style="color:#2dd4bf;">Licensed</div>
-              <div class="text-sm mt-0.5" style="color:#64748b;">Vets only, every time</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Floating slot cards -->
-        <div class="hidden lg:block relative" style="height:480px;">
-          <!-- Glow behind cards -->
-          <div class="glow-blob absolute" style="width:360px;height:360px;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;"></div>
-
-          <!-- Card 1 (top-left) -->
-          <div class="slot-card float-a absolute rounded-2xl p-5" style="width:265px;top:20px;left:0px;">
-            <div class="flex items-center justify-between mb-3">
-              <span style="background:rgba(168,85,247,0.2);color:#c084fc;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em;">Spay</span>
-              <div style="text-align:right;">
-                <span style="color:#64748b;font-size:0.75rem;text-decoration:line-through;margin-right:4px;">$450</span>
-                <span style="color:#2dd4bf;font-weight:700;font-size:1.1rem;">$295</span>
-              </div>
-            </div>
-            <div style="color:#f1f5f9;font-weight:700;font-size:0.95rem;margin-bottom:4px;">Summit Veterinary Clinic</div>
-            <div style="color:#64748b;font-size:0.8rem;margin-bottom:10px;">Edmonton, AB</div>
-            <div style="display:flex;align-items:center;gap:8px;color:#94a3b8;font-size:0.78rem;">
-              <span>Jun 23</span><span>·</span><span>9:00 AM</span>
-            </div>
-            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
-              <span style="color:#4ade80;font-size:0.73rem;font-weight:600;">Save $155</span>
-              <span style="background:#0d9488;color:#fff;font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:8px;">Reserve</span>
-            </div>
-          </div>
-
-          <!-- Card 2 (middle-right) -->
-          <div class="slot-card float-b absolute rounded-2xl p-5" style="width:258px;top:140px;right:0px;">
-            <div class="flex items-center justify-between mb-3">
-              <span style="background:rgba(59,130,246,0.2);color:#60a5fa;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em;">Neuter</span>
-              <div style="text-align:right;">
-                <span style="color:#64748b;font-size:0.75rem;text-decoration:line-through;margin-right:4px;">$320</span>
-                <span style="color:#2dd4bf;font-weight:700;font-size:1.1rem;">$195</span>
-              </div>
-            </div>
-            <div style="color:#f1f5f9;font-weight:700;font-size:0.95rem;margin-bottom:4px;">Parkview Animal Hospital</div>
-            <div style="color:#64748b;font-size:0.8rem;margin-bottom:10px;">Edmonton, AB</div>
-            <div style="display:flex;align-items:center;gap:8px;color:#94a3b8;font-size:0.78rem;">
-              <span>Jun 24</span><span>·</span><span>10:30 AM</span>
-            </div>
-            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
-              <span style="color:#4ade80;font-size:0.73rem;font-weight:600;">Save $125</span>
-              <span style="background:#0d9488;color:#fff;font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:8px;">Reserve</span>
-            </div>
-          </div>
-
-          <!-- Card 3 (bottom-left) -->
-          <div class="slot-card float-c absolute rounded-2xl p-5" style="width:255px;bottom:30px;left:20px;">
-            <div class="flex items-center justify-between mb-3">
-              <span style="background:rgba(13,148,136,0.25);color:#2dd4bf;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em;">Spay / Neuter</span>
-              <div style="text-align:right;">
-                <span style="color:#64748b;font-size:0.75rem;text-decoration:line-through;margin-right:4px;">$420</span>
-                <span style="color:#2dd4bf;font-weight:700;font-size:1.1rem;">$275</span>
-              </div>
-            </div>
-            <div style="color:#f1f5f9;font-weight:700;font-size:0.95rem;margin-bottom:4px;">Chinook Vet Centre</div>
-            <div style="color:#64748b;font-size:0.8rem;margin-bottom:10px;">Calgary, AB</div>
-            <div style="display:flex;align-items:center;gap:8px;color:#94a3b8;font-size:0.78rem;">
-              <span>Jun 25</span><span>·</span><span>12:00 PM</span>
-            </div>
-            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
-              <span style="color:#f59e0b;font-size:0.73rem;font-weight:600;">1 spot left</span>
-              <span style="background:#0d9488;color:#fff;font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:8px;">Reserve</span>
-            </div>
-          </div>
-
-          <!-- Notification toast -->
-          <div class="absolute rounded-xl px-4 py-3 flex items-center gap-3" style="top:0;right:10px;background:rgba(13,148,136,0.15);border:1px solid rgba(45,212,191,0.3);animation:floatB 5s ease-in-out infinite 2s;">
-            <div style="width:32px;height:32px;background:#0d9488;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-            </div>
-            <div>
-              <div style="color:#f1f5f9;font-size:0.78rem;font-weight:700;">Booking confirmed!</div>
-              <div style="color:#64748b;font-size:0.71rem;">OS-4829 · Summit Vet Clinic</div>
-            </div>
-          </div>
-        </div>
-
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-13a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 0 0 0-1.5h-3.25V5Z" clip-rule="evenodd"/></svg>
+        Priority access for early signups
       </div>
-    </div>
-  </section>
+      <h1 class="hero-title">Save up to 40% on<br><span>your pet's surgery.</span></h1>
+      <p class="hero-subtitle">Sign up once. When a discounted slot opens near you, we alert you first — before anyone else.</p>
 
-  <!-- Two Sides Section -->
-  <section class="py-20 sm:py-28 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-14">
-        <p class="text-teal-600 font-semibold text-sm uppercase tracking-widest mb-3">How OpenSlot works</p>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Built for both sides</h2>
-        <p class="text-slate-500 mt-4 max-w-lg mx-auto">Clinics fill empty time at a discount. Pet owners save on real vet surgery. Everyone wins.</p>
-      </div>
+      <div class="signup-card">
+        <h2>Get early access</h2>
+        <p>Takes 30 seconds. No spam.</p>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-
-        <!-- Pet Owners Card -->
-        <div class="path-card bg-white rounded-3xl border-2 border-slate-100 p-8 sm:p-10 cursor-pointer group" onclick="window.location='browse.html'">
-          <div class="flex items-center justify-between mb-8">
-            <div class="w-14 h-14 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, #f0fdfa, #ccfbf1);">
-              <svg class="w-6 h-6 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+        <div id="signup-form">
+          <div class="form-group">
+            <label>Email address</label>
+            <input class="form-control" type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
+          </div>
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom:0">
+              <label>Your city</label>
+              <select class="form-control" id="f-city">
+                <option value="Edmonton">Edmonton</option>
+                <option value="Calgary">Calgary</option>
+                <option value="Red Deer">Red Deer</option>
+                <option value="Lethbridge">Lethbridge</option>
+                <option value="St. Albert">St. Albert</option>
+                <option value="Sherwood Park">Sherwood Park</option>
+                <option value="Grande Prairie">Grande Prairie</option>
+                <option value="Medicine Hat">Medicine Hat</option>
+              </select>
             </div>
-            <span class="text-xs font-semibold text-teal-600 bg-teal-50 px-3 py-1.5 rounded-full uppercase tracking-wide">For Pet Owners</span>
-          </div>
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4 leading-tight">Find a slot.<br>Book today.</h3>
-          <p class="text-slate-500 leading-relaxed mb-8">Vet clinics post open slots at a discount — slots that would otherwise go unused. Browse, book, and save up to 40% on spays, neuters, and more.</p>
-          <ul class="space-y-3 mb-10">
-            <li class="flex items-center gap-3 text-slate-600 text-sm">
-              <div class="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center shrink-0">
-                <svg class="w-3 h-3 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-              </div>
-              Filter by city, procedure, species &amp; date
-            </li>
-            <li class="flex items-center gap-3 text-slate-600 text-sm">
-              <div class="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center shrink-0">
-                <svg class="w-3 h-3 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-              </div>
-              Reserve with a small deposit — no account needed
-            </li>
-            <li class="flex items-center gap-3 text-slate-600 text-sm">
-              <div class="w-5 h-5 rounded-full bg-teal-100 flex items-center justify-center shrink-0">
-                <svg class="w-3 h-3 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-              </div>
-              Instant confirmation with prep instructions
-            </li>
-          </ul>
-          <a href="browse.html" class="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-6 py-3.5 rounded-xl font-semibold text-sm transition-all group-hover:gap-3 shadow-md shadow-teal-200">
-            Browse Open Slots
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-          </a>
-        </div>
-
-        <!-- Clinics Card -->
-        <div class="path-card bg-slate-900 rounded-3xl border-2 border-slate-800 p-8 sm:p-10 cursor-pointer group" onclick="window.location='clinic.html'">
-          <div class="flex items-center justify-between mb-8">
-            <div class="w-14 h-14 rounded-2xl bg-teal-600/20 border border-teal-500/30 flex items-center justify-center">
-              <svg class="w-6 h-6 text-teal-400" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
+            <div class="form-group" style="margin-bottom:0">
+              <label>How far you'd drive</label>
+              <select class="form-control" id="f-range">
+                <option value="10">Up to 10 km</option>
+                <option value="25" selected>Up to 25 km</option>
+                <option value="50">Up to 50 km</option>
+                <option value="100">Any distance</option>
+              </select>
             </div>
-            <span class="text-xs font-semibold text-teal-400 bg-teal-400/10 border border-teal-500/20 px-3 py-1.5 rounded-full uppercase tracking-wide">For Clinics</span>
           </div>
-          <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-4 leading-tight">Post open slots.<br>Fill your schedule.</h3>
-          <p class="text-slate-400 leading-relaxed mb-8">Got a gap in your surgical calendar? Post it in 2 minutes. Pet owners in your city see it instantly and can reserve the slot the same day.</p>
-          <ul class="space-y-3 mb-10">
-            <li class="flex items-center gap-3 text-slate-300 text-sm">
-              <div class="w-5 h-5 rounded-full bg-teal-600/20 border border-teal-500/30 flex items-center justify-center shrink-0">
-                <svg class="w-3 h-3 text-teal-400" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-              </div>
-              Post slots with date, procedure &amp; price
-            </li>
-            <li class="flex items-center gap-3 text-slate-300 text-sm">
-              <div class="w-5 h-5 rounded-full bg-teal-600/20 border border-teal-500/30 flex items-center justify-center shrink-0">
-                <svg class="w-3 h-3 text-teal-400" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-              </div>
-              Manage reservations from your clinic portal
-            </li>
-            <li class="flex items-center gap-3 text-slate-300 text-sm">
-              <div class="w-5 h-5 rounded-full bg-teal-600/20 border border-teal-500/30 flex items-center justify-center shrink-0">
-                <svg class="w-3 h-3 text-teal-400" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-              </div>
-              Free to list — we only earn when you do
-            </li>
-          </ul>
-          <a href="clinic.html" class="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-500 text-white px-6 py-3.5 rounded-xl font-semibold text-sm transition-all group-hover:gap-3 shadow-md shadow-teal-900/40">
-            Get Started — It's Free
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-          </a>
+          <div class="form-row" style="margin-top:12px">
+            <div class="form-group" style="margin-bottom:0">
+              <label>Procedure</label>
+              <select class="form-control" id="f-procedure">
+                <option value="both">Spay or Neuter</option>
+                <option value="spay">Spay only</option>
+                <option value="neuter">Neuter only</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label>Pet type</label>
+              <select class="form-control" id="f-species">
+                <option value="both">Dog or Cat</option>
+                <option value="dog">Dog only</option>
+                <option value="cat">Cat only</option>
+              </select>
+            </div>
+          </div>
+          <button class="submit-btn" id="signup-btn" onclick="handleSignup()">Alert me when slots open</button>
         </div>
 
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works (3 steps) -->
-  <section class="py-20 sm:py-28 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <p class="text-teal-600 font-semibold text-sm uppercase tracking-widest mb-3">Simple process</p>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Book in 3 steps</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
-        <!-- Connector line (desktop) -->
-        <div class="hidden md:block absolute top-10 left-[calc(16.666%+2rem)] right-[calc(16.666%+2rem)] h-0.5 bg-gradient-to-r from-teal-100 via-teal-200 to-teal-100"></div>
-
-        <div class="text-center relative">
-          <div class="w-20 h-20 bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-5 relative z-10 border border-teal-100">
-            <svg class="w-8 h-8 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-          </div>
-          <div class="w-7 h-7 bg-teal-600 text-white text-xs font-bold rounded-full flex items-center justify-center mx-auto mb-4">1</div>
-          <h3 class="text-xl font-bold text-slate-900 mb-3">Browse open slots</h3>
-          <p class="text-slate-500 leading-relaxed text-sm">Clinics post open slots at discounted rates. Filter by procedure, species, date, and price.</p>
-        </div>
-        <div class="text-center relative">
-          <div class="w-20 h-20 bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-5 relative z-10 border border-teal-100">
-            <svg class="w-8 h-8 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-          </div>
-          <div class="w-7 h-7 bg-teal-600 text-white text-xs font-bold rounded-full flex items-center justify-center mx-auto mb-4">2</div>
-          <h3 class="text-xl font-bold text-slate-900 mb-3">Reserve your spot</h3>
-          <p class="text-slate-500 leading-relaxed text-sm">Enter your pet's details and lock in the slot with a small deposit. Done in under 2 minutes.</p>
-        </div>
-        <div class="text-center relative">
-          <div class="w-20 h-20 bg-gradient-to-br from-teal-50 to-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-5 relative z-10 border border-teal-100">
-            <svg class="w-8 h-8 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-            </svg>
-          </div>
-          <div class="w-7 h-7 bg-teal-600 text-white text-xs font-bold rounded-full flex items-center justify-center mx-auto mb-4">3</div>
-          <h3 class="text-xl font-bold text-slate-900 mb-3">Show up &amp; relax</h3>
-          <p class="text-slate-500 leading-relaxed text-sm">You'll get a confirmation with everything you need. Show up and let the experts handle the rest.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Slots -->
-  <section class="py-20 sm:py-28 bg-slate-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
-        <div>
-          <p class="text-teal-600 font-semibold text-sm uppercase tracking-widest mb-3">Available now</p>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900">Open slots today</h2>
-        </div>
-        <a href="browse.html" class="flex items-center gap-1.5 text-teal-600 font-semibold text-sm hover:text-teal-700 transition-colors shrink-0">
-          Browse all slots
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-        </a>
-      </div>
-      <div id="featured-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-14 text-slate-400">
-          <svg class="w-8 h-8 animate-spin mx-auto mb-3 text-teal-400" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        <div class="success-msg" id="signup-success">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
           </svg>
-          <p class="text-sm font-medium">Loading available slots...</p>
+          <h3>You're on the list.</h3>
+          <p>We'll alert you the moment a slot opens near you. Early signups get Wave 1 access — you'll be first to know.</p>
         </div>
       </div>
-      <div class="text-center mt-12">
-        <a href="browse.html" class="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-700 px-7 py-3.5 rounded-xl font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 hover:shadow-md transition-all shadow-sm">
-          View all available slots
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
 
-  <!-- Notification Signup -->
-  <section class="py-16 bg-white border-y border-slate-100">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <div class="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center mx-auto mb-4"><svg class="w-5 h-5 text-teal-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" /></svg></div>
-      <h3 class="text-2xl font-extrabold text-slate-900 mb-2">Nothing available right now?</h3>
-      <p class="text-slate-500 mb-8">Get notified the moment a slot opens in your city. We'll email you instantly — no spam, unsubscribe anytime.</p>
-      <form id="notify-form" onsubmit="handleNotify(event)" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-        <input type="email" id="notify-email" placeholder="Your email address" required
-          class="flex-1 px-4 py-3.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
-        <select id="notify-city" class="px-4 py-3.5 border border-slate-200 rounded-xl text-sm text-slate-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white cursor-pointer">
-          <option value="Edmonton">Edmonton</option>
-          <option value="Calgary">Calgary</option>
-        </select>
-        <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3.5 rounded-xl font-semibold text-sm transition-colors whitespace-nowrap shadow-sm">
-          Notify Me
-        </button>
-      </form>
-      <p id="notify-success" class="hidden text-teal-600 font-semibold text-sm mt-4">You're on the list. We'll alert you when slots open near you.</p>
+      <div class="stats">
+        <div>
+          <div class="stat-value">Up to 40%</div>
+          <div class="stat-label">off regular price</div>
+        </div>
+        <div>
+          <div class="stat-value">Licensed</div>
+          <div class="stat-label">vets only</div>
+        </div>
+        <div>
+          <div class="stat-value">Free</div>
+          <div class="stat-label">to sign up</div>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="bg-slate-900 py-14">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row justify-between gap-10 mb-10">
-        <div class="max-w-xs">
-          <a href="index.html" class="flex items-center gap-2.5 mb-4">
-            <div class="w-8 h-8 logo-mark rounded-lg flex items-center justify-center">
-              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-              </svg>
-            </div>
-            <span class="text-lg font-bold text-white tracking-tight">Open<span class="text-teal-400">Slot</span></span>
-          </a>
-          <p class="text-slate-400 text-sm leading-relaxed">Connecting Alberta pet owners with vet clinics that have open surgical slots.</p>
-        </div>
-        <div class="flex gap-14">
-          <div>
-            <p class="text-slate-300 font-semibold text-sm mb-4">Pet Owners</p>
-            <div class="flex flex-col gap-2.5">
-              <a href="browse.html" class="text-slate-400 hover:text-white text-sm transition-colors">Browse Slots</a>
-              <a href="browse.html" class="text-slate-400 hover:text-white text-sm transition-colors">How It Works</a>
-            </div>
+    <!-- Floating slot cards (desktop only) -->
+    <div class="hero-right">
+      <div class="float-cards">
+        <div class="slot-card">
+          <div class="wave-tag">Wave 1 Alert</div>
+          <div class="card-clinic">Summit Veterinary Clinic</div>
+          <div class="card-procedure">Spay · Cat · Edmonton</div>
+          <div class="card-price-row">
+            <span class="card-price">$195</span>
+            <span class="card-orig">$340</span>
+            <span class="card-save">Save $145</span>
           </div>
-          <div>
-            <p class="text-slate-300 font-semibold text-sm mb-4">Clinics</p>
-            <div class="flex flex-col gap-2.5">
-              <a href="clinic.html" class="text-slate-400 hover:text-white text-sm transition-colors">Post a Slot</a>
-              <a href="clinic.html" class="text-slate-400 hover:text-white text-sm transition-colors">Clinic Portal</a>
-            </div>
-          </div>
+          <div class="card-date">Thu Jul 3 · 9:00 AM · 1 spot</div>
         </div>
-      </div>
-      <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <p class="text-slate-500 text-sm">© 2026 OpenSlot. All rights reserved.</p>
-        <p class="text-slate-500 text-sm">Built for Alberta pet owners.</p>
+        <div class="slot-card">
+          <div class="wave-tag">Wave 1 Alert</div>
+          <div class="card-clinic">Parkview Animal Hospital</div>
+          <div class="card-procedure">Neuter · Dog · Edmonton</div>
+          <div class="card-price-row">
+            <span class="card-price">$220</span>
+            <span class="card-orig">$375</span>
+            <span class="card-save">Save $155</span>
+          </div>
+          <div class="card-date">Fri Jul 11 · 10:30 AM · 2 spots</div>
+        </div>
+        <div class="slot-card">
+          <div class="wave-tag">Wave 2 Alert</div>
+          <div class="card-clinic">Chinook Vet Centre</div>
+          <div class="card-procedure">Spay/Neuter · Calgary</div>
+          <div class="card-price-row">
+            <span class="card-price">$249</span>
+            <span class="card-orig">$400</span>
+            <span class="card-save">Save $151</span>
+          </div>
+          <div class="card-date">Mon Jul 14 · 8:00 AM · 1 spot</div>
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="section" style="padding-top: 0;">
+    <p class="section-label">How it works</p>
+    <h2 class="section-title">Simple. Fast. You save money.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Sign up in 30 seconds</h3>
+        <p>Tell us your city, how far you'll drive, and what procedure your pet needs. That's it.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Get alerted first</h3>
+        <p>When a local clinic posts a discounted slot, we email early subscribers before opening it to everyone. First come, first served.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Pay a deposit, lock it in</h3>
+        <p>Claim your spot with a small deposit. The remaining balance is paid directly to the clinic on the day of the procedure.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clinic CTA -->
+  <div class="section" style="padding-top: 0;">
+    <div class="clinic-cta">
+      <div>
+        <h2>Are you a veterinary clinic?</h2>
+        <p>Fill empty surgical slots and turn cancellations into revenue. Clients arrive committed — they've already paid a deposit.</p>
+      </div>
+      <a href="clinic.html" class="cta-btn">
+        Apply to join
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 OpenSlot &nbsp;·&nbsp; <a href="clinic.html">For Clinics</a> &nbsp;·&nbsp; Built in Edmonton, AB</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script>
-    function doSearch() {
-      const city = document.getElementById('search-city').value;
-      const procedure = document.getElementById('search-procedure').value;
-      const params = new URLSearchParams();
-      if (city) params.set('city', city);
-      if (procedure) params.set('procedure', procedure);
-      window.location.href = 'browse.html' + (params.toString() ? '?' + params.toString() : '');
-    }
+    async function handleSignup() {
+      const email = document.getElementById('f-email').value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('f-email').focus();
+        document.getElementById('f-email').style.borderColor = '#ef4444';
+        return;
+      }
 
-    async function handleNotify(e) {
-      e.preventDefault();
-      const email = document.getElementById('notify-email').value.trim();
-      const city = document.getElementById('notify-city').value || 'Edmonton';
-      const btn = e.target.querySelector('button[type=submit]');
-      if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+      const btn = document.getElementById('signup-btn');
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
 
       try {
-        await OpenSlotAPI.subscribeToAlerts({ email, city, procedure_type: 'both', species: 'both' });
+        await OpenSlotAPI.subscribeToAlerts({
+          email,
+          city: document.getElementById('f-city').value,
+          driving_range_km: parseInt(document.getElementById('f-range').value),
+          procedure_type: document.getElementById('f-procedure').value,
+          species: document.getElementById('f-species').value,
+        });
       } catch (err) {
         console.warn('Subscribe error:', err);
       }
 
-      document.getElementById('notify-form').classList.add('hidden');
-      document.getElementById('notify-success').classList.remove('hidden');
+      document.getElementById('signup-form').style.display = 'none';
+      document.getElementById('signup-success').style.display = 'block';
     }
 
-    function renderSlotCard(slot) {
-      const clinic = slot.clinic || {};
-      const available = slot.capacity - slot.booked_count;
-      const badgeClass = procedureBadgeClass(slot.procedure_type);
-      const spotsText = available === 1 ? '1 spot left' : `${available} spots left`;
-      const spotsColor = available === 1 ? 'text-amber-600 font-semibold' : 'text-slate-400';
-      const deposit = slot.deposit_amount || slot.deposit || 50;
-
-      return `
-        <div class="bg-white rounded-2xl border border-slate-100 shadow-sm card-hover overflow-hidden flex flex-col">
-          <div class="p-5 pb-4 flex-1">
-            <div class="flex items-start justify-between mb-4">
-              <div class="flex gap-2 flex-wrap">
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${badgeClass}">${procedureLabel(slot.procedure_type)}</span>
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">${speciesLabel(slot.species)}</span>
-              </div>
-              <span class="text-xs font-medium ${spotsColor} shrink-0 ml-2">${spotsText}</span>
-            </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1">${clinic.name || 'Vet Clinic'}</h3>
-            <div class="flex items-center gap-1 text-slate-400 text-sm">
-              <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-              </svg>
-              <span>${clinic.city || ''}, ${clinic.province || 'AB'}</span>
-            </div>
-          </div>
-          <div class="px-5 py-3 bg-slate-50 border-y border-slate-100">
-            <div class="flex items-center gap-3 text-slate-600 text-sm">
-              <div class="flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-teal-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                </svg>
-                <span class="font-medium">${formatDate(slot.date)}</span>
-              </div>
-              <span class="text-slate-200">·</span>
-              <div class="flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-teal-500" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
-                <span class="font-medium">${formatTime(slot.time)}</span>
-              </div>
-            </div>
-          </div>
-          <div class="p-5 pt-4 flex items-center justify-between">
-            <div>
-              <span class="text-2xl font-extrabold text-slate-900">${formatPrice(slot.price)}</span>
-              <div class="text-xs text-slate-400 mt-0.5">${formatPrice(deposit)} deposit to reserve</div>
-            </div>
-            <a href="reserve.html?id=${slot.id}" class="bg-teal-600 text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-700 active:scale-95 transition-all shadow-sm shadow-teal-100">
-              Reserve
-            </a>
-          </div>
-        </div>
-      `;
-    }
-
-    OpenSlotAPI.getSlots().then(slots => {
-      const grid = document.getElementById('featured-cards');
-      if (!slots || slots.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-14">
-            <div class="text-3xl mb-3">📭</div>
-            <p class="text-slate-500 font-medium">No slots available right now — check back soon.</p>
-            <a href="browse.html" class="mt-4 inline-block text-teal-600 font-semibold text-sm hover:text-teal-700">Browse all slots →</a>
-          </div>`;
-        return;
-      }
-      grid.innerHTML = slots.slice(0, 6).map(renderSlotCard).join('');
-    }).catch(() => {
-      document.getElementById('featured-cards').innerHTML = `
-        <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-14">
-          <p class="text-red-400 font-medium">Could not load slots. Please refresh and try again.</p>
-        </div>`;
+    document.getElementById('f-email').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleSignup();
+      document.getElementById('f-email').style.borderColor = '';
     });
   </script>
 </body>

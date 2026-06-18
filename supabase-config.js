@@ -253,7 +253,7 @@ const OpenSlotAPI = {
   },
 
   // Subscribe to slot alerts
-  async subscribeToAlerts({ email, city, procedure_type, species }) {
+  async subscribeToAlerts({ email, city, procedure_type, species, driving_range_km }) {
     const { data, error } = await sb
       .from('vetslot_subscribers')
       .upsert({
@@ -261,6 +261,7 @@ const OpenSlotAPI = {
         city: city || 'Edmonton',
         procedure_type: procedure_type || 'both',
         species: species || 'both',
+        driving_range_km: driving_range_km || 25,
       }, { onConflict: 'email', ignoreDuplicates: false })
       .select()
       .single();
