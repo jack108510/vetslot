@@ -9,96 +9,103 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: #0f172a; color: #fff; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #fff; color: #111827; min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-    /* Nav */
-    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 64px; border-bottom: 1px solid rgba(255,255,255,0.07); position: sticky; top: 0; background: rgba(15,23,42,0.95); backdrop-filter: blur(12px); z-index: 50; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,#0d9488,#0f766e); display: flex; align-items: center; justify-content: center; }
-    .nav-logo-text { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.3px; }
-    .nav-logo-text span { color: #14b8a6; }
-    .nav-clinic-link { font-size: 14px; font-weight: 600; color: #94a3b8; text-decoration: none; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; transition: all 0.15s; }
-    .nav-clinic-link:hover { color: #fff; border-color: rgba(255,255,255,0.25); }
+    /* NAV */
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 60px; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; background: #fff; z-index: 50; }
+    .nav-logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-logo-icon { width: 30px; height: 30px; border-radius: 8px; background: #16a34a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-logo-text { font-size: 17px; font-weight: 800; color: #111827; letter-spacing: -0.3px; }
+    .nav-logo-text span { color: #16a34a; }
+    .nav-clinic-link { font-size: 14px; font-weight: 600; color: #4b5563; text-decoration: none; padding: 8px 14px; border: 1.5px solid #e5e7eb; border-radius: 8px; transition: all 0.15s; white-space: nowrap; }
+    .nav-clinic-link:hover { border-color: #16a34a; color: #16a34a; }
 
-    /* Hero */
-    .hero { max-width: 1100px; margin: 0 auto; padding: 80px 24px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    @media (max-width: 768px) { .hero { grid-template-columns: 1fr; gap: 48px; padding: 48px 20px 40px; } }
+    /* HERO */
+    .hero { max-width: 1100px; margin: 0 auto; padding: 56px 20px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    @media (max-width: 768px) { .hero { grid-template-columns: 1fr; gap: 40px; padding: 36px 20px 32px; } }
 
-    .hero-left {}
-    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.25); color: #14b8a6; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 12px; border-radius: 100px; margin-bottom: 24px; }
-    .hero-title { font-size: clamp(36px, 5vw, 56px); font-weight: 900; line-height: 1.08; letter-spacing: -1.5px; color: #fff; margin-bottom: 20px; }
-    .hero-title span { color: #14b8a6; }
-    .hero-subtitle { font-size: 18px; color: #94a3b8; line-height: 1.6; margin-bottom: 40px; max-width: 460px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 6px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 5px 12px; border-radius: 100px; margin-bottom: 20px; }
+    .hero-title { font-size: clamp(32px, 5vw, 52px); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; color: #111827; margin-bottom: 16px; }
+    .hero-title span { color: #16a34a; }
+    .hero-subtitle { font-size: 17px; color: #6b7280; line-height: 1.65; margin-bottom: 36px; }
 
-    /* Signup form */
-    .signup-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 32px; }
-    .signup-card h2 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-    .signup-card p { font-size: 14px; color: #64748b; margin-bottom: 24px; }
+    /* FORM CARD */
+    .signup-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 28px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .signup-card h2 { font-size: 17px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+    .signup-card p { font-size: 13px; color: #9ca3af; margin-bottom: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .form-group label { font-size: 13px; font-weight: 600; color: #374151; display: flex; justify-content: space-between; align-items: center; }
+    .form-group label span.range-val { color: #16a34a; font-weight: 700; }
+    .form-control { width: 100%; padding: 11px 13px; background: #f9fafb; border: 1.5px solid #e5e7eb; border-radius: 10px; color: #111827; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.15s, background 0.15s; min-height: 44px; }
+    .form-control:focus { border-color: #16a34a; background: #fff; box-shadow: 0 0 0 3px rgba(22,163,74,0.08); }
+    .form-control::placeholder { color: #9ca3af; }
+    select.form-control { cursor: pointer; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
-    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-    .form-group label { font-size: 13px; font-weight: 600; color: #94a3b8; }
-    .form-control { width: 100%; padding: 11px 14px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.15s; }
-    .form-control::placeholder { color: #475569; }
-    .form-control:focus { border-color: #14b8a6; background: rgba(20,184,166,0.06); }
-    select.form-control option { background: #1e293b; color: #fff; }
-    .submit-btn { width: 100%; padding: 14px; background: #14b8a6; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: all 0.15s; font-family: inherit; }
-    .submit-btn:hover { background: #0d9488; transform: translateY(-1px); }
-    .submit-btn:active { transform: translateY(0); }
-    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .success-msg { display: none; text-align: center; padding: 24px 16px; }
-    .success-msg svg { width: 48px; height: 48px; color: #14b8a6; margin: 0 auto 12px; display: block; }
-    .success-msg h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .success-msg p { font-size: 14px; color: #64748b; }
+    @media (max-width: 400px) { .form-row { grid-template-columns: 1fr; } }
+    input[type=range].slider { width: 100%; accent-color: #16a34a; cursor: pointer; height: 4px; margin-top: 6px; }
+    .slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: #9ca3af; margin-top: 4px; }
+    .submit-btn { width: 100%; padding: 14px; background: #16a34a; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 4px; transition: all 0.15s; font-family: inherit; min-height: 48px; }
+    .submit-btn:hover { background: #15803d; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(22,163,74,0.3); }
+    .submit-btn:active { transform: none; box-shadow: none; }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+    .success-msg { display: none; text-align: center; padding: 20px 8px; }
+    .success-icon { width: 52px; height: 52px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
+    .success-icon svg { width: 26px; height: 26px; color: #16a34a; }
+    .success-msg h3 { font-size: 17px; font-weight: 700; color: #111827; margin-bottom: 6px; }
+    .success-msg p { font-size: 13px; color: #6b7280; line-height: 1.6; }
 
-    /* Right: floating cards */
+    /* FLOATING CARDS */
     .hero-right { position: relative; }
     @media (max-width: 768px) { .hero-right { display: none; } }
-    .float-cards { position: relative; height: 420px; }
-    .slot-card { position: absolute; background: rgba(30,41,59,0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; width: 280px; backdrop-filter: blur(20px); }
-    .slot-card:nth-child(1) { top: 20px; left: 20px; animation: floatA 5s ease-in-out infinite; }
-    .slot-card:nth-child(2) { top: 140px; right: 0; animation: floatB 6.5s ease-in-out infinite 0.8s; }
-    .slot-card:nth-child(3) { bottom: 20px; left: 40px; animation: floatC 4.5s ease-in-out infinite 1.6s; }
-    @keyframes floatA { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-14px) rotate(-1deg)} }
-    @keyframes floatB { 0%,100%{transform:translateY(0) rotate(1.5deg)} 50%{transform:translateY(-10px) rotate(1.5deg)} }
-    @keyframes floatC { 0%,100%{transform:translateY(0) rotate(-0.5deg)} 50%{transform:translateY(-12px) rotate(-0.5deg)} }
-    .card-clinic { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-    .card-procedure { font-size: 12px; color: #64748b; margin-bottom: 12px; }
-    .card-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
-    .card-price { font-size: 26px; font-weight: 800; color: #14b8a6; }
-    .card-orig { font-size: 14px; color: #475569; text-decoration: line-through; }
-    .card-save { font-size: 12px; font-weight: 700; color: #34d399; background: rgba(52,211,153,0.1); padding: 2px 8px; border-radius: 100px; }
-    .card-date { font-size: 12px; color: #475569; }
-    .wave-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: #f59e0b; background: rgba(245,158,11,0.12); padding: 3px 8px; border-radius: 4px; margin-bottom: 10px; }
+    .float-cards { position: relative; height: 400px; }
+    .slot-card { position: absolute; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 16px; padding: 18px 20px; width: 260px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); }
+    .slot-card:nth-child(1) { top: 10px; left: 10px; animation: floatA 5s ease-in-out infinite; }
+    .slot-card:nth-child(2) { top: 130px; right: 0; animation: floatB 6.5s ease-in-out infinite 0.8s; }
+    .slot-card:nth-child(3) { bottom: 10px; left: 30px; animation: floatC 4.5s ease-in-out infinite 1.6s; }
+    @keyframes floatA { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-12px) rotate(-1deg)} }
+    @keyframes floatB { 0%,100%{transform:translateY(0) rotate(1.5deg)} 50%{transform:translateY(-9px) rotate(1.5deg)} }
+    @keyframes floatC { 0%,100%{transform:translateY(0) rotate(-0.5deg)} 50%{transform:translateY(-11px) rotate(-0.5deg)} }
+    .card-wave { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 3px 8px; border-radius: 5px; margin-bottom: 10px; }
+    .card-clinic { font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 2px; }
+    .card-procedure { font-size: 12px; color: #9ca3af; margin-bottom: 12px; }
+    .card-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+    .card-price { font-size: 26px; font-weight: 800; color: #16a34a; }
+    .card-orig { font-size: 14px; color: #d1d5db; text-decoration: line-through; }
+    .card-save { font-size: 11px; font-weight: 700; color: #15803d; background: #f0fdf4; padding: 2px 7px; border-radius: 4px; }
+    .card-date { font-size: 12px; color: #9ca3af; }
 
-    /* Stats bar */
-    .stats { display: flex; gap: 40px; margin-top: 32px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.06); }
-    @media (max-width: 480px) { .stats { gap: 24px; } }
-    .stat-value { font-size: 22px; font-weight: 800; color: #fff; }
-    .stat-label { font-size: 12px; color: #475569; margin-top: 2px; }
+    /* STATS */
+    .stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 28px; padding-top: 28px; border-top: 1px solid #f3f4f6; }
+    .stat-value { font-size: 20px; font-weight: 800; color: #111827; }
+    .stat-label { font-size: 12px; color: #9ca3af; margin-top: 2px; }
 
-    /* How it works */
-    .section { max-width: 1100px; margin: 0 auto; padding: 80px 24px; }
-    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #14b8a6; margin-bottom: 12px; }
-    .section-title { font-size: clamp(28px, 4vw, 40px); font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 48px; }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; gap: 24px; } }
-    .step { }
-    .step-num { width: 36px; height: 36px; border-radius: 10px; background: rgba(20,184,166,0.12); border: 1px solid rgba(20,184,166,0.2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #14b8a6; margin-bottom: 16px; }
-    .step h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .step p { font-size: 14px; color: #64748b; line-height: 1.6; }
+    /* HOW IT WORKS */
+    .section { max-width: 1100px; margin: 0 auto; padding: 64px 20px; }
+    @media (max-width: 768px) { .section { padding: 48px 20px; } }
+    .section-bg { background: #f9fafb; }
+    .section-inner { max-width: 1100px; margin: 0 auto; padding: 64px 20px; }
+    @media (max-width: 768px) { .section-inner { padding: 48px 20px; } }
+    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #16a34a; margin-bottom: 10px; }
+    .section-title { font-size: clamp(26px, 4vw, 38px); font-weight: 800; color: #111827; letter-spacing: -0.75px; margin-bottom: 40px; line-height: 1.15; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; gap: 20px; } }
+    .step-num { width: 34px; height: 34px; border-radius: 10px; background: #f0fdf4; border: 1.5px solid #bbf7d0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #16a34a; margin-bottom: 14px; }
+    .step h3 { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 6px; }
+    .step p { font-size: 14px; color: #6b7280; line-height: 1.6; }
 
-    /* Clinic CTA */
-    .clinic-cta { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 56px 48px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
-    @media (max-width: 640px) { .clinic-cta { grid-template-columns: 1fr; padding: 36px 24px; } }
+    /* CLINIC CTA */
+    .clinic-cta-wrap { background: #111827; }
+    .clinic-cta { max-width: 1100px; margin: 0 auto; padding: 64px 20px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    @media (max-width: 640px) { .clinic-cta { grid-template-columns: 1fr; padding: 48px 20px; gap: 28px; } }
     .clinic-cta h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 800; color: #fff; letter-spacing: -0.5px; margin-bottom: 10px; }
-    .clinic-cta p { font-size: 15px; color: #64748b; line-height: 1.6; max-width: 480px; }
-    .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: #fff; color: #0f172a; font-size: 15px; font-weight: 700; padding: 14px 28px; border-radius: 12px; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
-    .cta-btn:hover { background: #f1f5f9; transform: translateY(-1px); }
+    .clinic-cta p { font-size: 15px; color: #6b7280; line-height: 1.6; max-width: 480px; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: #16a34a; color: #fff; font-size: 15px; font-weight: 700; padding: 14px 28px; border-radius: 10px; text-decoration: none; white-space: nowrap; transition: all 0.15s; min-height: 48px; }
+    .cta-btn:hover { background: #15803d; transform: translateY(-1px); }
+    @media (max-width: 640px) { .cta-btn { width: 100%; justify-content: center; } }
 
-    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 32px 24px; text-align: center; color: #334155; font-size: 13px; }
-    footer a { color: #475569; text-decoration: none; }
-    footer a:hover { color: #94a3b8; }
+    footer { border-top: 1px solid #f3f4f6; padding: 28px 20px; text-align: center; color: #9ca3af; font-size: 13px; }
+    footer a { color: #6b7280; text-decoration: none; }
+    footer a:hover { color: #16a34a; }
   </style>
 </head>
 <body>
@@ -106,7 +113,7 @@
   <nav>
     <a href="index.html" class="nav-logo">
       <div class="nav-logo-icon">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
         </svg>
       </div>
@@ -115,57 +122,37 @@
     <a href="clinic.html" class="nav-clinic-link">For Clinics</a>
   </nav>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <div class="hero">
     <div class="hero-left">
       <div class="hero-badge">
-        <svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-13a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 0 0 0-1.5h-3.25V5Z" clip-rule="evenodd"/></svg>
-        Priority access for early signups
+        <svg width="11" height="11" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-13a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 0 0 0-1.5h-3.25V5Z" clip-rule="evenodd"/></svg>
+        Early signups get priority access
       </div>
       <h1 class="hero-title">Save up to 40% on<br><span>your pet's surgery.</span></h1>
-      <p class="hero-subtitle">Sign up once. When a discounted slot opens near you, we alert you first — before anyone else.</p>
+      <p class="hero-subtitle">Sign up once. When a discounted slot opens near you, you're the first to know — before it goes to the general public.</p>
 
       <div class="signup-card">
         <h2>Get early access</h2>
-        <p>Takes 30 seconds. No spam.</p>
+        <p>Takes 30 seconds. Free forever.</p>
 
         <div id="signup-form">
           <div class="form-group">
             <label>Email address</label>
             <input class="form-control" type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
           </div>
-          <div class="form-group">
-            <label>Your city</label>
-            <select class="form-control" id="f-city">
-              <option value="Edmonton">Edmonton</option>
-              <option value="Calgary">Calgary</option>
-              <option value="Red Deer">Red Deer</option>
-              <option value="Lethbridge">Lethbridge</option>
-              <option value="St. Albert">St. Albert</option>
-              <option value="Sherwood Park">Sherwood Park</option>
-              <option value="Grande Prairie">Grande Prairie</option>
-              <option value="Medicine Hat">Medicine Hat</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label style="display:flex;justify-content:space-between;align-items:center">
-              <span>How far would you drive?</span>
-              <span id="range-label" style="color:#14b8a6;font-weight:700;font-size:13px">25 km</span>
-            </label>
-            <input type="range" id="f-range" min="5" max="100" value="25" step="5"
-              style="width:100%;accent-color:#14b8a6;cursor:pointer;margin-top:6px;margin-bottom:2px"
-              oninput="document.getElementById('range-label').textContent = +this.value >= 100 ? 'Any distance' : this.value + ' km'">
-            <div style="display:flex;justify-content:space-between;font-size:11px;color:#334155;margin-top:2px">
-              <span>5 km</span><span>50 km</span><span>Any</span>
-            </div>
-          </div>
-          <div class="form-row" style="margin-top:12px">
+          <div class="form-row">
             <div class="form-group" style="margin-bottom:0">
-              <label>Procedure</label>
-              <select class="form-control" id="f-procedure">
-                <option value="both">Spay or Neuter</option>
-                <option value="spay">Spay only</option>
-                <option value="neuter">Neuter only</option>
+              <label>Your city</label>
+              <select class="form-control" id="f-city">
+                <option value="Edmonton">Edmonton</option>
+                <option value="Calgary">Calgary</option>
+                <option value="Red Deer">Red Deer</option>
+                <option value="Lethbridge">Lethbridge</option>
+                <option value="St. Albert">St. Albert</option>
+                <option value="Sherwood Park">Sherwood Park</option>
+                <option value="Grande Prairie">Grande Prairie</option>
+                <option value="Medicine Hat">Medicine Hat</option>
               </select>
             </div>
             <div class="form-group" style="margin-bottom:0">
@@ -177,39 +164,49 @@
               </select>
             </div>
           </div>
+          <div class="form-group" style="margin-top:14px">
+            <label>
+              <span>How far would you drive?</span>
+              <span class="range-val" id="range-label">25 km</span>
+            </label>
+            <input type="range" class="slider" id="f-range" min="5" max="100" value="25" step="5"
+              oninput="document.getElementById('range-label').textContent = +this.value >= 100 ? 'Any distance' : this.value + ' km'">
+            <div class="slider-labels"><span>5 km</span><span>50 km</span><span>Any</span></div>
+          </div>
+          <div class="form-group">
+            <label>Procedure needed</label>
+            <select class="form-control" id="f-procedure">
+              <option value="both">Spay or Neuter</option>
+              <option value="spay">Spay only</option>
+              <option value="neuter">Neuter only</option>
+            </select>
+          </div>
           <button class="submit-btn" id="signup-btn" onclick="handleSignup()">Alert me when slots open</button>
         </div>
 
         <div class="success-msg" id="signup-success">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-          </svg>
+          <div class="success-icon">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+            </svg>
+          </div>
           <h3>You're on the list.</h3>
-          <p>We'll alert you the moment a slot opens near you. Early signups get Wave 1 access — you'll be first to know.</p>
+          <p>We'll alert you the moment a slot opens near you. Early signups get first access — before the general public.</p>
         </div>
       </div>
 
       <div class="stats">
-        <div>
-          <div class="stat-value">Up to 40%</div>
-          <div class="stat-label">off regular price</div>
-        </div>
-        <div>
-          <div class="stat-value">Licensed</div>
-          <div class="stat-label">vets only</div>
-        </div>
-        <div>
-          <div class="stat-value">Free</div>
-          <div class="stat-label">to sign up</div>
-        </div>
+        <div><div class="stat-value">Up to 40%</div><div class="stat-label">off regular price</div></div>
+        <div><div class="stat-value">Licensed</div><div class="stat-label">vets only</div></div>
+        <div><div class="stat-value">Free</div><div class="stat-label">to join the list</div></div>
       </div>
     </div>
 
-    <!-- Floating slot cards (desktop only) -->
+    <!-- Floating cards (desktop only) -->
     <div class="hero-right">
       <div class="float-cards">
         <div class="slot-card">
-          <div class="wave-tag">Wave 1 Alert</div>
+          <div class="card-wave">Wave 1 Alert</div>
           <div class="card-clinic">Westside Animal Clinic</div>
           <div class="card-procedure">Spay · Cat · Edmonton</div>
           <div class="card-price-row">
@@ -220,7 +217,7 @@
           <div class="card-date">Thu Jul 3 · 9:00 AM · 1 spot</div>
         </div>
         <div class="slot-card">
-          <div class="wave-tag">Wave 1 Alert</div>
+          <div class="card-wave">Wave 1 Alert</div>
           <div class="card-clinic">Northgate Pet Hospital</div>
           <div class="card-procedure">Neuter · Dog · Edmonton</div>
           <div class="card-price-row">
@@ -231,7 +228,7 @@
           <div class="card-date">Fri Jul 11 · 10:30 AM · 2 spots</div>
         </div>
         <div class="slot-card">
-          <div class="wave-tag">Wave 2 Alert</div>
+          <div class="card-wave">Wave 2 Alert</div>
           <div class="card-clinic">Riverside Vet Centre</div>
           <div class="card-procedure">Spay/Neuter · Calgary</div>
           <div class="card-price-row">
@@ -245,39 +242,41 @@
     </div>
   </div>
 
-  <!-- How it works -->
-  <div class="section" style="padding-top: 0;">
-    <p class="section-label">How it works</p>
-    <h2 class="section-title">Simple. Fast. You save money.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Sign up in 30 seconds</h3>
-        <p>Tell us your city, how far you'll drive, and what procedure your pet needs. That's it.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Get alerted first</h3>
-        <p>When a local clinic posts a discounted slot, we email early subscribers before opening it to everyone. First come, first served.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Pay a deposit, lock it in</h3>
-        <p>Claim your spot with a small deposit. The remaining balance is paid directly to the clinic on the day of the procedure.</p>
+  <!-- HOW IT WORKS -->
+  <div class="section-bg">
+    <div class="section-inner">
+      <p class="section-label">How it works</p>
+      <h2 class="section-title">Simple. Fast. You save money.</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Sign up in 30 seconds</h3>
+          <p>Tell us your city, how far you'll drive, and what procedure your pet needs. That's it — no account required.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Get alerted first</h3>
+          <p>When a local clinic posts a discounted slot, early subscribers get emailed before anyone else. First come, first served.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Pay a deposit, lock it in</h3>
+          <p>Claim your spot with a small deposit. The remaining balance is paid directly to the clinic on the day of the appointment.</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Clinic CTA -->
-  <div class="section" style="padding-top: 0;">
+  <!-- CLINIC CTA -->
+  <div class="clinic-cta-wrap">
     <div class="clinic-cta">
       <div>
         <h2>Are you a veterinary clinic?</h2>
-        <p>Fill empty surgical slots and turn cancellations into revenue. Clients arrive committed — they've already paid a deposit.</p>
+        <p>Fill empty surgical slots and turn cancellations into revenue. Clients arrive committed — they've paid a deposit to confirm their spot.</p>
       </div>
       <a href="clinic.html" class="cta-btn">
         Apply to join
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
         </svg>
       </a>
@@ -285,24 +284,24 @@
   </div>
 
   <footer>
-    <p>&copy; 2026 OpenSlot &nbsp;·&nbsp; <a href="clinic.html">For Clinics</a> &nbsp;·&nbsp; Built in Edmonton, AB</p>
+    <p>&copy; 2026 OpenSlot &nbsp;&middot;&nbsp; <a href="clinic.html">For Clinics</a> &nbsp;&middot;&nbsp; Built in Edmonton, AB</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script>
     async function handleSignup() {
-      const email = document.getElementById('f-email').value.trim();
+      const emailEl = document.getElementById('f-email');
+      const email = emailEl.value.trim();
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        document.getElementById('f-email').focus();
-        document.getElementById('f-email').style.borderColor = '#ef4444';
+        emailEl.style.borderColor = '#ef4444';
+        emailEl.focus();
         return;
       }
-
+      emailEl.style.borderColor = '';
       const btn = document.getElementById('signup-btn');
       btn.disabled = true;
       btn.textContent = 'Saving...';
-
       try {
         await OpenSlotAPI.subscribeToAlerts({
           email,
@@ -311,17 +310,13 @@
           procedure_type: document.getElementById('f-procedure').value,
           species: document.getElementById('f-species').value,
         });
-      } catch (err) {
-        console.warn('Subscribe error:', err);
-      }
-
+      } catch (err) { console.warn(err); }
       document.getElementById('signup-form').style.display = 'none';
       document.getElementById('signup-success').style.display = 'block';
     }
-
-    document.getElementById('f-email').addEventListener('keydown', (e) => {
+    document.getElementById('f-email').addEventListener('keydown', e => {
       if (e.key === 'Enter') handleSignup();
-      document.getElementById('f-email').style.borderColor = '';
+      e.target.style.borderColor = '';
     });
   </script>
 </body>
