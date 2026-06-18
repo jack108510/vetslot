@@ -68,6 +68,10 @@ const OpenSlotAPI = {
 
   // Create a reservation
   async createReservation(reservation) {
+    // Look up deposit amount from the slot
+    const slot = await this.getSlot(reservation.slot_id);
+    const depositAmount = slot ? (slot.deposit_amount || 50.00) : 50.00;
+
     const { data, error } = await sb
       .from('vetslot_reservations')
       .insert({
@@ -77,7 +81,7 @@ const OpenSlotAPI = {
         owner_name: reservation.owner_name,
         owner_email: reservation.owner_email,
         owner_phone: reservation.owner_phone,
-        deposit_amount: 50.00,
+        deposit_amount: depositAmount,
         status: 'confirmed'
       })
       .select()
@@ -88,19 +92,19 @@ const OpenSlotAPI = {
       return null;
     }
 
-    // Increment booked_count
-    await sb.rpc('increment_booked_count', { slot_id: reservation.slot_id }).catch(() => {
+    // Atomically increment booked_count via RPC, fallback to manual update
+    const { error: rpcErr } = await sb.rpc('increment_booked_count', { slot_id: reservation.slot_id });
+    if (rpcErr) {
       // Fallback: manual increment
-      const { data: slot } = await sb.from('vetslot_slots').select('booked_count, capacity').eq('id', reservation.slot_id).single();
-      if (slot) {
-        const newCount = slot.booked_count + 1;
-        const updates = { booked_count: newCount };
-        if (newCount >= slot.capacity) {
-          updates.status = 'full';
-        }
-        await sb.from('vetslot_slots').update(updates).eq('id', reservation.slot_id);
+      const { data: s } = await sb.from('vetslot_slots').select('booked_count, capacity').eq('id', reservation.slot_id).single();
+      if (s) {
+        const newCount = (s.booked_count || 0) + 1;
+        await sb.from('vetslot_slots').update({
+          booked_count: newCount,
+          status: newCount >= s.capacity ? 'full' : 'open'
+        }).eq('id', reservation.slot_id);
       }
-    });
+    }
 
     return data;
   },
@@ -109,7 +113,20 @@ const OpenSlotAPI = {
   async createSlot(slot) {
     const { data, error } = await sb
       .from('vetslot_slots')
-      .insert(slot)
+      .insert({
+        clinic_id: slot.clinic_id,
+        date: slot.date,
+        time: slot.time,
+        procedure_type: slot.procedure_type,
+        species: slot.species,
+        price: slot.price,
+        original_price: slot.original_price || null,
+        deposit_amount: slot.deposit_amount || 50,
+        capacity: slot.capacity || 1,
+        notes: slot.notes || null,
+        status: 'open',
+        booked_count: 0
+      })
       .select()
       .single();
 
@@ -117,6 +134,40 @@ const OpenSlotAPI = {
       console.error('Error creating slot:', error);
       return null;
     }
+    return data;
+  },
+
+  // Clinic: Register a new clinic (called after Supabase auth signup)
+  async registerClinic(clinic) {
+    const { data, error } = await sb
+      .from('vetslot_clinics')
+      .insert({
+        user_id: clinic.user_id,
+        name: clinic.name,
+        email: clinic.email,
+        phone: clinic.phone || null,
+        city: clinic.city || 'Edmonton',
+        province: 'AB'
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error registering clinic:', error);
+      return null;
+    }
+    return data;
+  },
+
+  // Get clinic by user_id (for auth session lookup)
+  async getClinicByUser(userId) {
+    const { data, error } = await sb
+      .from('vetslot_clinics')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+
+    if (error) return null;
     return data;
   },
 
@@ -248,6 +299,15 @@ function formatTime(timeStr) {
   const ampm = hour >= 12 ? 'PM' : 'AM';
   const h = hour > 12 ? hour - 12 : (hour === 0 ? 12 : hour);
   return `${h}:${min} ${ampm}`;
+}
+
+function formatDateShort(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-CA', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+function slotsAvailable(slot) {
+  return (slot.capacity || 1) - (slot.booked_count || 0);
 }
 
 function getWhatToBring(clinic) {
