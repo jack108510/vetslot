@@ -134,28 +134,29 @@
             <label>Email address</label>
             <input class="form-control" type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
           </div>
-          <div class="form-row">
-            <div class="form-group" style="margin-bottom:0">
-              <label>Your city</label>
-              <select class="form-control" id="f-city">
-                <option value="Edmonton">Edmonton</option>
-                <option value="Calgary">Calgary</option>
-                <option value="Red Deer">Red Deer</option>
-                <option value="Lethbridge">Lethbridge</option>
-                <option value="St. Albert">St. Albert</option>
-                <option value="Sherwood Park">Sherwood Park</option>
-                <option value="Grande Prairie">Grande Prairie</option>
-                <option value="Medicine Hat">Medicine Hat</option>
-              </select>
-            </div>
-            <div class="form-group" style="margin-bottom:0">
-              <label>How far you'd drive</label>
-              <select class="form-control" id="f-range">
-                <option value="10">Up to 10 km</option>
-                <option value="25" selected>Up to 25 km</option>
-                <option value="50">Up to 50 km</option>
-                <option value="100">Any distance</option>
-              </select>
+          <div class="form-group">
+            <label>Your city</label>
+            <select class="form-control" id="f-city">
+              <option value="Edmonton">Edmonton</option>
+              <option value="Calgary">Calgary</option>
+              <option value="Red Deer">Red Deer</option>
+              <option value="Lethbridge">Lethbridge</option>
+              <option value="St. Albert">St. Albert</option>
+              <option value="Sherwood Park">Sherwood Park</option>
+              <option value="Grande Prairie">Grande Prairie</option>
+              <option value="Medicine Hat">Medicine Hat</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="display:flex;justify-content:space-between;align-items:center">
+              <span>How far would you drive?</span>
+              <span id="range-label" style="color:#14b8a6;font-weight:700;font-size:13px">25 km</span>
+            </label>
+            <input type="range" id="f-range" min="5" max="100" value="25" step="5"
+              style="width:100%;accent-color:#14b8a6;cursor:pointer;margin-top:6px;margin-bottom:2px"
+              oninput="document.getElementById('range-label').textContent = +this.value >= 100 ? 'Any distance' : this.value + ' km'">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:#334155;margin-top:2px">
+              <span>5 km</span><span>50 km</span><span>Any</span>
             </div>
           </div>
           <div class="form-row" style="margin-top:12px">
@@ -209,7 +210,7 @@
       <div class="float-cards">
         <div class="slot-card">
           <div class="wave-tag">Wave 1 Alert</div>
-          <div class="card-clinic">Summit Veterinary Clinic</div>
+          <div class="card-clinic">Westside Animal Clinic</div>
           <div class="card-procedure">Spay · Cat · Edmonton</div>
           <div class="card-price-row">
             <span class="card-price">$195</span>
@@ -220,7 +221,7 @@
         </div>
         <div class="slot-card">
           <div class="wave-tag">Wave 1 Alert</div>
-          <div class="card-clinic">Parkview Animal Hospital</div>
+          <div class="card-clinic">Northgate Pet Hospital</div>
           <div class="card-procedure">Neuter · Dog · Edmonton</div>
           <div class="card-price-row">
             <span class="card-price">$220</span>
@@ -231,7 +232,7 @@
         </div>
         <div class="slot-card">
           <div class="wave-tag">Wave 2 Alert</div>
-          <div class="card-clinic">Chinook Vet Centre</div>
+          <div class="card-clinic">Riverside Vet Centre</div>
           <div class="card-procedure">Spay/Neuter · Calgary</div>
           <div class="card-price-row">
             <span class="card-price">$249</span>
