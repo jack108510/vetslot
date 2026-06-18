@@ -90,30 +90,42 @@ DROP POLICY IF EXISTS clinics_all ON vetslot_clinics;
 DROP POLICY IF EXISTS slots_all ON vetslot_slots;
 DROP POLICY IF EXISTS reservations_update ON vetslot_reservations;
 
+-- Drop new policies before recreating (idempotent)
+DROP POLICY IF EXISTS "clinics_public_read"          ON vetslot_clinics;
+DROP POLICY IF EXISTS "clinics_owner_insert"         ON vetslot_clinics;
+DROP POLICY IF EXISTS "clinics_owner_update"         ON vetslot_clinics;
+DROP POLICY IF EXISTS "slots_public_read"            ON vetslot_slots;
+DROP POLICY IF EXISTS "slots_clinic_insert"          ON vetslot_slots;
+DROP POLICY IF EXISTS "slots_clinic_update"          ON vetslot_slots;
+DROP POLICY IF EXISTS "slots_clinic_delete"          ON vetslot_slots;
+DROP POLICY IF EXISTS "reservations_public_insert"   ON vetslot_reservations;
+DROP POLICY IF EXISTS "reservations_clinic_read"     ON vetslot_reservations;
+DROP POLICY IF EXISTS "reservations_clinic_update"   ON vetslot_reservations;
+
 -- Clinics
-CREATE POLICY IF NOT EXISTS "clinics_public_read"   ON vetslot_clinics FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "clinics_owner_insert"  ON vetslot_clinics FOR INSERT WITH CHECK (user_id = auth.uid());
-CREATE POLICY IF NOT EXISTS "clinics_owner_update"  ON vetslot_clinics FOR UPDATE USING (user_id = auth.uid()) WITH CHECK (user_id = auth.uid());
+CREATE POLICY "clinics_public_read"   ON vetslot_clinics FOR SELECT USING (true);
+CREATE POLICY "clinics_owner_insert"  ON vetslot_clinics FOR INSERT WITH CHECK (user_id = auth.uid());
+CREATE POLICY "clinics_owner_update"  ON vetslot_clinics FOR UPDATE USING (user_id = auth.uid()) WITH CHECK (user_id = auth.uid());
 
 -- Slots
-CREATE POLICY IF NOT EXISTS "slots_public_read"     ON vetslot_slots FOR SELECT USING (true);
-CREATE POLICY IF NOT EXISTS "slots_clinic_insert"   ON vetslot_slots FOR INSERT
+CREATE POLICY "slots_public_read"     ON vetslot_slots FOR SELECT USING (true);
+CREATE POLICY "slots_clinic_insert"   ON vetslot_slots FOR INSERT
   WITH CHECK (clinic_id IN (SELECT id FROM vetslot_clinics WHERE user_id = auth.uid()));
-CREATE POLICY IF NOT EXISTS "slots_clinic_update"   ON vetslot_slots FOR UPDATE
+CREATE POLICY "slots_clinic_update"   ON vetslot_slots FOR UPDATE
   USING (clinic_id IN (SELECT id FROM vetslot_clinics WHERE user_id = auth.uid()))
   WITH CHECK (clinic_id IN (SELECT id FROM vetslot_clinics WHERE user_id = auth.uid()));
-CREATE POLICY IF NOT EXISTS "slots_clinic_delete"   ON vetslot_slots FOR DELETE
+CREATE POLICY "slots_clinic_delete"   ON vetslot_slots FOR DELETE
   USING (clinic_id IN (SELECT id FROM vetslot_clinics WHERE user_id = auth.uid()));
 
 -- Reservations: anyone can book (guest checkout), only clinic can read theirs
-CREATE POLICY IF NOT EXISTS "reservations_public_insert" ON vetslot_reservations FOR INSERT WITH CHECK (true);
-CREATE POLICY IF NOT EXISTS "reservations_clinic_read"   ON vetslot_reservations FOR SELECT
+CREATE POLICY "reservations_public_insert" ON vetslot_reservations FOR INSERT WITH CHECK (true);
+CREATE POLICY "reservations_clinic_read"   ON vetslot_reservations FOR SELECT
   USING (slot_id IN (
     SELECT s.id FROM vetslot_slots s
     JOIN vetslot_clinics c ON s.clinic_id = c.id
     WHERE c.user_id = auth.uid()
   ));
-CREATE POLICY IF NOT EXISTS "reservations_clinic_update" ON vetslot_reservations FOR UPDATE
+CREATE POLICY "reservations_clinic_update" ON vetslot_reservations FOR UPDATE
   USING (slot_id IN (
     SELECT s.id FROM vetslot_slots s
     JOIN vetslot_clinics c ON s.clinic_id = c.id

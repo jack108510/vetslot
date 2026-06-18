@@ -1,5 +1,6 @@
 // OpenSlot — Supabase Configuration
 const SUPABASE_URL = 'https://xacehhtgvubcqdoltazg.supabase.co';
+const EDGE_BASE = 'https://xacehhtgvubcqdoltazg.supabase.co/functions/v1';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhY2VoaHRndnViY3Fkb2x0YXpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NDI4NjcsImV4cCI6MjA4OTUxODg2N30.U3RX5jUC5OnV6gjT2p4vEIt7m3Lkx4Q0b6vBq0Qrk-U';
 const ROSSLYN_CLINIC_ID = '4e078398-9e45-441e-9771-91dca35be71c';
 
@@ -134,6 +135,14 @@ const OpenSlotAPI = {
       console.error('Error creating slot:', error);
       return null;
     }
+
+    // Fire wave notifications — non-blocking
+    fetch(`${EDGE_BASE}/notify-wave`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slot_id: data.id }),
+    }).catch(err => console.warn('notify-wave:', err));
+
     return data;
   },
 
@@ -212,17 +221,20 @@ const OpenSlotAPI = {
     return data || [];
   },
 
-  // Clinic: Delete/cancel a slot
+  // Clinic: Cancel a slot — triggers automatic refunds for any paid reservations
   async cancelSlot(slotId) {
-    const { data, error } = await sb
-      .from('vetslot_slots')
-      .update({ status: 'cancelled' })
-      .eq('id', slotId)
-      .select()
-      .single();
+    const { data: { session } } = await sb.auth.getSession();
+    const resp = await fetch(`${EDGE_BASE}/cancel-slot-refund`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session?.access_token || ''}`,
+      },
+      body: JSON.stringify({ slot_id: slotId }),
+    });
 
-    if (error) {
-      console.error('Error cancelling slot:', error);
+    if (!resp.ok) {
+      console.error('Error cancelling slot:', await resp.text());
       return false;
     }
     return true;
@@ -238,6 +250,26 @@ const OpenSlotAPI = {
     if (error || !data) return ['Edmonton'];
     const cities = [...new Set(data.map(c => c.city))];
     return cities.length > 0 ? cities : ['Edmonton'];
+  },
+
+  // Subscribe to slot alerts
+  async subscribeToAlerts({ email, city, procedure_type, species }) {
+    const { data, error } = await sb
+      .from('vetslot_subscribers')
+      .upsert({
+        email: email.toLowerCase().trim(),
+        city: city || 'Edmonton',
+        procedure_type: procedure_type || 'both',
+        species: species || 'both',
+      }, { onConflict: 'email', ignoreDuplicates: false })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Subscribe error:', error);
+      return null;
+    }
+    return data;
   },
 
   // Get a single reservation with slot and clinic info

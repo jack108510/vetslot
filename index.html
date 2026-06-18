@@ -391,7 +391,7 @@
           Notify Me
         </button>
       </form>
-      <p id="notify-success" class="hidden text-teal-600 font-semibold text-sm mt-4">✓ You're on the list! We'll notify you when slots open.</p>
+      <p id="notify-success" class="hidden text-teal-600 font-semibold text-sm mt-4">You're on the list. We'll alert you when slots open near you.</p>
     </div>
   </section>
 
@@ -446,8 +446,19 @@
       window.location.href = 'browse.html' + (params.toString() ? '?' + params.toString() : '');
     }
 
-    function handleNotify(e) {
+    async function handleNotify(e) {
       e.preventDefault();
+      const email = document.getElementById('notify-email').value.trim();
+      const city = document.getElementById('notify-city').value || 'Edmonton';
+      const btn = e.target.querySelector('button[type=submit]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
+      try {
+        await OpenSlotAPI.subscribeToAlerts({ email, city, procedure_type: 'both', species: 'both' });
+      } catch (err) {
+        console.warn('Subscribe error:', err);
+      }
+
       document.getElementById('notify-form').classList.add('hidden');
       document.getElementById('notify-success').classList.remove('hidden');
     }
