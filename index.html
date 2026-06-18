@@ -29,9 +29,21 @@
     .path-card { transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s; }
     .path-card:hover { box-shadow: 0 24px 64px -16px rgba(13,148,136,0.18); transform: translateY(-4px); }
     .logo-mark { background: linear-gradient(135deg, #0d9488, #0f766e); }
-    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-    .float { animation: float 4s ease-in-out infinite; }
-    .badge-pill { backdrop-filter: blur(8px); }
+    @keyframes floatA { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-10px) rotate(-1deg)} }
+    @keyframes floatB { 0%,100%{transform:translateY(0) rotate(1.5deg)} 50%{transform:translateY(-8px) rotate(1.5deg)} }
+    @keyframes floatC { 0%,100%{transform:translateY(0) rotate(-0.5deg)} 50%{transform:translateY(-12px) rotate(-0.5deg)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    .float-a { animation: floatA 5s ease-in-out infinite; }
+    .float-b { animation: floatB 6s ease-in-out infinite 0.8s; }
+    .float-c { animation: floatC 4.5s ease-in-out infinite 1.6s; }
+    .fade-up { animation: fadeUp 0.7s ease both; }
+    .fade-up-1 { animation: fadeUp 0.7s ease 0.1s both; }
+    .fade-up-2 { animation: fadeUp 0.7s ease 0.25s both; }
+    .fade-up-3 { animation: fadeUp 0.7s ease 0.4s both; }
+    .fade-up-4 { animation: fadeUp 0.7s ease 0.55s both; }
+    .glow-blob { background: radial-gradient(ellipse at center, rgba(13,148,136,0.25) 0%, transparent 70%); }
+    .slot-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(16px); }
+    .slot-card-available { background: rgba(13,148,136,0.12); border: 1px solid rgba(45,212,191,0.25); }
   </style>
 </head>
 <body class="font-sans bg-white text-slate-900 antialiased">
@@ -63,57 +75,133 @@
   </nav>
 
   <!-- Hero -->
-  <section class="hero-bg hero-grid pt-16 overflow-hidden" style="background-color:#0f172a;">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40">
-      <div class="max-w-3xl">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-8 uppercase tracking-widest" style="background:rgba(20,184,166,0.15);border:1px solid rgba(45,212,191,0.3);color:#5eead4;">
-          <span class="w-1.5 h-1.5 bg-teal-400 rounded-full animate-pulse"></span>
-          Slots available now in Edmonton &amp; Calgary
-        </div>
-        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] mb-6 tracking-tight" style="color:#ffffff;">
-          Book last-minute<br>surgery<br>
-          <span style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:transparent;background-image:linear-gradient(90deg,#2dd4bf,#14b8a6);display:inline-block;">for your pet.</span>
-        </h1>
-        <p class="text-lg sm:text-xl mb-10 max-w-xl leading-relaxed" style="color:#cbd5e1;">
-          Vet clinics post open slots in their surgical calendar. You reserve in minutes — no waitlists, no phone tag.
-        </p>
+  <section class="hero-bg hero-grid pt-16 overflow-hidden" style="background-color:#0f172a;min-height:92vh;display:flex;align-items:center;">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
 
-        <!-- Search Bar -->
-        <div class="bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2 shadow-2xl max-w-2xl border border-white/20">
-          <select id="search-city" class="flex-1 px-4 py-3.5 text-slate-700 bg-slate-50 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500 border-0 cursor-pointer">
-            <option value="">All Cities</option>
-            <option value="Edmonton">Edmonton, AB</option>
-            <option value="Calgary">Calgary, AB</option>
-          </select>
-          <select id="search-procedure" class="flex-1 px-4 py-3.5 text-slate-700 bg-slate-50 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-teal-500 border-0 cursor-pointer">
-            <option value="">Any Procedure</option>
-            <option value="spay">Spay</option>
-            <option value="neuter">Neuter</option>
-            <option value="both">Spay &amp; Neuter</option>
-          </select>
-          <button onclick="doSearch()" class="bg-teal-600 hover:bg-teal-700 active:scale-95 text-white px-7 py-3.5 rounded-xl font-semibold text-sm transition-all whitespace-nowrap flex items-center gap-2 shadow-lg shadow-teal-900/30">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-            Find Slots
-          </button>
+        <!-- Left: Copy -->
+        <div>
+          <div class="fade-up inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-8 uppercase tracking-widest" style="background:rgba(20,184,166,0.15);border:1px solid rgba(45,212,191,0.3);color:#5eead4;">
+            <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background:#2dd4bf;"></span>
+            Slots open now — Edmonton &amp; Calgary
+          </div>
+          <h1 class="fade-up-1 font-extrabold leading-[1.06] mb-6 tracking-tight" style="font-size:clamp(2.6rem,5vw,4rem);color:#ffffff;">
+            Your pet can't wait<br>
+            <span style="-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-image:linear-gradient(90deg,#2dd4bf,#5eead4);display:inline;">three months.</span>
+          </h1>
+          <p class="fade-up-2 mb-10 max-w-lg leading-relaxed" style="font-size:1.125rem;color:#94a3b8;">
+            Vet clinics post their open surgical slots. You browse, reserve, and show up — no waitlists, no phone tag, no weeks of waiting.
+          </p>
+
+          <!-- Search Bar -->
+          <div class="fade-up-3 bg-white rounded-2xl p-2 flex flex-col sm:flex-row gap-2 max-w-xl mb-10" style="box-shadow:0 24px 64px -12px rgba(0,0,0,0.5);">
+            <select id="search-city" style="flex:1;padding:0.875rem 1rem;color:#334155;background:#f8fafc;border-radius:0.75rem;font-size:0.9rem;font-weight:500;border:none;outline:none;cursor:pointer;">
+              <option value="">📍 All Cities</option>
+              <option value="Edmonton">Edmonton, AB</option>
+              <option value="Calgary">Calgary, AB</option>
+            </select>
+            <select id="search-procedure" style="flex:1;padding:0.875rem 1rem;color:#334155;background:#f8fafc;border-radius:0.75rem;font-size:0.9rem;font-weight:500;border:none;outline:none;cursor:pointer;">
+              <option value="">🩺 Any Procedure</option>
+              <option value="spay">Spay</option>
+              <option value="neuter">Neuter</option>
+              <option value="both">Spay &amp; Neuter</option>
+            </select>
+            <button onclick="doSearch()" style="background:#0d9488;color:#fff;padding:0.875rem 1.5rem;border-radius:0.75rem;font-weight:700;font-size:0.9rem;border:none;cursor:pointer;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='#0f766e'" onmouseout="this.style.background='#0d9488'">
+              Find Slots →
+            </button>
+          </div>
+
+          <!-- Trust stats -->
+          <div class="fade-up-4 flex flex-wrap gap-8">
+            <div>
+              <div class="text-3xl font-extrabold" style="color:#2dd4bf;">3</div>
+              <div class="text-sm mt-0.5" style="color:#64748b;">Partner clinics</div>
+            </div>
+            <div style="width:1px;background:rgba(255,255,255,0.08);"></div>
+            <div>
+              <div class="text-3xl font-extrabold" style="color:#2dd4bf;">47+</div>
+              <div class="text-sm mt-0.5" style="color:#64748b;">Surgeries booked</div>
+            </div>
+            <div style="width:1px;background:rgba(255,255,255,0.08);"></div>
+            <div>
+              <div class="text-3xl font-extrabold" style="color:#2dd4bf;">4.9★</div>
+              <div class="text-sm mt-0.5" style="color:#64748b;">Avg clinic rating</div>
+            </div>
+          </div>
         </div>
 
-        <!-- Trust stats -->
-        <div class="mt-12 flex flex-wrap gap-8">
-          <div>
-            <div class="text-3xl font-extrabold" style="color:#2dd4bf;">3</div>
-            <div class="text-sm mt-0.5" style="color:#94a3b8;">Partner clinics</div>
+        <!-- Right: Floating slot cards -->
+        <div class="hidden lg:block relative" style="height:480px;">
+          <!-- Glow behind cards -->
+          <div class="glow-blob absolute" style="width:360px;height:360px;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;"></div>
+
+          <!-- Card 1 (top-left) -->
+          <div class="slot-card float-a absolute rounded-2xl p-5" style="width:260px;top:20px;left:0px;">
+            <div class="flex items-center justify-between mb-3">
+              <span style="background:rgba(168,85,247,0.2);color:#c084fc;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em;">Spay</span>
+              <span style="color:#2dd4bf;font-weight:700;font-size:1.1rem;">$295</span>
+            </div>
+            <div style="color:#f1f5f9;font-weight:700;font-size:0.95rem;margin-bottom:4px;">Rosslyn Vet Animal Hospital</div>
+            <div style="color:#64748b;font-size:0.8rem;margin-bottom:10px;">Edmonton, AB</div>
+            <div class="flex items-center gap-3" style="color:#94a3b8;font-size:0.78rem;">
+              <span>📅 Jun 23, 2026</span>
+              <span>·</span>
+              <span>🕘 9:00 AM</span>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
+              <span style="color:#94a3b8;font-size:0.75rem;">Dogs &amp; Cats</span>
+              <span style="background:#0d9488;color:#fff;font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:8px;">Reserve</span>
+            </div>
           </div>
-          <div>
-            <div class="text-3xl font-extrabold" style="color:#2dd4bf;">47+</div>
-            <div class="text-sm mt-0.5" style="color:#94a3b8;">Surgeries booked</div>
+
+          <!-- Card 2 (middle-right) -->
+          <div class="slot-card float-b absolute rounded-2xl p-5" style="width:255px;top:130px;right:0px;">
+            <div class="flex items-center justify-between mb-3">
+              <span style="background:rgba(59,130,246,0.2);color:#60a5fa;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em;">Neuter</span>
+              <span style="color:#2dd4bf;font-weight:700;font-size:1.1rem;">$195</span>
+            </div>
+            <div style="color:#f1f5f9;font-weight:700;font-size:0.95rem;margin-bottom:4px;">Millwoods Animal Hospital</div>
+            <div style="color:#64748b;font-size:0.8rem;margin-bottom:10px;">Edmonton, AB</div>
+            <div class="flex items-center gap-3" style="color:#94a3b8;font-size:0.78rem;">
+              <span>📅 Jun 24, 2026</span>
+              <span>·</span>
+              <span>🕙 10:30 AM</span>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
+              <span style="color:#94a3b8;font-size:0.75rem;">Dogs only</span>
+              <span style="background:#0d9488;color:#fff;font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:8px;">Reserve</span>
+            </div>
           </div>
-          <div>
-            <div class="text-3xl font-extrabold" style="color:#2dd4bf;">4.9★</div>
-            <div class="text-sm mt-0.5" style="color:#94a3b8;">Avg clinic rating</div>
+
+          <!-- Card 3 (bottom-left) -->
+          <div class="slot-card float-c absolute rounded-2xl p-5" style="width:250px;bottom:30px;left:30px;">
+            <div class="flex items-center justify-between mb-3">
+              <span style="background:rgba(13,148,136,0.25);color:#2dd4bf;font-size:0.7rem;font-weight:700;padding:3px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:0.05em;">Spay / Neuter</span>
+              <span style="color:#2dd4bf;font-weight:700;font-size:1.1rem;">$275</span>
+            </div>
+            <div style="color:#f1f5f9;font-weight:700;font-size:0.95rem;margin-bottom:4px;">Calgary South Vet Clinic</div>
+            <div style="color:#64748b;font-size:0.8rem;margin-bottom:10px;">Calgary, AB</div>
+            <div class="flex items-center gap-3" style="color:#94a3b8;font-size:0.78rem;">
+              <span>📅 Jun 25, 2026</span>
+              <span>·</span>
+              <span>🕛 12:00 PM</span>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:space-between;">
+              <span style="color:#f59e0b;font-size:0.75rem;font-weight:600;">⚡ 1 spot left</span>
+              <span style="background:#0d9488;color:#fff;font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:8px;">Reserve</span>
+            </div>
+          </div>
+
+          <!-- Notification toast -->
+          <div class="absolute rounded-xl px-4 py-3 flex items-center gap-3" style="top:0;right:10px;background:rgba(13,148,136,0.15);border:1px solid rgba(45,212,191,0.3);animation:floatB 5s ease-in-out infinite 2s;">
+            <div style="width:32px;height:32px;background:#0d9488;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🐾</div>
+            <div>
+              <div style="color:#f1f5f9;font-size:0.78rem;font-weight:700;">Booking confirmed!</div>
+              <div style="color:#64748b;font-size:0.71rem;">OS-4829 · Rosslyn Vet</div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
