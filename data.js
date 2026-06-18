@@ -1,4 +1,4 @@
-// VetSlot — Mock Data & Helpers
+// OpenSlot — Mock Data & Helpers
 // Reference date: 2026-06-14
 
 const CLINICS = [
@@ -240,7 +240,7 @@ function procedureBadgeClass(type) {
 
 function generateBookingRef() {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let ref = 'VS-';
+  let ref = 'OS-';
   for (let i = 0; i < 6; i++) {
     ref += chars[Math.floor(Math.random() * chars.length)];
   }

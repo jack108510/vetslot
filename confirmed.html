@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking Confirmed — VetSlot</title>
+  <title>Booking Confirmed — OpenSlot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -230,7 +230,7 @@
       }
 
       try {
-        const reservation = await VetSlotAPI.getReservation(reservationId);
+        const reservation = await OpenSlotAPI.getReservation(reservationId);
         if (!reservation) {
           showState('no-reservation');
           return;
@@ -257,9 +257,9 @@
       const clinic = slot.clinic || {};
       const deposit = reservation.deposit_amount || 50;
       const balance = (slot.price || 0) - deposit;
-      const bookingRef = 'VS-' + reservation.id.replace(/-/g, '').toUpperCase().slice(0, 8);
+      const bookingRef = 'OS-' + reservation.id.replace(/-/g, '').toUpperCase().slice(0, 8);
 
-      document.title = `Confirmed: ${bookingRef} — VetSlot`;
+      document.title = `Confirmed: ${bookingRef} — OpenSlot`;
 
       document.getElementById('booking-ref').textContent = bookingRef;
       document.getElementById('confirm-pet').textContent = reservation.pet_name || '';
@@ -303,7 +303,7 @@
       const slot = reservationData.slot || {};
       const clinic = slot.clinic || {};
       const deposit = reservationData.deposit_amount || 50;
-      const bookingRef = 'VS-' + reservationData.id.replace(/-/g, '').toUpperCase().slice(0, 8);
+      const bookingRef = 'OS-' + reservationData.id.replace(/-/g, '').toUpperCase().slice(0, 8);
 
       const dateStr = (slot.date || '').replace(/-/g, '');
       const timeStr = slot.time || '09:00';

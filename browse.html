@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Browse Surgery Slots — VetSlot</title>
+  <title>Browse Surgery Slots — OpenSlot</title>
   <meta name="description" content="Browse available veterinary surgery slots in Edmonton and Calgary. Filter by procedure, date, and price.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -145,7 +145,7 @@
         </div>
         <span class="text-base font-bold text-slate-700">Vet<span class="text-teal-600">Slot</span></span>
       </a>
-      <p class="text-slate-400 text-sm">© 2026 VetSlot</p>
+      <p class="text-slate-400 text-sm">© 2026 OpenSlot</p>
       <a href="clinic.html" class="text-teal-600 text-sm font-semibold hover:text-teal-700">Are you a clinic? Post slots →</a>
     </div>
   </footer>
@@ -229,7 +229,7 @@
       if (procedure) filters.procedure_type = procedure;
       if (species) filters.species = species;
 
-      let filtered = await VetSlotAPI.getSlots(filters);
+      let filtered = await OpenSlotAPI.getSlots(filters);
 
       // Client-side price filter
       if (price) {

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reserve a Slot — VetSlot</title>
+  <title>Reserve a Slot — OpenSlot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -285,7 +285,7 @@
       }
 
       try {
-        const slot = await VetSlotAPI.getSlot(slotId);
+        const slot = await OpenSlotAPI.getSlot(slotId);
         if (!slot) {
           showState('error');
           return;
@@ -365,7 +365,7 @@
       document.getElementById('deposit-display').textContent = formatPrice(deposit);
       document.getElementById('balance-display').textContent = formatPrice(balance);
 
-      document.title = `Reserve — ${clinic.name || 'VetSlot'} ${procedureLabel(slot.procedure_type)} — VetSlot`;
+      document.title = `Reserve — ${clinic.name || 'OpenSlot'} ${procedureLabel(slot.procedure_type)} — OpenSlot`;
     }
 
     function validateField(id, errId, validator) {
@@ -401,7 +401,7 @@
       `;
 
       try {
-        const reservation = await VetSlotAPI.createReservation({
+        const reservation = await OpenSlotAPI.createReservation({
           slot_id: currentSlot.id,
           pet_name: document.getElementById('pet-name').value.trim(),
           pet_species: document.getElementById('pet-species').value,
