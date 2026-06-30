@@ -155,8 +155,8 @@ const OpenSlotAPI = {
         name: clinic.name,
         email: clinic.email,
         phone: clinic.phone || null,
-        city: clinic.city || 'Edmonton',
-        province: 'AB'
+        city: clinic.city || 'Calgary',
+        province: clinic.province || 'AB'
       })
       .select()
       .single();
@@ -247,9 +247,9 @@ const OpenSlotAPI = {
       .select('city')
       .order('city');
 
-    if (error || !data) return ['Edmonton'];
+    if (error || !data) return ['Calgary', 'Toronto', 'Vancouver'];
     const cities = [...new Set(data.map(c => c.city))];
-    return cities.length > 0 ? cities : ['Edmonton'];
+    return cities.length > 0 ? cities : ['Calgary', 'Toronto', 'Vancouver'];
   },
 
   // Subscribe to slot alerts
@@ -258,7 +258,7 @@ const OpenSlotAPI = {
       .from('vetslot_subscribers')
       .upsert({
         email: email.toLowerCase().trim(),
-        city: city || 'Edmonton',
+        city: city || 'Calgary',
         procedure_type: procedure_type || 'both',
         species: species || 'both',
         driving_range_km: driving_range_km || 25,
