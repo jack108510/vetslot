@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Booking Confirmed — OpenSlot</title>
+  <title>Booking Confirmed — Empty Slot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -259,7 +259,7 @@
       const balance = (slot.price || 0) - deposit;
       const bookingRef = 'OS-' + reservation.id.replace(/-/g, '').toUpperCase().slice(0, 8);
 
-      document.title = `Confirmed: ${bookingRef} — OpenSlot`;
+      document.title = `Confirmed: ${bookingRef} — Empty Slot`;
 
       document.getElementById('booking-ref').textContent = bookingRef;
       document.getElementById('confirm-pet').textContent = reservation.pet_name || '';

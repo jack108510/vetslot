@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reserve a Slot — OpenSlot</title>
+  <title>Reserve a Slot — Empty Slot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -120,7 +120,7 @@
     <h2 class="text-2xl font-extrabold text-slate-900 mb-2">You're booked in.</h2>
     <p class="text-slate-500 mb-2">Your deposit was received and your spot is confirmed.</p>
     <p class="text-slate-400 text-sm mb-8">Check your email for appointment details and prep instructions.</p>
-    <a href="index.html" class="bg-teal-600 text-white px-8 py-3 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors">Back to OpenSlot</a>
+    <a href="index.html" class="bg-teal-600 text-white px-8 py-3 rounded-xl font-semibold text-sm hover:bg-teal-700 transition-colors">Back to Empty Slot</a>
   </div>
 
   <!-- Full slot state -->
@@ -389,7 +389,7 @@
       document.getElementById('deposit-display').textContent = formatPrice(deposit);
       document.getElementById('balance-display').textContent = formatPrice(balance);
 
-      document.title = `Reserve — ${clinic.name || 'OpenSlot'} ${procedureLabel(slot.procedure_type)} — OpenSlot`;
+      document.title = `Reserve — ${clinic.name || 'Empty Slot'} ${procedureLabel(slot.procedure_type)} — Empty Slot`;
     }
 
     function validateField(id, errId, validator) {
