@@ -150,11 +150,7 @@
           <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <div class="form-group" style="margin-bottom:0">
               <label>Your city</label>
-              <select class="form-control" id="f-city">
-                <option value="Calgary">Calgary</option>
-                <option value="Toronto">Toronto</option>
-                <option value="Vancouver">Vancouver</option>
-              </select>
+              <input type="text" class="form-control" id="f-city" placeholder="e.g. Calgary" autocomplete="off">
             </div>
             <div class="form-group" style="margin-bottom:0">
               <label>Pet type</label>
@@ -315,13 +311,21 @@
         return;
       }
       emailEl.style.borderColor = '';
+      const cityEl = document.getElementById('f-city');
+      const city = cityEl.value.trim();
+      if (!city) {
+        cityEl.style.borderColor = '#ef4444';
+        cityEl.focus();
+        return;
+      }
+      cityEl.style.borderColor = '';
       const btn = document.getElementById('signup-btn');
       btn.disabled = true;
       btn.textContent = 'Saving...';
       try {
         await OpenSlotAPI.subscribeToAlerts({
           email,
-          city: document.getElementById('f-city').value,
+          city,
           driving_range_km: parseInt(document.getElementById('f-range').value),
           procedure_type: document.getElementById('f-procedure').value,
           species: document.getElementById('f-species').value,
