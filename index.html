@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Empty Slot — Discounted Vet Surgery Near You</title>
-  <meta name="description" content="Sign up once. When a discounted surgery slot opens near you, you're the first to know.">
+  <title>Empty Slot — Preview</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --green: #16a34a;
       --green-dark: #15803d;
+      --green-xdark: #14532d;
       --green-light: #f0fdf4;
+      --green-mid: #dcfce7;
       --green-border: #bbf7d0;
       --text: #0f172a;
       --muted: #64748b;
@@ -24,149 +25,184 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-    /* NAV */
+    /* ── LOGO SVG ── */
+    .logo-svg { display: block; }
+
+    /* ── NAV ── */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.85); backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      padding: 0 24px; height: 60px;
+      padding: 0 28px; height: 62px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .logo { display: flex; align-items: center; gap: 9px; text-decoration: none; }
-    .logo-mark { width: 32px; height: 32px; background: var(--green); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-    .logo-mark svg { width: 17px; height: 17px; }
-    .logo-name { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -0.4px; }
+    .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-name { font-size: 18px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; }
     .logo-name em { color: var(--green); font-style: normal; }
-    .nav-link { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; padding: 7px 14px; border: 1.5px solid var(--border); border-radius: 8px; transition: all 0.15s; }
-    .nav-link:hover { color: var(--green); border-color: var(--green-border); }
+    .nav-link { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px; transition: all 0.15s; }
+    .nav-link:hover { color: var(--green); border-color: var(--green-border); background: var(--green-light); }
 
-    /* HERO */
+    /* ── HERO ── */
     .hero {
-      min-height: calc(100vh - 60px);
+      max-width: 1140px; margin: 0 auto;
+      padding: 80px 28px 72px;
       display: grid; grid-template-columns: 1fr 1fr;
-      max-width: 1120px; margin: 0 auto;
-      padding: 80px 24px 64px; gap: 80px; align-items: center;
+      gap: 72px; align-items: center;
+      min-height: calc(100vh - 62px);
     }
-    @media (max-width: 820px) {
+    @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; gap: 48px; padding: 52px 20px 48px; min-height: auto; }
       .hero-visual { display: none; }
     }
 
-    .pill {
-      display: inline-flex; align-items: center; gap: 6px;
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
       background: var(--green-light); border: 1px solid var(--green-border);
-      color: #15803d; font-size: 11.5px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
-      padding: 5px 12px; border-radius: 100px; margin-bottom: 24px;
+      color: #15803d; font-size: 11.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase;
+      padding: 5px 13px; border-radius: 100px; margin-bottom: 26px;
     }
-    .pill-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
 
     h1 {
-      font-size: clamp(36px, 5vw, 56px); font-weight: 900; line-height: 1.06;
-      letter-spacing: -2px; color: var(--text); margin-bottom: 20px;
+      font-size: clamp(38px, 5.5vw, 60px);
+      font-weight: 900; line-height: 1.05; letter-spacing: -2.5px;
+      margin-bottom: 22px; color: var(--text);
     }
-    h1 em { color: var(--green); font-style: normal; }
+    h1 .accent { color: var(--green); }
+    h1 .lighter { color: #334155; }
 
     .hero-sub {
-      font-size: 17px; color: var(--muted); line-height: 1.75; margin-bottom: 36px; max-width: 420px;
+      font-size: 17px; color: var(--muted); line-height: 1.8;
+      margin-bottom: 36px; max-width: 430px;
     }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
 
-    /* FORM */
+    /* ── FORM CARD ── */
     .card {
       background: #fff; border: 1.5px solid var(--border);
-      border-radius: 20px; padding: 28px 28px 24px;
-      box-shadow: 0 8px 48px rgba(0,0,0,0.08);
+      border-radius: 22px; padding: 30px;
+      box-shadow: 0 12px 60px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.04);
     }
-    .card-head { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .card-head { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 3px; letter-spacing: -0.3px; }
     .card-sub { font-size: 13px; color: #94a3b8; margin-bottom: 22px; }
 
     .field { margin-bottom: 14px; }
-    .field label { display: block; font-size: 12.5px; font-weight: 600; color: #475569; margin-bottom: 5px; }
+    .field label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 5px; letter-spacing: 0.2px; text-transform: uppercase; }
     .field input, .field select {
-      width: 100%; padding: 11px 13px;
+      width: 100%; padding: 11px 14px;
       background: var(--bg2); border: 1.5px solid var(--border);
       border-radius: 10px; font-size: 14px; font-family: inherit;
-      color: var(--text); outline: none; transition: border-color 0.15s, background 0.15s;
+      color: var(--text); outline: none; transition: all 0.15s;
       -webkit-appearance: none; appearance: none;
     }
-    .field input:focus, .field select:focus { border-color: var(--green); background: #fff; box-shadow: 0 0 0 3px rgba(22,163,74,0.1); }
+    .field input:focus, .field select:focus {
+      border-color: var(--green); background: #fff;
+      box-shadow: 0 0 0 3px rgba(22,163,74,0.1);
+    }
     .field input::placeholder { color: #94a3b8; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    .range-wrap { padding: 2px 0; }
-    .range-top { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; font-weight: 600; color: #475569; margin-bottom: 8px; }
-    .range-val { color: var(--green); }
-    input[type=range] { width: 100%; height: 4px; accent-color: var(--green); cursor: pointer; background: var(--border); border-radius: 2px; }
+    .range-top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: #475569; letter-spacing: 0.2px; text-transform: uppercase; margin-bottom: 9px; }
+    .range-val { color: var(--green); font-weight: 800; }
+    input[type=range] { width: 100%; height: 4px; accent-color: var(--green); cursor: pointer; }
     .range-ticks { display: flex; justify-content: space-between; font-size: 10.5px; color: #94a3b8; margin-top: 4px; }
 
     .btn {
-      width: 100%; padding: 14px;
+      width: 100%; padding: 15px;
       background: var(--green); color: #fff;
-      border: none; border-radius: 11px;
-      font-size: 15px; font-weight: 700; font-family: inherit;
-      cursor: pointer; margin-top: 8px;
-      transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+      border: none; border-radius: 12px;
+      font-size: 15px; font-weight: 800; font-family: inherit; letter-spacing: -0.2px;
+      cursor: pointer; margin-top: 10px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.15s;
     }
-    .btn:hover { background: var(--green-dark); box-shadow: 0 6px 20px rgba(22,163,74,0.35); transform: translateY(-1px); }
+    .btn:hover { background: var(--green-dark); box-shadow: 0 8px 24px rgba(22,163,74,0.4); transform: translateY(-1px); }
     .btn:active { transform: none; box-shadow: none; }
-    .btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
     .fine { font-size: 12px; color: #94a3b8; text-align: center; margin-top: 10px; }
 
-    .success { display: none; text-align: center; padding: 16px 0 8px; }
-    .success-icon { width: 52px; height: 52px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
-    .success-icon svg { width: 26px; height: 26px; color: var(--green); }
-    .success h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px; }
-    .success p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .success { display: none; text-align: center; padding: 20px 0 8px; }
+    .success-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    .success-icon svg { width: 28px; height: 28px; color: var(--green); }
+    .success h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.4px; margin-bottom: 8px; }
+    .success p { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
-    /* STATS */
+    /* ── STATS ── */
     .stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
     .stat-n { font-size: 22px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; }
-    .stat-l { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    .stat-l { font-size: 12px; color: #94a3b8; margin-top: 1px; }
 
-    /* VISUAL */
-    .hero-visual { position: relative; height: 480px; }
-    .vc { position: absolute; background: #fff; border: 1.5px solid var(--border); border-radius: 16px; padding: 18px 20px; width: 272px; box-shadow: 0 16px 48px rgba(0,0,0,0.09); }
+    /* ── VISUAL CARDS ── */
+    .hero-visual { position: relative; height: 500px; }
+    .vc {
+      position: absolute; background: #fff;
+      border: 1.5px solid var(--border); border-radius: 18px;
+      padding: 20px 22px; width: 275px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.04);
+    }
     .vc:nth-child(1) { top: 0; left: 0; animation: f1 5s ease-in-out infinite; }
-    .vc:nth-child(2) { top: 156px; right: 0; animation: f2 6s ease-in-out infinite 0.7s; }
-    .vc:nth-child(3) { bottom: 0; left: 24px; animation: f3 5.5s ease-in-out infinite 1.4s; }
-    @keyframes f1 { 0%,100%{transform:translateY(0) rotate(-1deg)} 50%{transform:translateY(-13px) rotate(-1deg)} }
-    @keyframes f2 { 0%,100%{transform:translateY(0) rotate(1.5deg)} 50%{transform:translateY(-10px) rotate(1.5deg)} }
-    @keyframes f3 { 0%,100%{transform:translateY(0) rotate(-0.5deg)} 50%{transform:translateY(-11px) rotate(-0.5deg)} }
-    .vc-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; color: #15803d; background: var(--green-light); border: 1px solid var(--green-border); padding: 3px 8px; border-radius: 5px; margin-bottom: 10px; }
+    .vc:nth-child(2) { top: 162px; right: 0; animation: f2 6s ease-in-out infinite 0.8s; }
+    .vc:nth-child(3) { bottom: 0; left: 28px; animation: f3 5.5s ease-in-out infinite 1.5s; }
+    @keyframes f1 { 0%,100%{transform:translateY(0) rotate(-1.2deg)} 50%{transform:translateY(-14px) rotate(-1.2deg)} }
+    @keyframes f2 { 0%,100%{transform:translateY(0) rotate(1.8deg)} 50%{transform:translateY(-11px) rotate(1.8deg)} }
+    @keyframes f3 { 0%,100%{transform:translateY(0) rotate(-0.6deg)} 50%{transform:translateY(-12px) rotate(-0.6deg)} }
+
+    .vc-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 10.5px; font-weight: 700; color: #15803d;
+      background: var(--green-light); border: 1px solid var(--green-border);
+      padding: 3px 9px; border-radius: 5px; margin-bottom: 11px;
+    }
     .vc-badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
-    .vc-name { font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 1px; }
-    .vc-proc { font-size: 12px; color: #94a3b8; margin-bottom: 12px; }
-    .vc-price-row { display: flex; align-items: baseline; gap: 7px; margin-bottom: 6px; }
-    .vc-price { font-size: 30px; font-weight: 900; color: var(--green); letter-spacing: -1px; }
+    .vc-name { font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .vc-proc { font-size: 12px; color: #94a3b8; margin-bottom: 13px; }
+    .vc-price-row { display: flex; align-items: baseline; gap: 7px; margin-bottom: 7px; }
+    .vc-price { font-size: 32px; font-weight: 900; color: var(--green); letter-spacing: -1.5px; }
     .vc-orig { font-size: 13px; color: #cbd5e1; text-decoration: line-through; }
-    .vc-save { font-size: 10.5px; font-weight: 700; color: #15803d; background: var(--green-light); padding: 2px 6px; border-radius: 4px; }
+    .vc-save { font-size: 10.5px; font-weight: 800; color: #15803d; background: var(--green-mid); padding: 2px 7px; border-radius: 4px; }
     .vc-date { font-size: 11.5px; color: #94a3b8; }
 
-    /* HOW IT WORKS */
-    .how { background: var(--bg2); border-top: 1px solid var(--border); }
-    .how-inner { max-width: 1120px; margin: 0 auto; padding: 88px 24px; }
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .how-inner { max-width: 1140px; margin: 0 auto; padding: 96px 28px; }
     @media (max-width: 640px) { .how-inner { padding: 64px 20px; } }
-    .section-eyebrow { font-size: 11.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
-    .section-h { font-size: clamp(26px, 4vw, 38px); font-weight: 900; letter-spacing: -0.8px; margin-bottom: 52px; line-height: 1.15; }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
-    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; gap: 28px; } }
-    .step-n { width: 34px; height: 34px; border-radius: 9px; background: var(--green-light); border: 1.5px solid var(--green-border); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--green); margin-bottom: 14px; }
-    .step h3 { font-size: 15px; font-weight: 700; margin-bottom: 7px; }
-    .step p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .section-tag { font-size: 11.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
+    .section-h { font-size: clamp(28px, 4vw, 42px); font-weight: 900; letter-spacing: -1px; margin-bottom: 56px; line-height: 1.12; color: var(--text); }
+    .section-h span { color: var(--muted); font-weight: 400; font-style: italic; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; gap: 32px; } }
+    .step-n {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--green-light); border: 1.5px solid var(--green-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 900; color: var(--green); margin-bottom: 16px;
+    }
+    .step h3 { font-size: 15px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.2px; }
+    .step p { font-size: 14px; color: var(--muted); line-height: 1.75; }
 
-    /* CLINIC BANNER */
-    .banner { background: var(--text); }
-    .banner-inner { max-width: 1120px; margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
-    @media (max-width: 640px) { .banner-inner { grid-template-columns: 1fr; padding: 60px 20px; gap: 28px; } }
-    .banner h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 800; letter-spacing: -0.5px; color: #fff; margin-bottom: 10px; }
-    .banner p { font-size: 15px; color: #64748b; line-height: 1.7; max-width: 460px; }
-    .banner-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: #fff; font-size: 14px; font-weight: 700; padding: 13px 24px; border-radius: 10px; text-decoration: none; white-space: nowrap; transition: all 0.15s; }
-    .banner-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
+    /* ── CLINIC BANNER ── */
+    .banner { background: var(--green-xdark); }
+    .banner-inner {
+      max-width: 1140px; margin: 0 auto; padding: 88px 28px;
+      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+    }
+    @media (max-width: 640px) { .banner-inner { grid-template-columns: 1fr; padding: 64px 20px; gap: 28px; } }
+    .banner-tag { font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
+    .banner h2 { font-size: clamp(22px, 3vw, 34px); font-weight: 900; letter-spacing: -0.8px; color: #fff; margin-bottom: 12px; line-height: 1.15; }
+    .banner p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 460px; }
+    .banner-btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      background: var(--green); color: #fff;
+      font-size: 14px; font-weight: 800; font-family: inherit;
+      padding: 14px 26px; border-radius: 11px; text-decoration: none; white-space: nowrap;
+      transition: all 0.15s; letter-spacing: -0.2px;
+    }
+    .banner-btn:hover { background: #22c55e; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(22,163,74,0.5); }
     @media (max-width: 640px) { .banner-btn { width: 100%; justify-content: center; } }
 
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border); padding: 32px 24px; }
-    .foot { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 32px 28px; }
+    .foot { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
     .foot-copy { font-size: 13px; color: #94a3b8; }
     .foot-links { display: flex; gap: 20px; }
     .foot-links a { font-size: 13px; color: #64748b; text-decoration: none; transition: color 0.15s; }
@@ -176,26 +212,38 @@
 <body>
 
 <nav>
-  <a href="index.html" class="logo">
-    <div class="logo-mark">
-      <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-      </svg>
-    </div>
+  <a href="#" class="logo-wrap">
+    <!-- LOGO: paw print inside a rounded slot shape -->
+    <svg class="logo-svg" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="36" height="36" rx="10" fill="#16a34a"/>
+      <!-- Paw print -->
+      <!-- Main pad -->
+      <ellipse cx="18" cy="21" rx="5.5" ry="4.2" fill="white"/>
+      <!-- Top toes -->
+      <ellipse cx="12.5" cy="16.5" rx="2.2" ry="2.8" fill="white"/>
+      <ellipse cx="16.5" cy="14.5" rx="2.2" ry="2.6" fill="white"/>
+      <ellipse cx="20.8" cy="14.2" rx="2.2" ry="2.6" fill="white"/>
+      <ellipse cx="24.5" cy="16.2" rx="2.2" ry="2.8" fill="white"/>
+    </svg>
     <span class="logo-name">Empty<em>Slot</em></span>
   </a>
-  <a href="clinic.html" class="nav-link">For Clinics</a>
+  <a href="clinic.html" class="nav-link">For Clinics →</a>
 </nav>
 
 <div class="hero">
   <div>
-    <div class="pill"><span class="pill-dot"></span>Free · No account needed</div>
-    <h1>Save up to 40%<br>on your pet's<br><em>surgery.</em></h1>
-    <p class="hero-sub">Vet clinics fill last-minute slots at a discount. Sign up once and we'll alert you the moment one opens near you.</p>
+    <div class="eyebrow"><span class="eyebrow-dot"></span>Free · No account needed</div>
+    <h1>
+      Your pet deserves<br>
+      <span class="accent">affordable care.</span>
+    </h1>
+    <p class="hero-sub">
+      When vet clinics have <strong>last-minute surgical openings</strong>, they discount them to fill the slot. Sign up and we'll alert you the moment one opens near you — before anyone else.
+    </p>
 
     <div class="card">
       <div class="card-head">Get alerted when slots open</div>
-      <div class="card-sub">Takes 30 seconds. Always free.</div>
+      <div class="card-sub">Free forever. Takes 30 seconds.</div>
 
       <div id="form">
         <div class="field">
@@ -221,11 +269,9 @@
             <span>How far would you drive?</span>
             <span class="range-val" id="range-label">25 km</span>
           </div>
-          <div class="range-wrap">
-            <input type="range" id="f-range" min="5" max="100" value="25" step="5"
-              oninput="document.getElementById('range-label').textContent = +this.value >= 100 ? 'Any distance' : this.value + ' km'">
-            <div class="range-ticks"><span>5 km</span><span>50 km</span><span>Any</span></div>
-          </div>
+          <input type="range" id="f-range" min="5" max="100" value="25" step="5"
+            oninput="document.getElementById('range-label').textContent = +this.value >= 100 ? 'Any distance' : this.value + ' km'">
+          <div class="range-ticks"><span>5 km</span><span>50 km</span><span>Any</span></div>
         </div>
         <div class="field">
           <label>Procedure needed</label>
@@ -246,15 +292,15 @@
         <div class="success-icon">
           <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
         </div>
-        <h3>You're on the list.</h3>
+        <h3>You're on the list. 🐾</h3>
         <p>We'll alert you the moment a discounted slot opens near you. Early signups get first access.</p>
       </div>
     </div>
 
     <div class="stats">
       <div><div class="stat-n">Up to 40%</div><div class="stat-l">off regular price</div></div>
-      <div><div class="stat-n">Licensed</div><div class="stat-l">vets only</div></div>
-      <div><div class="stat-n">Free</div><div class="stat-l">to join</div></div>
+      <div><div class="stat-n">Licensed vets</div><div class="stat-l">only</div></div>
+      <div><div class="stat-n">Always free</div><div class="stat-l">to join</div></div>
     </div>
   </div>
 
@@ -297,23 +343,23 @@
 
 <div class="how">
   <div class="how-inner">
-    <p class="section-eyebrow">How it works</p>
-    <h2 class="section-h">Simple. Fast. You save money.</h2>
+    <p class="section-tag">How it works</p>
+    <h2 class="section-h">Simple enough to explain<br><span>in three sentences.</span></h2>
     <div class="steps">
       <div class="step">
         <div class="step-n">1</div>
         <h3>Sign up in 30 seconds</h3>
-        <p>Just your email and city. No account, no app. We'll handle everything else.</p>
+        <p>Your email, your city, and your pet. No account, no app, no credit card. That's it.</p>
       </div>
       <div class="step">
         <div class="step-n">2</div>
-        <h3>Get alerted first</h3>
-        <p>When a local clinic posts a discounted slot, you're emailed before it goes public. First come, first served.</p>
+        <h3>We watch the slots for you</h3>
+        <p>When a nearby clinic posts a last-minute discounted opening, you get an email before it goes public.</p>
       </div>
       <div class="step">
         <div class="step-n">3</div>
-        <h3>Lock in your spot</h3>
-        <p>Claim the slot with a small deposit. Pay the rest at the clinic on the day of surgery.</p>
+        <h3>Claim it with a deposit</h3>
+        <p>Lock in your spot with a small deposit. The rest is paid at the clinic on the day — no surprises.</p>
       </div>
     </div>
   </div>
@@ -322,8 +368,9 @@
 <div class="banner">
   <div class="banner-inner">
     <div>
-      <h2>Are you a veterinary clinic?</h2>
-      <p>Turn last-minute cancellations into revenue. Post a discounted slot and committed, deposit-paid clients show up.</p>
+      <p class="banner-tag">For veterinary clinics</p>
+      <h2>Turn empty slots into<br>guaranteed revenue.</h2>
+      <p>Post a discounted opening and clients show up committed — deposit already paid. No more last-minute no-shows.</p>
     </div>
     <a href="clinic.html" class="banner-btn">
       Apply to join
@@ -334,12 +381,8 @@
 
 <footer>
   <div class="foot">
-    <a href="index.html" class="logo">
-      <div class="logo-mark" style="width:26px;height:26px;border-radius:6px">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white" style="width:14px;height:14px">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
-        </svg>
-      </div>
+    <a href="#" class="logo-wrap">
+      <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="10" fill="#16a34a"/><ellipse cx="18" cy="21" rx="5.5" ry="4.2" fill="white"/><ellipse cx="12.5" cy="16.5" rx="2.2" ry="2.8" fill="white"/><ellipse cx="16.5" cy="14.5" rx="2.2" ry="2.6" fill="white"/><ellipse cx="20.8" cy="14.2" rx="2.2" ry="2.6" fill="white"/><ellipse cx="24.5" cy="16.2" rx="2.2" ry="2.8" fill="white"/></svg>
       <span class="logo-name" style="font-size:15px">Empty<em>Slot</em></span>
     </a>
     <span class="foot-copy">&copy; 2026 Empty Slot</span>
@@ -350,42 +393,5 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script>
-  async function handleSignup() {
-    const emailEl = document.getElementById('f-email');
-    const email = emailEl.value.trim();
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      emailEl.style.borderColor = '#ef4444';
-      emailEl.focus(); return;
-    }
-    emailEl.style.borderColor = '';
-    const cityEl = document.getElementById('f-city');
-    const city = cityEl.value.trim();
-    if (!city) {
-      cityEl.style.borderColor = '#ef4444';
-      cityEl.focus(); return;
-    }
-    cityEl.style.borderColor = '';
-    const btn = document.getElementById('signup-btn');
-    btn.disabled = true;
-    btn.innerHTML = 'Saving&hellip;';
-    try {
-      await OpenSlotAPI.subscribeToAlerts({
-        email, city,
-        driving_range_km: parseInt(document.getElementById('f-range').value),
-        procedure_type: document.getElementById('f-procedure').value,
-        species: document.getElementById('f-species').value,
-      });
-    } catch(e) { console.warn(e); }
-    document.getElementById('form').style.display = 'none';
-    document.getElementById('success').style.display = 'block';
-  }
-  document.getElementById('f-email').addEventListener('keydown', e => {
-    if (e.key === 'Enter') handleSignup();
-    e.target.style.borderColor = '';
-  });
-</script>
 </body>
 </html>
