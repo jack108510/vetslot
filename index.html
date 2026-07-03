@@ -393,5 +393,40 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+  async function handleSignup() {
+    const emailEl = document.getElementById('f-email');
+    const email = emailEl.value.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailEl.style.borderColor = '#ef4444'; emailEl.focus(); return;
+    }
+    emailEl.style.borderColor = '';
+    const cityEl = document.getElementById('f-city');
+    const city = cityEl.value.trim();
+    if (!city) {
+      cityEl.style.borderColor = '#ef4444'; cityEl.focus(); return;
+    }
+    cityEl.style.borderColor = '';
+    const btn = document.getElementById('signup-btn');
+    btn.disabled = true; btn.innerHTML = 'Saving&hellip;';
+    try {
+      await OpenSlotAPI.subscribeToAlerts({
+        email, city,
+        driving_range_km: parseInt(document.getElementById('f-range').value),
+        procedure_type: document.getElementById('f-procedure').value,
+        species: document.getElementById('f-species').value,
+      });
+    } catch(e) { console.warn(e); }
+    document.getElementById('form').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+  }
+  document.getElementById('f-email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSignup();
+    e.target.style.borderColor = '';
+  });
+</script>
+
 </body>
 </html>
