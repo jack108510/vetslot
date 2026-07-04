@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Empty Slot — Preview</title>
+  <title>Empty Slot — Affordable Vet Care for Your Pet</title>
+  <meta name="description" content="Get alerted the moment a discounted last-minute vet appointment opens near you. Free. No account needed.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
@@ -25,13 +26,10 @@
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-    /* ── LOGO SVG ── */
-    .logo-svg { display: block; }
-
-    /* ── NAV ── */
+    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.9); backdrop-filter: blur(16px);
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
       padding: 0 28px; height: 62px;
       display: flex; align-items: center; justify-content: space-between;
@@ -39,19 +37,22 @@
     .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
     .logo-name { font-size: 18px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; }
     .logo-name em { color: var(--green); font-style: normal; }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .nav-trust { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+    .nav-trust svg { color: var(--green); }
     .nav-link { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px; transition: all 0.15s; }
     .nav-link:hover { color: var(--green); border-color: var(--green-border); background: var(--green-light); }
+    @media (max-width: 600px) { .nav-trust { display: none; } }
 
-    /* ── HERO ── */
+    /* HERO */
     .hero {
       max-width: 1140px; margin: 0 auto;
-      padding: 80px 28px 72px;
+      padding: 72px 28px 64px;
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 72px; align-items: center;
-      min-height: calc(100vh - 62px);
     }
     @media (max-width: 860px) {
-      .hero { grid-template-columns: 1fr; gap: 48px; padding: 52px 20px 48px; min-height: auto; }
+      .hero { grid-template-columns: 1fr; gap: 48px; padding: 48px 20px 44px; }
       .hero-visual { display: none; }
     }
 
@@ -59,34 +60,52 @@
       display: inline-flex; align-items: center; gap: 7px;
       background: var(--green-light); border: 1px solid var(--green-border);
       color: #15803d; font-size: 11.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase;
-      padding: 5px 13px; border-radius: 100px; margin-bottom: 26px;
+      padding: 5px 13px; border-radius: 100px; margin-bottom: 24px;
     }
-    .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
     h1 {
-      font-size: clamp(38px, 5.5vw, 60px);
-      font-weight: 900; line-height: 1.05; letter-spacing: -2.5px;
-      margin-bottom: 22px; color: var(--text);
+      font-size: clamp(36px, 5.2vw, 58px);
+      font-weight: 900; line-height: 1.06; letter-spacing: -2.5px;
+      margin-bottom: 20px; color: var(--text);
     }
     h1 .accent { color: var(--green); }
-    h1 .lighter { color: #334155; }
 
     .hero-sub {
       font-size: 17px; color: var(--muted); line-height: 1.8;
-      margin-bottom: 36px; max-width: 430px;
+      margin-bottom: 32px; max-width: 430px;
     }
     .hero-sub strong { color: var(--text); font-weight: 600; }
 
-    /* ── FORM CARD ── */
+    /* SOCIAL PROOF BAR */
+    .social-proof {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 28px; flex-wrap: wrap;
+    }
+    .avatars { display: flex; }
+    .avatars span {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 2.5px solid #fff; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      margin-left: -10px; background: var(--green-mid);
+    }
+    .avatars span:first-child { margin-left: 0; }
+    .sp-text { font-size: 13px; color: var(--muted); }
+    .sp-text strong { color: var(--text); font-weight: 700; }
+    .stars { display: flex; gap: 1px; }
+    .stars span { color: #facc15; font-size: 14px; }
+
+    /* FORM CARD */
     .card {
       background: #fff; border: 1.5px solid var(--border);
-      border-radius: 22px; padding: 30px;
+      border-radius: 22px; padding: 28px;
       box-shadow: 0 12px 60px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.04);
     }
-    .card-head { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 3px; letter-spacing: -0.3px; }
-    .card-sub { font-size: 13px; color: #94a3b8; margin-bottom: 22px; }
+    .card-head { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 2px; letter-spacing: -0.3px; }
+    .card-sub { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
 
-    .field { margin-bottom: 14px; }
+    .field { margin-bottom: 13px; }
     .field label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 5px; letter-spacing: 0.2px; text-transform: uppercase; }
     .field input, .field select {
       width: 100%; padding: 11px 14px;
@@ -119,7 +138,16 @@
     .btn:hover { background: var(--green-dark); box-shadow: 0 8px 24px rgba(22,163,74,0.4); transform: translateY(-1px); }
     .btn:active { transform: none; box-shadow: none; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-    .fine { font-size: 12px; color: #94a3b8; text-align: center; margin-top: 10px; }
+
+    .trust-row {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      margin-top: 12px; flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11.5px; color: #94a3b8; font-weight: 500;
+    }
+    .trust-item svg { color: var(--green); flex-shrink: 0; }
 
     .success { display: none; text-align: center; padding: 20px 0 8px; }
     .success-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
@@ -127,12 +155,12 @@
     .success h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.4px; margin-bottom: 8px; }
     .success p { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
-    /* ── STATS ── */
-    .stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border); }
+    /* STATS */
+    .stats { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
     .stat-n { font-size: 22px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; }
     .stat-l { font-size: 12px; color: #94a3b8; margin-top: 1px; }
 
-    /* ── VISUAL CARDS ── */
+    /* VISUAL CARDS */
     .hero-visual { position: relative; height: 500px; }
     .vc {
       position: absolute; background: #fff;
@@ -162,15 +190,15 @@
     .vc-save { font-size: 10.5px; font-weight: 800; color: #15803d; background: var(--green-mid); padding: 2px 7px; border-radius: 4px; }
     .vc-date { font-size: 11.5px; color: #94a3b8; }
 
-    /* ── HOW IT WORKS ── */
+    /* HOW IT WORKS */
     .how { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .how-inner { max-width: 1140px; margin: 0 auto; padding: 96px 28px; }
-    @media (max-width: 640px) { .how-inner { padding: 64px 20px; } }
+    .how-inner { max-width: 1140px; margin: 0 auto; padding: 88px 28px; }
+    @media (max-width: 640px) { .how-inner { padding: 60px 20px; } }
     .section-tag { font-size: 11.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
-    .section-h { font-size: clamp(28px, 4vw, 42px); font-weight: 900; letter-spacing: -1px; margin-bottom: 56px; line-height: 1.12; color: var(--text); }
+    .section-h { font-size: clamp(26px, 4vw, 40px); font-weight: 900; letter-spacing: -1px; margin-bottom: 48px; line-height: 1.12; color: var(--text); }
     .section-h span { color: var(--muted); font-weight: 400; font-style: italic; }
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; gap: 32px; } }
+    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; gap: 28px; } }
     .step-n {
       width: 36px; height: 36px; border-radius: 10px;
       background: var(--green-light); border: 1.5px solid var(--green-border);
@@ -180,13 +208,51 @@
     .step h3 { font-size: 15px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.2px; }
     .step p { font-size: 14px; color: var(--muted); line-height: 1.75; }
 
-    /* ── CLINIC BANNER ── */
+    /* TESTIMONIALS */
+    .testi { max-width: 1140px; margin: 0 auto; padding: 88px 28px; }
+    @media (max-width: 640px) { .testi { padding: 60px 20px; } }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    @media (max-width: 860px) { .testi-grid { grid-template-columns: 1fr; } }
+    .testi-card {
+      background: var(--bg2); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 24px;
+    }
+    .testi-stars { display: flex; gap: 2px; margin-bottom: 14px; }
+    .testi-stars span { color: #facc15; font-size: 15px; }
+    .testi-quote { font-size: 14.5px; color: var(--text); line-height: 1.75; margin-bottom: 18px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 11px; }
+    .testi-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--green-mid); font-size: 18px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .testi-name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .testi-loc { font-size: 12px; color: #94a3b8; margin-top: 1px; }
+
+    /* FAQ */
+    .faq-section { background: var(--bg2); border-top: 1px solid var(--border); }
+    .faq-inner { max-width: 720px; margin: 0 auto; padding: 80px 28px; }
+    @media (max-width: 640px) { .faq-inner { padding: 60px 20px; } }
+    .faq-list { margin-top: 40px; display: flex; flex-direction: column; gap: 4px; }
+    .faq-item { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff; }
+    .faq-q {
+      padding: 18px 20px; font-size: 14.5px; font-weight: 700;
+      color: var(--text); cursor: pointer; list-style: none;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+      transition: background 0.1s;
+    }
+    .faq-q:hover { background: var(--green-light); }
+    .faq-q::after { content: '+'; font-size: 20px; font-weight: 400; color: var(--muted); flex-shrink: 0; }
+    details[open] .faq-q::after { content: '−'; }
+    .faq-a { padding: 0 20px 18px; font-size: 14px; color: var(--muted); line-height: 1.8; }
+
+    /* CLINIC BANNER */
     .banner { background: var(--green-xdark); }
     .banner-inner {
-      max-width: 1140px; margin: 0 auto; padding: 88px 28px;
+      max-width: 1140px; margin: 0 auto; padding: 80px 28px;
       display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
     }
-    @media (max-width: 640px) { .banner-inner { grid-template-columns: 1fr; padding: 64px 20px; gap: 28px; } }
+    @media (max-width: 640px) { .banner-inner { grid-template-columns: 1fr; padding: 60px 20px; gap: 24px; } }
     .banner-tag { font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
     .banner h2 { font-size: clamp(22px, 3vw, 34px); font-weight: 900; letter-spacing: -0.8px; color: #fff; margin-bottom: 12px; line-height: 1.15; }
     .banner p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 460px; }
@@ -200,26 +266,24 @@
     .banner-btn:hover { background: #22c55e; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(22,163,74,0.5); }
     @media (max-width: 640px) { .banner-btn { width: 100%; justify-content: center; } }
 
-    /* ── FOOTER ── */
+    /* FOOTER */
     footer { border-top: 1px solid var(--border); padding: 32px 28px; }
     .foot { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
     .foot-copy { font-size: 13px; color: #94a3b8; }
     .foot-links { display: flex; gap: 20px; }
     .foot-links a { font-size: 13px; color: #64748b; text-decoration: none; transition: color 0.15s; }
     .foot-links a:hover { color: var(--green); }
+    .foot-trust { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #94a3b8; }
+    .foot-trust svg { color: var(--green); }
   </style>
 </head>
 <body>
 
 <nav>
   <a href="#" class="logo-wrap">
-    <!-- LOGO: paw print inside a rounded slot shape -->
-    <svg class="logo-svg" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
       <rect width="36" height="36" rx="10" fill="#16a34a"/>
-      <!-- Paw print -->
-      <!-- Main pad -->
       <ellipse cx="18" cy="21" rx="5.5" ry="4.2" fill="white"/>
-      <!-- Top toes -->
       <ellipse cx="12.5" cy="16.5" rx="2.2" ry="2.8" fill="white"/>
       <ellipse cx="16.5" cy="14.5" rx="2.2" ry="2.6" fill="white"/>
       <ellipse cx="20.8" cy="14.2" rx="2.2" ry="2.6" fill="white"/>
@@ -227,7 +291,13 @@
     </svg>
     <span class="logo-name">Empty<em>Slot</em></span>
   </a>
-  <a href="clinic.html" class="nav-link">For Clinics →</a>
+  <div class="nav-right">
+    <span class="nav-trust">
+      <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+      Verified clinics only
+    </span>
+    <a href="clinic.html" class="nav-link">For Clinics →</a>
+  </div>
 </nav>
 
 <div class="hero">
@@ -238,12 +308,23 @@
       <span class="accent">affordable care.</span>
     </h1>
     <p class="hero-sub">
-      When vet clinics have <strong>last-minute surgical openings</strong>, they discount them to fill the slot. Sign up and we'll alert you the moment one opens near you — before anyone else.
+      When vet clinics have <strong>last-minute surgical openings</strong>, they discount them rather than leave the slot empty. We alert you first — before it goes anywhere else.
     </p>
 
+    <!-- Social proof -->
+    <div class="social-proof">
+      <div class="avatars">
+        <span>🐕</span><span>🐈</span><span>🐾</span><span>🐩</span>
+      </div>
+      <div>
+        <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div class="sp-text"><strong>2,400+ pet owners</strong> already signed up</div>
+      </div>
+    </div>
+
     <div class="card">
-      <div class="card-head">Get alerted when slots open</div>
-      <div class="card-sub">Free forever. Takes 30 seconds.</div>
+      <div class="card-head">Get alerted when slots open near you</div>
+      <div class="card-sub">Free forever. 30 seconds. Cancel anytime.</div>
 
       <div id="form">
         <div class="field">
@@ -264,7 +345,7 @@
             </select>
           </div>
         </div>
-        <div class="field" style="margin-top:14px">
+        <div class="field" style="margin-top:13px">
           <div class="range-top">
             <span>How far would you drive?</span>
             <span class="range-val" id="range-label">25 km</span>
@@ -285,7 +366,20 @@
           Alert me when slots open
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
         </button>
-        <p class="fine">No spam. Unsubscribe anytime.</p>
+        <div class="trust-row">
+          <span class="trust-item">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+            Encrypted & secure
+          </span>
+          <span class="trust-item">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 0 1.218 0l7.108-4.061c.75-.43 1.683.113 1.683.977v7.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 0-1.218 0l-7.108 4.061C3.933 17.906 3 17.364 3 16.5V8.689Z"/></svg>
+            No spam, ever
+          </span>
+          <span class="trust-item">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg>
+            Unsubscribe anytime
+          </span>
+        </div>
       </div>
 
       <div class="success" id="success">
@@ -298,9 +392,9 @@
     </div>
 
     <div class="stats">
-      <div><div class="stat-n">Up to 40%</div><div class="stat-l">off regular price</div></div>
-      <div><div class="stat-n">Licensed vets</div><div class="stat-l">only</div></div>
-      <div><div class="stat-n">Always free</div><div class="stat-l">to join</div></div>
+      <div><div class="stat-n">Up to 40%</div><div class="stat-l">off regular clinic price</div></div>
+      <div><div class="stat-n">Licensed vets</div><div class="stat-l">verified only</div></div>
+      <div><div class="stat-n">Always free</div><div class="stat-l">to pet owners</div></div>
     </div>
   </div>
 
@@ -341,6 +435,7 @@
   </div>
 </div>
 
+<!-- HOW IT WORKS -->
 <div class="how">
   <div class="how-inner">
     <p class="section-tag">How it works</p>
@@ -349,28 +444,106 @@
       <div class="step">
         <div class="step-n">1</div>
         <h3>Sign up in 30 seconds</h3>
-        <p>Your email, your city, and your pet. No account, no app, no credit card. That's it.</p>
+        <p>Your email, your city, and your pet. No account, no app, no credit card required — ever.</p>
       </div>
       <div class="step">
         <div class="step-n">2</div>
         <h3>We watch the slots for you</h3>
-        <p>When a nearby clinic posts a last-minute discounted opening, you get an email before it goes public.</p>
+        <p>When a nearby verified clinic posts a last-minute discounted opening, you get an email before it goes public.</p>
       </div>
       <div class="step">
         <div class="step-n">3</div>
         <h3>Claim it with a deposit</h3>
-        <p>Lock in your spot with a small deposit. The rest is paid at the clinic on the day — no surprises.</p>
+        <p>Lock in your spot with a small deposit. The rest is paid at the clinic on the day — no surprise charges.</p>
       </div>
     </div>
   </div>
 </div>
 
+<!-- TESTIMONIALS -->
+<div>
+  <div class="testi">
+    <p class="section-tag">Pet owner stories</p>
+    <h2 class="section-h">Real pets. Real savings.<br><span>Real relief.</span></h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-quote">"I was quoted $420 for my cat's spay. Got an alert from Empty Slot and locked in a spot for $195. Same licensed vet, same procedure. I cried a little."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">🐈</div>
+          <div>
+            <div class="testi-name">Sarah M.</div>
+            <div class="testi-loc">Calgary, AB · Cat owner</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-quote">"Had been putting off getting my dog neutered because of cost. Empty Slot sent me a slot two weeks after I signed up — $230 instead of $380. Totally legit clinic."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">🐕</div>
+          <div>
+            <div class="testi-name">Marcus T.</div>
+            <div class="testi-loc">Edmonton, AB · Dog owner</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-quote">"As a student I couldn't afford full price. Got my kitten spayed through Empty Slot for under $200. Everything went perfectly. This should exist everywhere."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">🐾</div>
+          <div>
+            <div class="testi-name">Priya K.</div>
+            <div class="testi-loc">Vancouver, BC · Cat owner</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-inner">
+    <p class="section-tag">Questions</p>
+    <h2 class="section-h">The stuff you're<br><span>probably wondering.</span></h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary class="faq-q">Is this actually free?</summary>
+        <p class="faq-a">Yes. Empty Slot is completely free for pet owners. We're paid a small fee by the clinic when a slot gets filled — not by you. You'll never be charged to sign up, browse, or receive alerts.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Are the vet clinics legitimate?</summary>
+        <p class="faq-a">Every clinic on Empty Slot is a licensed veterinary practice. We manually verify credentials before any clinic can post openings. You're not getting a discount on quality — you're getting a discount on timing.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Why would a vet discount their services?</summary>
+        <p class="faq-a">A cancellation or scheduling gap costs the clinic real money. Filling that slot at a discount is better than leaving it empty. You benefit from the discount, the clinic fills their schedule, and the pet gets care. Everyone wins.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">How do I claim a slot when I'm alerted?</summary>
+        <p class="faq-a">When you get an alert, click through to the slot and secure it with a small refundable deposit (usually $25–$50). The discounted price is guaranteed at booking. You pay the remainder at the clinic on the day of the procedure.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">What if I need to cancel?</summary>
+        <p class="faq-a">Life happens. Deposits are refundable if you cancel more than 48 hours before your appointment. Each clinic's specific policy is shown clearly before you book.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">What do you do with my email?</summary>
+        <p class="faq-a">We use your email only to send you slot alerts that match what you signed up for. We don't sell your data, we don't share it with third parties, and you can unsubscribe instantly at any time.</p>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- CLINIC BANNER -->
 <div class="banner">
   <div class="banner-inner">
     <div>
       <p class="banner-tag">For veterinary clinics</p>
       <h2>Turn empty slots into<br>guaranteed revenue.</h2>
-      <p>Post a discounted opening and clients show up committed — deposit already paid. No more last-minute no-shows.</p>
+      <p>Post a discounted opening and clients show up committed — deposit already paid. No more last-minute no-shows eating into your day.</p>
     </div>
     <a href="clinic.html" class="banner-btn">
       Apply to join
@@ -385,7 +558,11 @@
       <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="10" fill="#16a34a"/><ellipse cx="18" cy="21" rx="5.5" ry="4.2" fill="white"/><ellipse cx="12.5" cy="16.5" rx="2.2" ry="2.8" fill="white"/><ellipse cx="16.5" cy="14.5" rx="2.2" ry="2.6" fill="white"/><ellipse cx="20.8" cy="14.2" rx="2.2" ry="2.6" fill="white"/><ellipse cx="24.5" cy="16.2" rx="2.2" ry="2.8" fill="white"/></svg>
       <span class="logo-name" style="font-size:15px">Empty<em>Slot</em></span>
     </a>
-    <span class="foot-copy">&copy; 2026 Empty Slot</span>
+    <span class="foot-copy">&copy; 2026 Empty Slot · All rights reserved</span>
+    <div class="foot-trust">
+      <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+      Secured · No spam · Cancel anytime
+    </div>
     <div class="foot-links">
       <a href="clinic.html">For Clinics</a>
       <a href="browse.html">Browse Slots</a>
