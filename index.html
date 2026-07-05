@@ -608,14 +608,18 @@
 <script>
   let _email = '';
 
-  function handleStep1() {
+  async function handleStep1() {
     const emailEl = document.getElementById('f-email');
     const email = emailEl.value.trim();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       emailEl.style.borderColor = '#ef4444'; emailEl.focus(); return;
     }
     emailEl.style.borderColor = '';
+    const btn = document.getElementById('step1-btn');
+    btn.disabled = true; btn.innerHTML = 'One sec&hellip;';
     _email = email;
+    // Save email immediately so we never lose the lead
+    try { await OpenSlotAPI.subscribeToAlerts({ email: _email }); } catch(e) { console.warn(e); }
     document.getElementById('step1').style.display = 'none';
     document.getElementById('step2').style.display = 'block';
   }
@@ -623,6 +627,7 @@
   async function handleSignup() {
     const btn = document.getElementById('signup-btn');
     btn.disabled = true; btn.innerHTML = 'Saving&hellip;';
+    // Upsert with full preferences — overwrites the stub saved at step 1
     try {
       await OpenSlotAPI.subscribeToAlerts({
         email: _email,
@@ -636,10 +641,8 @@
     document.getElementById('success').style.display = 'block';
   }
 
-  async function skipPrefs() {
-    try {
-      await OpenSlotAPI.subscribeToAlerts({ email: _email });
-    } catch(e) { console.warn(e); }
+  function skipPrefs() {
+    // Email already saved at step 1 — nothing to do
     document.getElementById('step2').style.display = 'none';
     document.getElementById('success').style.display = 'block';
   }

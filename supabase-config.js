@@ -254,15 +254,15 @@ const OpenSlotAPI = {
 
   // Subscribe to slot alerts
   async subscribeToAlerts({ email, city, procedure_type, species, driving_range_km }) {
+    const payload = { email: email.toLowerCase().trim() };
+    if (city !== undefined) payload.city = city || null;
+    if (procedure_type !== undefined) payload.procedure_type = procedure_type || 'both';
+    if (species !== undefined) payload.species = species || 'both';
+    if (driving_range_km !== undefined) payload.driving_range_km = driving_range_km || 25;
+
     const { data, error } = await sb
       .from('vetslot_subscribers')
-      .upsert({
-        email: email.toLowerCase().trim(),
-        city: city || 'Calgary',
-        procedure_type: procedure_type || 'both',
-        species: species || 'both',
-        driving_range_km: driving_range_km || 25,
-      }, { onConflict: 'email', ignoreDuplicates: false })
+      .upsert(payload, { onConflict: 'email', ignoreDuplicates: false })
       .select()
       .single();
 
