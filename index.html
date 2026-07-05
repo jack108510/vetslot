@@ -327,10 +327,37 @@
       <div class="card-head">Get alerted when slots open near you</div>
       <div class="card-sub">Free forever. 30 seconds. Cancel anytime.</div>
 
-      <div id="form">
+      <!-- Step 1: email only -->
+      <div id="step1">
         <div class="field">
           <label>Email address</label>
           <input type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
+        </div>
+        <button class="btn" id="step1-btn" onclick="handleStep1()">
+          Alert me when slots open
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+        </button>
+        <div class="trust-row">
+          <span class="trust-item">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+            Encrypted & secure
+          </span>
+          <span class="trust-item">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 0 1.218 0l7.108-4.061c.75-.43 1.683.113 1.683.977v7.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 0-1.218 0l-7.108 4.061C3.933 17.906 3 17.364 3 16.5V8.689Z"/></svg>
+            No spam, ever
+          </span>
+          <span class="trust-item">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg>
+            Unsubscribe anytime
+          </span>
+        </div>
+      </div>
+
+      <!-- Step 2: preferences (shown after email) -->
+      <div id="step2" style="display:none">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="#16a34a"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+          <span style="font-size:13px;color:#16a34a;font-weight:700">You're in — one more step to filter your alerts</span>
         </div>
         <div class="field-row">
           <div class="field" style="margin-bottom:0">
@@ -358,29 +385,18 @@
         <div class="field">
           <label>Procedure needed</label>
           <select id="f-procedure">
-            <option value="both">Spay or Neuter</option>
-            <option value="spay">Spay only</option>
-            <option value="neuter">Neuter only</option>
+            <option value="any">Any procedure</option>
+            <option value="spay">Spay</option>
+            <option value="neuter">Neuter</option>
+            <option value="dental">Dental</option>
+            <option value="surgery">Surgery / Other</option>
           </select>
         </div>
         <button class="btn" id="signup-btn" onclick="handleSignup()">
-          Alert me when slots open
+          Save my preferences
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
         </button>
-        <div class="trust-row">
-          <span class="trust-item">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
-            Encrypted & secure
-          </span>
-          <span class="trust-item">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 0 1.218 0l7.108-4.061c.75-.43 1.683.113 1.683.977v7.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 0-1.218 0l-7.108 4.061C3.933 17.906 3 17.364 3 16.5V8.689Z"/></svg>
-            No spam, ever
-          </span>
-          <span class="trust-item">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg>
-            Unsubscribe anytime
-          </span>
-        </div>
+        <p style="text-align:center;font-size:12px;color:#94a3b8;margin-top:10px;cursor:pointer" onclick="skipPrefs()">Skip — just send me everything near me</p>
       </div>
 
       <div class="success" id="success">
@@ -590,34 +606,46 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <script>
-  async function handleSignup() {
+  let _email = '';
+
+  function handleStep1() {
     const emailEl = document.getElementById('f-email');
     const email = emailEl.value.trim();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       emailEl.style.borderColor = '#ef4444'; emailEl.focus(); return;
     }
     emailEl.style.borderColor = '';
-    const cityEl = document.getElementById('f-city');
-    const city = cityEl.value.trim();
-    if (!city) {
-      cityEl.style.borderColor = '#ef4444'; cityEl.focus(); return;
-    }
-    cityEl.style.borderColor = '';
+    _email = email;
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+  }
+
+  async function handleSignup() {
     const btn = document.getElementById('signup-btn');
     btn.disabled = true; btn.innerHTML = 'Saving&hellip;';
     try {
       await OpenSlotAPI.subscribeToAlerts({
-        email, city,
+        email: _email,
+        city: document.getElementById('f-city').value.trim() || null,
         driving_range_km: parseInt(document.getElementById('f-range').value),
         procedure_type: document.getElementById('f-procedure').value,
         species: document.getElementById('f-species').value,
       });
     } catch(e) { console.warn(e); }
-    document.getElementById('form').style.display = 'none';
+    document.getElementById('step2').style.display = 'none';
     document.getElementById('success').style.display = 'block';
   }
+
+  async function skipPrefs() {
+    try {
+      await OpenSlotAPI.subscribeToAlerts({ email: _email });
+    } catch(e) { console.warn(e); }
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+  }
+
   document.getElementById('f-email').addEventListener('keydown', e => {
-    if (e.key === 'Enter') handleSignup();
+    if (e.key === 'Enter') handleStep1();
     e.target.style.borderColor = '';
   });
 </script>
