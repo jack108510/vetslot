@@ -262,15 +262,13 @@ const OpenSlotAPI = {
 
     const { data, error } = await sb
       .from('vetslot_subscribers')
-      .upsert(payload, { onConflict: 'email', ignoreDuplicates: false })
-      .select()
-      .single();
+      .upsert(payload, { onConflict: 'email', ignoreDuplicates: false });
 
     if (error) {
       console.error('Subscribe error:', error);
-      return null;
+      throw error;
     }
-    return data;
+    return data || true;
   },
 
   // Get a single reservation with slot and clinic info

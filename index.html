@@ -130,6 +130,12 @@
     }
     .field input::placeholder { color: #94a3b8; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-error {
+      display: none; margin-top: 12px; padding: 11px 12px;
+      border: 1px solid #fecaca; border-radius: 10px;
+      background: #fef2f2; color: #b91c1c;
+      font-size: 13px; line-height: 1.45; font-weight: 600;
+    }
 
     .range-top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: #475569; letter-spacing: 0.2px; text-transform: uppercase; margin-bottom: 9px; }
     .range-val { color: var(--green); font-weight: 800; }
@@ -324,6 +330,7 @@
           Alert me when slots open
           <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
         </button>
+        <div class="form-error" id="signup-error"></div>
         <div class="trust-row">
           <span class="trust-item">
             <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
@@ -602,6 +609,18 @@
 <script>
   let _email = '';
 
+  function showSignupError(message) {
+    const errorEl = document.getElementById('signup-error');
+    errorEl.textContent = message || 'Signup failed. Please try again.';
+    errorEl.style.display = 'block';
+  }
+
+  function clearSignupError() {
+    const errorEl = document.getElementById('signup-error');
+    errorEl.textContent = '';
+    errorEl.style.display = 'none';
+  }
+
   async function handleStep1() {
     const emailEl = document.getElementById('f-email');
     const email = emailEl.value.trim();
@@ -609,13 +628,21 @@
       emailEl.style.borderColor = '#ef4444'; emailEl.focus(); return;
     }
     emailEl.style.borderColor = '';
+    clearSignupError();
     const btn = document.getElementById('step1-btn');
     btn.disabled = true; btn.innerHTML = 'One sec&hellip;';
     _email = email;
     // Save email immediately so we never lose the lead
-    try { await OpenSlotAPI.subscribeToAlerts({ email: _email }); } catch(e) { console.warn(e); }
-    document.getElementById('step1').style.display = 'none';
-    document.getElementById('step2').style.display = 'block';
+    try {
+      await OpenSlotAPI.subscribeToAlerts({ email: _email });
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+    } catch(e) {
+      console.warn(e);
+      showSignupError('Signup is temporarily unavailable. Please try again in a few minutes.');
+      btn.disabled = false;
+      btn.innerHTML = 'Alert me when slots open <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>';
+    }
   }
 
   async function handleSignup() {

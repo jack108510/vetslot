@@ -57,6 +57,21 @@ CREATE TABLE IF NOT EXISTS vetslot_reservations (
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
+CREATE TABLE IF NOT EXISTS vetslot_subscribers (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  email TEXT NOT NULL UNIQUE,
+  city TEXT,
+  procedure_type TEXT DEFAULT 'both',
+  species TEXT DEFAULT 'both',
+  driving_range_km INT DEFAULT 25,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE vetslot_subscribers ADD COLUMN IF NOT EXISTS city TEXT;
+ALTER TABLE vetslot_subscribers ADD COLUMN IF NOT EXISTS procedure_type TEXT DEFAULT 'both';
+ALTER TABLE vetslot_subscribers ADD COLUMN IF NOT EXISTS species TEXT DEFAULT 'both';
+ALTER TABLE vetslot_subscribers ADD COLUMN IF NOT EXISTS driving_range_km INT DEFAULT 25;
+
 -- =====================
 -- FUNCTIONS
 -- =====================
@@ -73,6 +88,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
+-- Safe public count for internal checks without exposing subscriber emails.
+CREATE OR REPLACE FUNCTION vetslot_subscriber_count()
+RETURNS integer AS $$
+BEGIN
+  RETURN (SELECT count(*) FROM vetslot_subscribers);
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
 -- =====================
 -- ROW LEVEL SECURITY
 -- =====================
@@ -80,6 +103,7 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 ALTER TABLE vetslot_clinics ENABLE ROW LEVEL SECURITY;
 ALTER TABLE vetslot_slots ENABLE ROW LEVEL SECURITY;
 ALTER TABLE vetslot_reservations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE vetslot_subscribers ENABLE ROW LEVEL SECURITY;
 
 -- Drop old blanket policies
 DROP POLICY IF EXISTS slots_select_all ON vetslot_slots;
@@ -101,6 +125,8 @@ DROP POLICY IF EXISTS "slots_clinic_delete"          ON vetslot_slots;
 DROP POLICY IF EXISTS "reservations_public_insert"   ON vetslot_reservations;
 DROP POLICY IF EXISTS "reservations_clinic_read"     ON vetslot_reservations;
 DROP POLICY IF EXISTS "reservations_clinic_update"   ON vetslot_reservations;
+DROP POLICY IF EXISTS "subscribers_public_insert"    ON vetslot_subscribers;
+DROP POLICY IF EXISTS "subscribers_public_update"    ON vetslot_subscribers;
 
 -- Clinics
 CREATE POLICY "clinics_public_read"   ON vetslot_clinics FOR SELECT USING (true);
@@ -131,3 +157,8 @@ CREATE POLICY "reservations_clinic_update" ON vetslot_reservations FOR UPDATE
     JOIN vetslot_clinics c ON s.clinic_id = c.id
     WHERE c.user_id = auth.uid()
   ));
+
+-- Subscribers: public waitlist form can create/update their own email row.
+-- Public read stays disabled so the waitlist is not exposed.
+CREATE POLICY "subscribers_public_insert" ON vetslot_subscribers FOR INSERT WITH CHECK (true);
+CREATE POLICY "subscribers_public_update" ON vetslot_subscribers FOR UPDATE USING (true) WITH CHECK (true);
