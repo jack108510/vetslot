@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empty Slot — Analytics</title>
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --green-border: #bbf7d0;
+      --slate: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--slate); min-height: 100vh; }
+    nav {
+      background: white; border-bottom: 1px solid var(--border);
+      padding: 0 32px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-size: 16px; font-weight: 900; letter-spacing: -0.5px; }
+    .logo em { color: var(--green); font-style: normal; }
+    .nav-badge { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--bg); border: 1px solid var(--border); padding: 3px 10px; border-radius: 100px; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
+    h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
+    .subtitle { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .stat {
+      background: white; border: 1px solid var(--border); border-radius: 12px;
+      padding: 20px 24px;
+    }
+    .stat-label { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+    .stat-value { font-size: 36px; font-weight: 800; color: var(--slate); letter-spacing: -1px; }
+    .stat-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+    .stat.green { border-color: var(--green-border); background: var(--green-light); }
+    .stat.green .stat-value { color: var(--green); }
+    .panel {
+      background: white; border: 1px solid var(--border); border-radius: 12px;
+      padding: 24px; margin-bottom: 20px;
+    }
+    .panel-title { font-size: 14px; font-weight: 700; margin-bottom: 20px; }
+    .chart { display: flex; align-items: flex-end; gap: 6px; height: 120px; }
+    .bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .bar { width: 100%; background: var(--green); border-radius: 4px 4px 0 0; min-height: 2px; transition: height 0.3s; }
+    .bar-label { font-size: 10px; color: var(--muted); white-space: nowrap; }
+    .bar-count { font-size: 10px; font-weight: 700; color: var(--slate); }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 0 0 12px; border-bottom: 1px solid var(--border); }
+    td { padding: 12px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+    td:last-child, th:last-child { text-align: right; }
+    tr:last-child td { border-bottom: none; }
+    .ref-bar-wrap { display: flex; align-items: center; gap: 10px; }
+    .ref-bar { height: 6px; background: var(--green); border-radius: 3px; opacity: 0.7; }
+    .loading { color: var(--muted); font-size: 14px; text-align: center; padding: 40px; }
+    .refresh { font-size: 12px; color: var(--muted); cursor: pointer; }
+    .refresh:hover { color: var(--green); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">empty<em>slot</em></div>
+  <span class="nav-badge">Analytics</span>
+</nav>
+
+<div class="container">
+  <h1>Traffic Dashboard</h1>
+  <p class="subtitle" id="last-updated">Loading...</p>
+
+  <div class="stats">
+    <div class="stat green">
+      <div class="stat-label">Total Views</div>
+      <div class="stat-value" id="total-views">—</div>
+      <div class="stat-sub">all time</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Today</div>
+      <div class="stat-value" id="today-views">—</div>
+      <div class="stat-sub">page loads</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">This Week</div>
+      <div class="stat-value" id="week-views">—</div>
+      <div class="stat-sub">last 7 days</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Signups</div>
+      <div class="stat-value" id="total-signups">—</div>
+      <div class="stat-sub">waitlist</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Views — Last 14 Days</div>
+    <div class="chart" id="chart"><div class="loading">Loading chart...</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Top Referrers</div>
+    <table id="referrer-table">
+      <thead><tr><th>Source</th><th>Views</th></tr></thead>
+      <tbody><tr><td colspan="2" class="loading">Loading...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+async function load() {
+  const now = new Date();
+  document.getElementById('last-updated').textContent = 'Last updated: ' + now.toLocaleTimeString();
+
+  const todayStr = now.toISOString().split('T')[0];
+  const weekAgo = new Date(now - 7 * 86400000).toISOString();
+  const twoWeeksAgo = new Date(now - 14 * 86400000).toISOString();
+
+  // Total views
+  const { count: total } = await sb.from('vetslot_pageviews').select('*', { count: 'exact', head: true });
+  document.getElementById('total-views').textContent = (total || 0).toLocaleString();
+
+  // Today
+  const { count: today } = await sb.from('vetslot_pageviews')
+    .select('*', { count: 'exact', head: true })
+    .gte('created_at', todayStr + 'T00:00:00Z');
+  document.getElementById('today-views').textContent = (today || 0).toLocaleString();
+
+  // This week
+  const { count: week } = await sb.from('vetslot_pageviews')
+    .select('*', { count: 'exact', head: true })
+    .gte('created_at', weekAgo);
+  document.getElementById('week-views').textContent = (week || 0).toLocaleString();
+
+  // Signups
+  const { count: signups } = await sb.from('vetslot_subscribers').select('*', { count: 'exact', head: true });
+  document.getElementById('total-signups').textContent = (signups || 0).toLocaleString();
+
+  // Last 14 days chart
+  const { data: views } = await sb.from('vetslot_pageviews')
+    .select('created_at')
+    .gte('created_at', twoWeeksAgo)
+    .order('created_at', { ascending: true });
+
+  const days = {};
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(now - i * 86400000);
+    const key = d.toISOString().split('T')[0];
+    days[key] = 0;
+  }
+  (views || []).forEach(v => {
+    const key = v.created_at.split('T')[0];
+    if (days[key] !== undefined) days[key]++;
+  });
+
+  const maxVal = Math.max(...Object.values(days), 1);
+  const chartEl = document.getElementById('chart');
+  chartEl.innerHTML = Object.entries(days).map(([date, count]) => {
+    const pct = Math.round((count / maxVal) * 100);
+    const label = new Date(date + 'T12:00:00').toLocaleDateString('en-CA', { month: 'short', day: 'numeric' });
+    return `<div class="bar-wrap">
+      <div class="bar-count">${count || ''}</div>
+      <div class="bar" style="height:${Math.max(pct, 2)}%"></div>
+      <div class="bar-label">${label}</div>
+    </div>`;
+  }).join('');
+
+  // Referrers
+  const { data: refs } = await sb.from('vetslot_pageviews')
+    .select('referrer');
+
+  const refCounts = {};
+  (refs || []).forEach(r => {
+    let src = r.referrer || 'Direct';
+    try { src = src === 'Direct' ? 'Direct' : new URL(src).hostname.replace('www.', ''); } catch(e) {}
+    refCounts[src] = (refCounts[src] || 0) + 1;
+  });
+
+  const sorted = Object.entries(refCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+  const maxRef = sorted[0]?.[1] || 1;
+  const tbody = document.querySelector('#referrer-table tbody');
+  tbody.innerHTML = sorted.length ? sorted.map(([src, count]) =>
+    `<tr>
+      <td><div class="ref-bar-wrap">
+        <div class="ref-bar" style="width:${Math.round(count/maxRef*120)}px"></div>
+        ${src}
+      </div></td>
+      <td>${count}</td>
+    </tr>`
+  ).join('') : '<tr><td colspan="2" style="color:#94a3b8;font-size:14px;padding:16px 0">No data yet</td></tr>';
+}
+
+load();
+</script>
+</body>
+</html>
