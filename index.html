@@ -286,7 +286,6 @@
     .foot-links a { font-size: 13px; color: #64748b; text-decoration: none; transition: color 0.15s; }
     .foot-links a:hover { color: var(--green); }
   </style>
-  <script defer data-domain="emptyslot.ca" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 
@@ -592,6 +591,14 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
+<script>
+  (function() {
+    sb.from('vetslot_pageviews').insert({
+      page: window.location.pathname || '/',
+      referrer: document.referrer || null,
+    }).then(() => {});
+  })();
+</script>
 <script>
   let _email = '';
 
