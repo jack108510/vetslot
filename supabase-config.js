@@ -1,7 +1,7 @@
 // OpenSlot — Supabase Configuration
 const SUPABASE_URL = 'https://xacehhtgvubcqdoltazg.supabase.co';
 const EDGE_BASE = 'https://xacehhtgvubcqdoltazg.supabase.co/functions/v1';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhY2VoaHRndnViY3Fkb2x0YXpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NDI4NjcsImV4cCI6MjA4OTUxODg2N30.cHCCtXwtl8BW2G2yB8WJqfFeUNCzFwDNd2jDGvyWYew';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhY2VoaHRndnViY3Fkb2x0YXpnIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3Mzk0Mjg2NywiZXhwIjoyMDg5NTE4ODY3fQ.5sqLtRtRnWEEuytTsfGhh1hmrQkTilL4Bd_rMrqmQ9A';
 const ROSSLYN_CLINIC_ID = '4e078398-9e45-441e-9771-91dca35be71c';
 
 // Initialize Supabase
