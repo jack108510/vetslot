@@ -63,6 +63,7 @@
       display: flex; align-items: center; justify-content: space-between;
     }
     .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-img { height: 42px; width: auto; display: block; }
     .logo-name { font-size: 17px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; line-height: 1; }
     .logo-name em { color: var(--green); font-style: normal; font-weight: 400; }
     .logo-name span { display: block; font-size: 9px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: #94a3b8; margin-top: 1px; }
@@ -309,8 +310,8 @@
 <body>
 
 <nav>
-  <a href="#" class="logo-wrap">
-    <span class="logo-name">empty<em>slot</em><span>vet care alerts</span></span>
+  <a href="#" class="logo-wrap" aria-label="Empty Slot home">
+    <img class="logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot">
   </a>
   <div class="nav-right">
     <span class="nav-tag">Licensed vets only</span>
@@ -537,8 +538,8 @@
 
 <footer>
   <div class="foot">
-    <a href="#" class="logo-wrap">
-      <span class="logo-name" style="font-size:14px">empty<em>slot</em></span>
+    <a href="#" class="logo-wrap" aria-label="Empty Slot home">
+      <img class="logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot" style="height:34px">
     </a>
     <span class="foot-copy">&copy; 2026 Empty Slot · All rights reserved</span>
     <div class="foot-links">
