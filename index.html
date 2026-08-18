@@ -39,272 +39,176 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --green: #16a34a;
-      --green-dark: #15803d;
-      --green-xdark: #14532d;
-      --green-light: #f0fdf4;
-      --green-mid: #dcfce7;
-      --green-border: #bbf7d0;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --bg: #ffffff;
-      --bg2: #f8fafc;
+      --ink: #132238;
+      --ink-soft: #40516a;
+      --muted: #71809a;
+      --line: #dfe7ef;
+      --cream: #fbf7ef;
+      --cream-2: #f4efe6;
+      --mint: #e6f7ec;
+      --green: #13a85a;
+      --green-dark: #08743f;
+      --green-deep: #0b4b2c;
+      --teal: #0d9488;
+      --amber: #f5b84b;
+      --rose: #ff7a7a;
+      --white: #ffffff;
+      --shadow: 0 24px 80px rgba(19,34,56,.12), 0 2px 10px rgba(19,34,56,.06);
+      --shadow-soft: 0 14px 40px rgba(19,34,56,.09), 0 1px 3px rgba(19,34,56,.05);
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at 8% 2%, rgba(19,168,90,.12), transparent 28rem),
+        radial-gradient(circle at 85% 8%, rgba(245,184,75,.16), transparent 34rem),
+        linear-gradient(180deg, #fffaf1 0%, #ffffff 34%, #f6faf8 100%);
+      color: var(--ink); -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; opacity: .45;
+      background-image: radial-gradient(rgba(19,34,56,.08) .65px, transparent .65px);
+      background-size: 22px 22px; mask-image: linear-gradient(to bottom, #000, transparent 65%);
+      z-index: -1;
+    }
+    a { color: inherit; }
 
-    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 28px; height: 62px;
+      height: 76px; padding: 0 30px;
       display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,250,241,.78); backdrop-filter: blur(22px);
+      border-bottom: 1px solid rgba(19,34,56,.08);
     }
-    .logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-img { height: 42px; width: auto; display: block; }
-    .logo-name { font-size: 17px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; line-height: 1; }
-    .logo-name em { color: var(--green); font-style: normal; font-weight: 400; }
-    .logo-name span { display: block; font-size: 9px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; color: #94a3b8; margin-top: 1px; }
+    .logo-wrap { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-img { height: 44px; width: auto; display: block; filter: drop-shadow(0 8px 16px rgba(19,34,56,.06)); }
     .nav-right { display: flex; align-items: center; gap: 12px; }
-    .nav-tag { font-size: 11.5px; font-weight: 700; letter-spacing: 0.3px; color: var(--green); background: var(--green-light); border: 1px solid var(--green-border); padding: 4px 11px; border-radius: 100px; }
-    .nav-link { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; padding: 7px 16px; border: 1.5px solid var(--border); border-radius: 8px; transition: all 0.15s; }
-    .nav-link:hover { color: var(--green); border-color: var(--green-border); background: var(--green-light); }
-    @media (max-width: 600px) { .nav-tag { display: none; } }
+    .nav-tag { font-size: 12px; font-weight: 800; color: var(--green-dark); background: rgba(19,168,90,.1); border: 1px solid rgba(19,168,90,.2); padding: 8px 14px; border-radius: 999px; }
+    .nav-link { font-size: 13px; font-weight: 800; color: var(--ink); text-decoration: none; padding: 11px 16px; border: 1px solid rgba(19,34,56,.12); border-radius: 999px; background: rgba(255,255,255,.72); box-shadow: 0 4px 16px rgba(19,34,56,.04); transition: .18s ease; }
+    .nav-link:hover { transform: translateY(-1px); border-color: rgba(19,168,90,.35); color: var(--green-dark); }
 
-    /* HERO */
-    .hero {
-      max-width: 1140px; margin: 0 auto;
-      padding: 72px 28px 64px;
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 72px; align-items: center;
-    }
-    @media (max-width: 860px) {
-      .hero { grid-template-columns: 1fr; gap: 48px; padding: 48px 20px 44px; }
-      .hero-visual { display: none; }
-    }
-    @media (max-width: 480px) {
-      .hero { padding: 32px 16px 36px; }
-      h1 { font-size: 32px; letter-spacing: -1.5px; }
-      .hero-sub { font-size: 15px; margin-bottom: 24px; }
-      .card { padding: 20px 16px; border-radius: 16px; }
-      .card-head { font-size: 15px; }
-      .field-row { grid-template-columns: 1fr; gap: 0; }
-      .field-row .field { margin-bottom: 13px; }
-      .btn { font-size: 14px; padding: 14px; }
-      .trust-row { gap: 10px; justify-content: flex-start; }
-      .pillar { min-width: 100%; }
-      nav { padding: 0 16px; }
-    }
+    .hero { max-width: 1180px; margin: 0 auto; padding: 76px 28px 74px; display: grid; grid-template-columns: minmax(0, .96fr) minmax(420px, 1.04fr); gap: 58px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; background: rgba(255,255,255,.8); border: 1px solid rgba(19,34,56,.09); color: var(--green-dark); font-size: 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; box-shadow: 0 10px 30px rgba(19,34,56,.05); margin-bottom: 22px; }
+    .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--green), var(--teal)); box-shadow: 0 0 0 6px rgba(19,168,90,.12); }
+    h1 { font-size: clamp(42px, 5.8vw, 76px); line-height: .94; letter-spacing: -4px; font-weight: 950; margin-bottom: 24px; color: var(--ink); }
+    h1 .accent { display: inline-block; color: var(--green); position: relative; }
+    h1 .accent::after { content: ''; position: absolute; left: .04em; right: -.04em; bottom: .07em; height: .18em; background: rgba(245,184,75,.38); z-index: -1; border-radius: 999px; }
+    .hero-sub { font-size: 18px; line-height: 1.72; color: var(--ink-soft); max-width: 510px; margin-bottom: 28px; }
+    .hero-sub strong { color: var(--ink); font-weight: 800; }
 
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--green-light); border: 1px solid var(--green-border);
-      color: #15803d; font-size: 11.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase;
-      padding: 5px 13px; border-radius: 100px; margin-bottom: 24px;
-    }
-    .eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-    h1 {
-      font-size: clamp(36px, 5.2vw, 58px);
-      font-weight: 900; line-height: 1.06; letter-spacing: -2.5px;
-      margin-bottom: 20px; color: var(--text);
-    }
-    h1 .accent { color: var(--green); }
-
-    .hero-sub {
-      font-size: 17px; color: var(--muted); line-height: 1.8;
-      margin-bottom: 32px; max-width: 430px;
-    }
-    .hero-sub strong { color: var(--text); font-weight: 600; }
-
-    /* FORM CARD */
-    .card {
-      background: #fff; border: 1.5px solid var(--border);
-      border-radius: 22px; padding: 28px;
-      box-shadow: 0 12px 60px rgba(0,0,0,0.09), 0 2px 8px rgba(0,0,0,0.04);
-    }
-    .card-head { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 2px; letter-spacing: -0.3px; }
-    .card-sub { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
-
+    .card { position: relative; background: rgba(255,255,255,.9); border: 1px solid rgba(19,34,56,.11); border-radius: 30px; padding: 30px; box-shadow: var(--shadow); overflow: hidden; }
+    .card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 5px; background: linear-gradient(90deg, var(--green), var(--teal), var(--amber)); }
+    .card-head { font-size: 19px; font-weight: 900; letter-spacing: -.45px; color: var(--ink); margin-bottom: 4px; }
+    .card-sub { font-size: 13.5px; color: var(--muted); margin-bottom: 20px; }
     .field { margin-bottom: 13px; }
-    .field label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 5px; letter-spacing: 0.2px; text-transform: uppercase; }
-    .field input, .field select {
-      width: 100%; padding: 11px 14px;
-      background: var(--bg2); border: 1.5px solid var(--border);
-      border-radius: 10px; font-size: 14px; font-family: inherit;
-      color: var(--text); outline: none; transition: all 0.15s;
-      -webkit-appearance: none; appearance: none;
-    }
-    .field input:focus, .field select:focus {
-      border-color: var(--green); background: #fff;
-      box-shadow: 0 0 0 3px rgba(22,163,74,0.1);
-    }
-    .field input::placeholder { color: #94a3b8; }
+    .field label { display: block; font-size: 11.5px; font-weight: 900; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 7px; }
+    .field input, .field select { width: 100%; padding: 15px 16px; background: #fbfdff; border: 1.5px solid rgba(19,34,56,.12); border-radius: 16px; font-size: 15px; font-family: inherit; color: var(--ink); outline: none; transition: .18s ease; -webkit-appearance: none; appearance: none; }
+    .field input:focus, .field select:focus { background: #fff; border-color: rgba(19,168,90,.65); box-shadow: 0 0 0 5px rgba(19,168,90,.12); }
+    .field input::placeholder { color: #9aa8ba; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .form-error {
-      display: none; margin-top: 12px; padding: 11px 12px;
-      border: 1px solid #fecaca; border-radius: 10px;
-      background: #fef2f2; color: #b91c1c;
-      font-size: 13px; line-height: 1.45; font-weight: 600;
-    }
-
-    .range-top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; color: #475569; letter-spacing: 0.2px; text-transform: uppercase; margin-bottom: 9px; }
-    .range-val { color: var(--green); font-weight: 800; }
-    input[type=range] { width: 100%; height: 4px; accent-color: var(--green); cursor: pointer; }
-    .range-ticks { display: flex; justify-content: space-between; font-size: 10.5px; color: #94a3b8; margin-top: 4px; }
-
-    .btn {
-      width: 100%; padding: 15px;
-      background: var(--green); color: #fff;
-      border: none; border-radius: 12px;
-      font-size: 15px; font-weight: 800; font-family: inherit; letter-spacing: -0.2px;
-      cursor: pointer; margin-top: 10px;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: all 0.15s;
-    }
-    .btn:hover { background: var(--green-dark); box-shadow: 0 8px 24px rgba(22,163,74,0.4); transform: translateY(-1px); }
-    .btn:active { transform: none; box-shadow: none; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-
-    .trust-row {
-      display: flex; align-items: center; justify-content: center; gap: 16px;
-      margin-top: 12px; flex-wrap: wrap;
-    }
-    .trust-item {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 11.5px; color: #94a3b8; font-weight: 500;
-    }
+    .form-error { display: none; margin-top: 12px; padding: 12px 14px; border: 1px solid #fecaca; border-radius: 14px; background: #fff1f1; color: #b91c1c; font-size: 13px; line-height: 1.45; font-weight: 700; }
+    .range-top { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; font-weight: 900; color: var(--ink-soft); letter-spacing: .07em; text-transform: uppercase; margin-bottom: 9px; }
+    .range-val { color: var(--green-dark); }
+    input[type=range] { width: 100%; height: 5px; accent-color: var(--green); cursor: pointer; }
+    .range-ticks { display: flex; justify-content: space-between; font-size: 11px; color: #98a5b6; margin-top: 5px; }
+    .btn { width: 100%; padding: 16px 18px; background: linear-gradient(135deg, var(--green), #0d8f55); color: #fff; border: none; border-radius: 17px; font-size: 15px; font-weight: 900; font-family: inherit; cursor: pointer; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 9px; transition: .18s ease; box-shadow: 0 14px 28px rgba(19,168,90,.25); }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(19,168,90,.32); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; }
+    .trust-row { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+    .trust-item { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 700; padding: 7px 9px; background: rgba(246,250,248,.9); border: 1px solid rgba(19,34,56,.07); border-radius: 999px; }
     .trust-item svg { color: var(--green); flex-shrink: 0; }
-
-    .success { display: none; text-align: center; padding: 20px 0 8px; }
-    .success-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-    .success-icon svg { width: 28px; height: 28px; color: var(--green); }
-    .success h3 { font-size: 19px; font-weight: 900; letter-spacing: -0.4px; margin-bottom: 8px; }
+    .success { display: none; text-align: center; padding: 24px 0 10px; }
+    .success-icon { width: 64px; height: 64px; border-radius: 22px; background: var(--mint); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--green); }
+    .success h3 { font-size: 22px; font-weight: 950; letter-spacing: -.7px; margin-bottom: 8px; }
     .success p { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
-    /* PILLARS */
-    .pillars { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
-    .pillar { display: flex; align-items: flex-start; gap: 10px; flex: 1; min-width: 130px; }
-    .pillar-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--green-light); border: 1px solid var(--green-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .pillar-icon svg { color: var(--green); }
-    .pillar-title { font-size: 12px; font-weight: 800; color: var(--text); letter-spacing: -0.1px; }
-    .pillar-desc { font-size: 11px; color: #94a3b8; margin-top: 1px; line-height: 1.5; }
+    .proof-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+    .proof { background: rgba(255,255,255,.68); border: 1px solid rgba(19,34,56,.08); border-radius: 18px; padding: 15px; box-shadow: 0 8px 24px rgba(19,34,56,.04); }
+    .proof strong { display: block; font-size: 13px; font-weight: 900; color: var(--ink); margin-bottom: 4px; }
+    .proof span { display: block; font-size: 12px; line-height: 1.4; color: var(--muted); }
 
-    /* VISUAL CARDS */
-    .hero-visual { position: relative; height: 500px; }
-    .vc {
-      position: absolute; background: #fff;
-      border: 1.5px solid var(--border); border-radius: 18px;
-      padding: 20px 22px; width: 275px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.04);
-    }
-    .vc:nth-child(1) { top: 0; left: 0; animation: f1 5s ease-in-out infinite; }
-    .vc:nth-child(2) { top: 162px; right: 0; animation: f2 6s ease-in-out infinite 0.8s; }
-    .vc:nth-child(3) { bottom: 0; left: 28px; animation: f3 5.5s ease-in-out infinite 1.5s; }
-    @keyframes f1 { 0%,100%{transform:translateY(0) rotate(-1.2deg)} 50%{transform:translateY(-14px) rotate(-1.2deg)} }
-    @keyframes f2 { 0%,100%{transform:translateY(0) rotate(1.8deg)} 50%{transform:translateY(-11px) rotate(1.8deg)} }
-    @keyframes f3 { 0%,100%{transform:translateY(0) rotate(-0.6deg)} 50%{transform:translateY(-12px) rotate(-0.6deg)} }
+    .hero-visual { position: relative; min-height: 580px; }
+    .orb { position: absolute; border-radius: 999px; filter: blur(0); opacity: .88; }
+    .orb.one { width: 330px; height: 330px; background: radial-gradient(circle, rgba(19,168,90,.18), transparent 68%); top: 12px; right: 40px; }
+    .orb.two { width: 250px; height: 250px; background: radial-gradient(circle, rgba(245,184,75,.22), transparent 70%); bottom: 34px; left: 10px; }
+    .phone-card { position: absolute; top: 8px; right: 18px; width: 360px; border-radius: 38px; background: #10243b; color: #fff; padding: 14px; box-shadow: 0 30px 90px rgba(16,36,59,.24); transform: rotate(2deg); }
+    .phone-inner { min-height: 512px; border-radius: 28px; background: linear-gradient(180deg, #fff 0%, #f7fbf8 100%); color: var(--ink); padding: 22px; overflow: hidden; }
+    .phone-top { height: 22px; display: flex; justify-content: center; margin-bottom: 18px; }
+    .notch { width: 82px; height: 8px; border-radius: 999px; background: #dfe7ef; }
+    .phone-badge { display: inline-flex; align-items:center; gap: 6px; font-size: 11px; font-weight: 900; color: var(--green-dark); background: var(--mint); border: 1px solid rgba(19,168,90,.18); padding: 7px 10px; border-radius: 999px; margin-bottom: 18px; }
+    .phone-badge::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--green); }
+    .alert-title { font-size: 24px; line-height: 1.08; letter-spacing: -.9px; font-weight: 950; margin-bottom: 10px; }
+    .alert-meta { color: var(--muted); font-size: 13px; line-height: 1.55; margin-bottom: 18px; }
+    .alert-price { border-radius: 24px; padding: 18px; background: linear-gradient(135deg, #effdf4, #fff8e6); border: 1px solid rgba(19,168,90,.14); margin-bottom: 16px; }
+    .alert-price .big { font-size: 42px; line-height: .95; letter-spacing: -2px; color: var(--green); font-weight: 950; }
+    .alert-price .small { margin-top: 8px; color: var(--ink-soft); font-weight: 800; font-size: 13px; }
+    .mini-list { display: grid; gap: 10px; }
+    .mini-item { display:flex; align-items:center; gap: 10px; font-size: 13px; font-weight: 800; color: var(--ink-soft); background: #fff; border: 1px solid rgba(19,34,56,.08); border-radius: 16px; padding: 11px; }
+    .mini-icon { width: 28px; height: 28px; border-radius: 10px; background: var(--mint); display:grid; place-items:center; color: var(--green); }
+    .float-card { position: absolute; background: rgba(255,255,255,.94); border: 1px solid rgba(19,34,56,.1); border-radius: 26px; padding: 18px; box-shadow: var(--shadow-soft); backdrop-filter: blur(14px); }
+    .float-card.pet { left: 0; top: 116px; width: 238px; transform: rotate(-4deg); }
+    .float-card.clinic { left: 34px; bottom: 72px; width: 286px; transform: rotate(3deg); }
+    .float-kicker { font-size: 11px; text-transform: uppercase; letter-spacing: .11em; font-weight: 950; color: var(--green); margin-bottom: 8px; }
+    .float-title { font-size: 17px; font-weight: 950; letter-spacing: -.5px; margin-bottom: 7px; }
+    .float-text { color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .paw-row { display:flex; gap: 8px; margin-top: 13px; }
+    .paw { width: 34px; height: 34px; border-radius: 12px; display:grid; place-items:center; background: var(--mint); color: var(--green-dark); font-weight: 950; }
 
-    .vc-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 10.5px; font-weight: 700; color: #15803d;
-      background: var(--green-light); border: 1px solid var(--green-border);
-      padding: 3px 9px; border-radius: 5px; margin-bottom: 11px;
-    }
-    .vc-badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
-    .vc-name { font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-    .vc-proc { font-size: 12px; color: #94a3b8; margin-bottom: 13px; }
-    .vc-price-row { display: flex; align-items: baseline; gap: 7px; margin-bottom: 7px; }
-    .vc-price { font-size: 32px; font-weight: 900; color: var(--green); letter-spacing: -1.5px; }
-    .vc-orig { font-size: 13px; color: #cbd5e1; text-decoration: line-through; }
-    .vc-save { font-size: 10.5px; font-weight: 800; color: #15803d; background: var(--green-mid); padding: 2px 7px; border-radius: 4px; }
-    .vc-date { font-size: 11.5px; color: #94a3b8; }
-    .vc-note { font-size: 10px; color: #cbd5e1; margin-top: 10px; font-style: italic; }
-
-    /* HOW IT WORKS */
-    .how { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .how-inner { max-width: 1140px; margin: 0 auto; padding: 88px 28px; }
-    @media (max-width: 640px) { .how-inner { padding: 60px 20px; } }
-    .section-tag { font-size: 11.5px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: var(--green); margin-bottom: 10px; }
-    .section-h { font-size: clamp(26px, 4vw, 40px); font-weight: 900; letter-spacing: -1px; margin-bottom: 48px; line-height: 1.12; color: var(--text); }
-    .section-h span { color: var(--muted); font-weight: 400; font-style: italic; }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-    @media (max-width: 640px) { .steps { grid-template-columns: 1fr; gap: 28px; } }
-    .step-n {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: var(--green-light); border: 1.5px solid var(--green-border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px; font-weight: 900; color: var(--green); margin-bottom: 16px;
-    }
-    .step h3 { font-size: 15px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.2px; }
-    .step p { font-size: 14px; color: var(--muted); line-height: 1.75; }
-
-    /* WHY IT WORKS */
-    .why { max-width: 1140px; margin: 0 auto; padding: 88px 28px; }
-    @media (max-width: 640px) { .why { padding: 60px 20px; } }
-    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 48px; }
-    @media (max-width: 860px) { .why-grid { grid-template-columns: 1fr; gap: 32px; } }
-    .why-points { display: flex; flex-direction: column; gap: 24px; }
-    .why-point { display: flex; gap: 16px; align-items: flex-start; }
-    .why-check { width: 28px; height: 28px; border-radius: 8px; background: var(--green-light); border: 1.5px solid var(--green-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
-    .why-check svg { color: var(--green); }
-    .why-point h4 { font-size: 14.5px; font-weight: 800; color: var(--text); margin-bottom: 4px; letter-spacing: -0.2px; }
-    .why-point p { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
-    .why-callout {
-      background: var(--green-xdark); border-radius: 22px; padding: 36px;
-      display: flex; flex-direction: column; gap: 20px;
-    }
-    .why-callout-tag { font-size: 10.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
-    .why-callout p { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.6; letter-spacing: -0.3px; }
-    .why-callout-note { font-size: 12.5px; color: rgba(255,255,255,0.4); line-height: 1.7; }
-
-    /* FAQ */
-    .faq-section { background: var(--bg2); border-top: 1px solid var(--border); }
-    .faq-inner { max-width: 720px; margin: 0 auto; padding: 80px 28px; }
-    @media (max-width: 640px) { .faq-inner { padding: 60px 20px; } }
-    .faq-list { margin-top: 40px; display: flex; flex-direction: column; gap: 4px; }
-    .faq-item { border: 1.5px solid var(--border); border-radius: 12px; overflow: hidden; background: #fff; }
-    .faq-q {
-      padding: 18px 20px; font-size: 14.5px; font-weight: 700;
-      color: var(--text); cursor: pointer; list-style: none;
-      display: flex; justify-content: space-between; align-items: center; gap: 12px;
-      transition: background 0.1s;
-    }
-    .faq-q:hover { background: var(--green-light); }
-    .faq-q::after { content: '+'; font-size: 20px; font-weight: 400; color: var(--muted); flex-shrink: 0; }
+    .section { border-top: 1px solid rgba(19,34,56,.08); }
+    .how { background: rgba(255,255,255,.58); }
+    .how-inner, .faq-inner, .banner-inner, .foot { max-width: 1180px; margin: 0 auto; }
+    .how-inner { padding: 86px 28px; }
+    .section-tag { font-size: 12px; font-weight: 950; letter-spacing: .16em; text-transform: uppercase; color: var(--green); margin-bottom: 14px; }
+    .section-h { font-size: clamp(31px, 4vw, 52px); line-height: 1.04; font-weight: 950; letter-spacing: -2px; margin-bottom: 40px; color: var(--ink); }
+    .section-h span { color: var(--muted); font-style: italic; font-weight: 750; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .step { background: #fff; border: 1px solid rgba(19,34,56,.09); border-radius: 26px; padding: 24px; box-shadow: 0 12px 32px rgba(19,34,56,.05); }
+    .step-n { width: 42px; height: 42px; border-radius: 15px; background: linear-gradient(135deg, var(--mint), #fff7df); display:grid; place-items:center; font-size: 15px; font-weight: 950; color: var(--green-dark); margin-bottom: 18px; border: 1px solid rgba(19,168,90,.15); }
+    .step h3 { font-size: 17px; font-weight: 950; letter-spacing: -.4px; margin-bottom: 9px; }
+    .step p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .faq-section { background: linear-gradient(180deg, rgba(246,250,248,.9), #fff); }
+    .faq-inner { padding: 82px 28px; max-width: 780px; }
+    .faq-list { margin-top: 34px; display:flex; flex-direction:column; gap: 10px; }
+    .faq-item { border: 1px solid rgba(19,34,56,.1); border-radius: 20px; overflow: hidden; background: rgba(255,255,255,.88); box-shadow: 0 10px 26px rgba(19,34,56,.04); }
+    .faq-q { padding: 20px 22px; font-size: 15px; font-weight: 900; color: var(--ink); cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+    .faq-q::after { content: '+'; color: var(--green); font-size: 23px; font-weight: 700; }
     details[open] .faq-q::after { content: '−'; }
-    .faq-a { padding: 0 20px 18px; font-size: 14px; color: var(--muted); line-height: 1.8; }
+    .faq-a { padding: 0 22px 20px; color: var(--muted); font-size: 14px; line-height: 1.75; }
+    .banner { background: linear-gradient(135deg, #0a3d25, #0f633b 62%, #0b4b2c); color:#fff; position:relative; overflow:hidden; }
+    .banner::before { content:''; position:absolute; width:520px; height:520px; right:-170px; top:-210px; background:radial-gradient(circle, rgba(245,184,75,.2), transparent 65%); }
+    .banner-inner { position:relative; padding: 78px 28px; display:grid; grid-template-columns: 1fr auto; gap: 40px; align-items:center; }
+    .banner-tag { font-size: 12px; text-transform:uppercase; letter-spacing:.16em; font-weight:950; color:rgba(255,255,255,.48); margin-bottom: 10px; }
+    .banner h2 { font-size: clamp(28px, 3.8vw, 46px); font-weight:950; letter-spacing:-1.6px; line-height:1.03; margin-bottom:12px; }
+    .banner p { color: rgba(255,255,255,.68); font-size:16px; line-height:1.65; max-width:540px; }
+    .banner-btn { display:inline-flex; align-items:center; gap:9px; text-decoration:none; background:#fff; color:var(--green-deep); font-size:15px; font-weight:950; padding:16px 24px; border-radius:17px; box-shadow:0 16px 34px rgba(0,0,0,.18); }
+    footer { background:#fff; border-top:1px solid rgba(19,34,56,.08); padding:32px 28px; }
+    .foot { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+    .foot-copy { color:#98a5b6; font-size:13px; }
+    .foot-links { display:flex; gap:18px; }
+    .foot-links a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:700; }
 
-    /* CLINIC BANNER */
-    .banner { background: var(--green-xdark); }
-    .banner-inner {
-      max-width: 1140px; margin: 0 auto; padding: 80px 28px;
-      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 48px; }
+      .hero-visual { min-height: 520px; order: -1; transform: scale(.92); transform-origin: top center; margin-bottom: -56px; }
+      .phone-card { right: 50%; transform: translateX(50%) rotate(2deg); }
+      .float-card.pet { left: calc(50% - 270px); }
+      .float-card.clinic { left: calc(50% - 250px); }
     }
-    @media (max-width: 640px) { .banner-inner { grid-template-columns: 1fr; padding: 60px 20px; gap: 24px; } }
-    .banner-tag { font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 10px; }
-    .banner h2 { font-size: clamp(22px, 3vw, 34px); font-weight: 900; letter-spacing: -0.8px; color: #fff; margin-bottom: 12px; line-height: 1.15; }
-    .banner p { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.75; max-width: 460px; }
-    .banner-btn {
-      display: inline-flex; align-items: center; gap: 9px;
-      background: var(--green); color: #fff;
-      font-size: 14px; font-weight: 800; font-family: inherit;
-      padding: 14px 26px; border-radius: 11px; text-decoration: none; white-space: nowrap;
-      transition: all 0.15s; letter-spacing: -0.2px;
+    @media (max-width: 640px) {
+      nav { padding: 0 16px; height: 68px; }
+      .logo-img { height: 38px; }
+      .nav-tag { display:none; }
+      .nav-link { padding: 10px 13px; }
+      .hero { padding: 34px 18px 52px; gap: 28px; }
+      h1 { letter-spacing: -2.2px; }
+      .hero-sub { font-size: 16px; }
+      .card { padding: 22px; border-radius: 24px; }
+      .field-row, .proof-strip, .steps, .banner-inner { grid-template-columns: 1fr; }
+      .hero-visual { display:none; }
+      .how-inner, .faq-inner, .banner-inner { padding: 58px 18px; }
+      .section-h { letter-spacing: -1.1px; }
+      .banner-btn { justify-content:center; }
     }
-    .banner-btn:hover { background: #22c55e; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(22,163,74,0.5); }
-    @media (max-width: 640px) { .banner-btn { width: 100%; justify-content: center; } }
-
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border); padding: 32px 28px; }
-    .foot { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
-    .foot-copy { font-size: 13px; color: #94a3b8; }
-    .foot-links { display: flex; gap: 20px; }
-    .foot-links a { font-size: 13px; color: #64748b; text-decoration: none; transition: color 0.15s; }
-    .foot-links a:hover { color: var(--green); }
   </style>
 
 <!-- Commercial analytics: Microsoft Clarity -->
@@ -324,238 +228,139 @@ window.siteTrack=function(name){try{if(window.clarity&&name)window.clarity("even
     <img class="logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot">
   </a>
   <div class="nav-right">
-    <span class="nav-tag">Licensed vets only</span>
+    <span class="nav-tag">Licensed clinics · verified care</span>
     <a href="clinic.html" class="nav-link">For Clinics →</a>
   </div>
 </nav>
 
-<div class="hero">
-  <div>
-    <div class="eyebrow"><span class="eyebrow-dot"></span>Free signup · No account needed</div>
-    <h1>
-      Find affordable<br>
-      <span class="accent">vet care openings.</span>
-    </h1>
-    <p class="hero-sub">
-      Sign up for free alerts when nearby vet clinics have discounted last-minute surgery openings for spay, neuter, dental, or other care.
-    </p>
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="eyebrow-dot"></span>Free alerts · no account needed</div>
+      <h1>Affordable vet care, <span class="accent">when a slot opens.</span></h1>
+      <p class="hero-sub">Join Empty Slot and get emailed when nearby licensed clinics have discounted last-minute openings for spay, neuter, dental, or other pet care.</p>
 
-    <div class="card">
-      <div class="card-head">Sign up for local slot alerts</div>
-      <div class="card-sub">Free forever. 30 seconds. Cancel anytime.</div>
+      <div class="card">
+        <div class="card-head">Sign up for local slot alerts</div>
+        <div class="card-sub">Takes 30 seconds. No credit card. Unsubscribe anytime.</div>
 
-      <!-- Step 1: email only -->
-      <div id="step1">
-        <div class="field">
-          <label>Email address</label>
-          <input type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
-        </div>
-        <button class="btn" id="step1-btn" onclick="handleStep1()">
-          Sign up for slot alerts
-          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-        </button>
-        <div class="form-error" id="signup-error"></div>
-        <div class="trust-row">
-          <span class="trust-item">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
-            Encrypted & secure
-          </span>
-          <span class="trust-item">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 0 1.218 0l7.108-4.061c.75-.43 1.683.113 1.683.977v7.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 0-1.218 0l-7.108 4.061C3.933 17.906 3 17.364 3 16.5V8.689Z"/></svg>
-            No spam, ever
-          </span>
-          <span class="trust-item">
-            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"/></svg>
-            Unsubscribe anytime
-          </span>
-        </div>
-      </div>
-
-      <!-- Step 2: preferences (shown after email) -->
-      <div id="step2" style="display:none">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="#16a34a"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-          <span style="font-size:13px;color:#16a34a;font-weight:700">You're signed up — one more step to filter your alerts</span>
-        </div>
-        <div class="field-row">
-          <div class="field" style="margin-bottom:0">
-            <label>Your city</label>
-            <input type="text" id="f-city" placeholder="e.g. Calgary" autocomplete="off">
+        <div id="step1">
+          <div class="field">
+            <label>Email address</label>
+            <input type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
           </div>
-          <div class="field" style="margin-bottom:0">
-            <label>Pet type</label>
-            <select id="f-species">
-              <option value="both">Dog or Cat</option>
-              <option value="dog">Dog only</option>
-              <option value="cat">Cat only</option>
-            </select>
+          <button class="btn" id="step1-btn" onclick="handleStep1()">
+            Sign up for slot alerts
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+          </button>
+          <div class="form-error" id="signup-error"></div>
+          <div class="trust-row">
+            <span class="trust-item"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>Private</span>
+            <span class="trust-item"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8.689c0-.864.933-1.406 1.683-.977l7.108 4.061a1.125 1.125 0 0 0 1.218 0l7.108-4.061c.75-.43 1.683.113 1.683.977v7.811c0 .864-.933 1.406-1.683.977l-7.108-4.061a1.125 1.125 0 0 0-1.218 0l-7.108 4.061C3.933 17.906 3 17.364 3 16.5V8.689Z"/></svg>No spam</span>
+            <span class="trust-item"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>Licensed vets</span>
           </div>
         </div>
-        <div class="field" style="margin-top:13px">
-          <div class="range-top">
-            <span>How far would you drive?</span>
-            <span class="range-val" id="range-label">25 km</span>
+
+        <div id="step2" style="display:none">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid rgba(19,34,56,.1)">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="#13a85a"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+            <span style="font-size:13px;color:#08743f;font-weight:900">You're signed up — add preferences for better matches</span>
           </div>
-          <input type="range" id="f-range" min="5" max="100" value="25" step="5"
-            oninput="document.getElementById('range-label').textContent = +this.value >= 100 ? 'Any distance' : this.value + ' km'">
-          <div class="range-ticks"><span>5 km</span><span>50 km</span><span>Any</span></div>
+          <div class="field-row">
+            <div class="field" style="margin-bottom:0"><label>Your city</label><input type="text" id="f-city" placeholder="e.g. Calgary" autocomplete="off"></div>
+            <div class="field" style="margin-bottom:0"><label>Pet type</label><select id="f-species"><option value="both">Dog or Cat</option><option value="dog">Dog only</option><option value="cat">Cat only</option></select></div>
+          </div>
+          <div class="field" style="margin-top:13px">
+            <div class="range-top"><span>How far would you drive?</span><span class="range-val" id="range-label">25 km</span></div>
+            <input type="range" id="f-range" min="5" max="100" value="25" step="5" oninput="document.getElementById('range-label').textContent = +this.value >= 100 ? 'Any distance' : this.value + ' km'">
+            <div class="range-ticks"><span>5 km</span><span>50 km</span><span>Any</span></div>
+          </div>
+          <div class="field"><label>Procedure needed</label><select id="f-procedure"><option value="any">Any procedure</option><option value="spay">Spay</option><option value="neuter">Neuter</option><option value="dental">Dental</option><option value="surgery">Surgery / Other</option></select></div>
+          <button class="btn" id="signup-btn" onclick="handleSignup()">Save my preferences <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></button>
+          <p style="text-align:center;font-size:12px;color:#71809a;margin-top:12px;cursor:pointer;font-weight:700" onclick="skipPrefs()">Skip — just send me everything near me</p>
         </div>
-        <div class="field">
-          <label>Procedure needed</label>
-          <select id="f-procedure">
-            <option value="any">Any procedure</option>
-            <option value="spay">Spay</option>
-            <option value="neuter">Neuter</option>
-            <option value="dental">Dental</option>
-            <option value="surgery">Surgery / Other</option>
-          </select>
+
+        <div class="success" id="success">
+          <div class="success-icon"><svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke-width="2.4" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg></div>
+          <h3>You're signed up.</h3>
+          <p>We'll email you the moment a discounted slot opens near you.</p>
         </div>
-        <button class="btn" id="signup-btn" onclick="handleSignup()">
-          Save my preferences
-          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-        </button>
-        <p style="text-align:center;font-size:12px;color:#94a3b8;margin-top:10px;cursor:pointer" onclick="skipPrefs()">Skip — just send me everything near me</p>
       </div>
 
-      <div class="success" id="success">
-        <div class="success-icon">
-          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
-        </div>
-        <h3>You're signed up.</h3>
-        <p>We'll email you the moment a discounted slot opens near you.</p>
+      <div class="proof-strip">
+        <div class="proof"><strong>Verified clinics</strong><span>Only licensed vet providers can post.</span></div>
+        <div class="proof"><strong>Free signup</strong><span>No subscription or credit card.</span></div>
+        <div class="proof"><strong>Useful alerts</strong><span>City, pet type, procedure, distance.</span></div>
       </div>
     </div>
 
-    <div class="pillars">
-      <div class="pillar">
-        <div class="pillar-icon">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/></svg>
-        </div>
-        <div>
-          <div class="pillar-title">Licensed vets only</div>
-          <div class="pillar-desc">Credentials verified before any clinic can post</div>
-        </div>
-      </div>
-      <div class="pillar">
-        <div class="pillar-icon">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"/></svg>
-        </div>
-        <div>
-          <div class="pillar-title">Free signup</div>
-          <div class="pillar-desc">No subscription, no credit card, no catch</div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="orb one"></div><div class="orb two"></div>
+      <div class="phone-card">
+        <div class="phone-inner">
+          <div class="phone-top"><div class="notch"></div></div>
+          <div class="phone-badge">New local opening</div>
+          <div class="alert-title">Discounted dental slot near Edmonton</div>
+          <div class="alert-meta">Licensed clinic · tomorrow morning · matches your pet preferences</div>
+          <div class="alert-price"><div class="big">Lower price</div><div class="small">Last-minute opening sent directly by email</div></div>
+          <div class="mini-list">
+            <div class="mini-item"><span class="mini-icon">✓</span>See the clinic, date, and next step</div>
+            <div class="mini-item"><span class="mini-icon">⌁</span>No app or public booking required</div>
+            <div class="mini-item"><span class="mini-icon">↗</span>Choose if the opening works for you</div>
+          </div>
         </div>
       </div>
-      <div class="pillar">
-        <div class="pillar-icon">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
-        </div>
-        <div>
-          <div class="pillar-title">Your data is yours</div>
-          <div class="pillar-desc">Never sold or shared. One-click unsubscribe.</div>
-        </div>
+      <div class="float-card pet">
+        <div class="float-kicker">For pet owners</div>
+        <div class="float-title">Alerts before stale listings.</div>
+        <div class="float-text">Sign up once. We watch for relevant openings near you.</div>
+        <div class="paw-row"><div class="paw">🐾</div><div class="paw">✉</div><div class="paw">✓</div></div>
+      </div>
+      <div class="float-card clinic">
+        <div class="float-kicker">For clinics</div>
+        <div class="float-title">Fill cancellations without discount ads everywhere.</div>
+        <div class="float-text">Post openings to a local list of owners already looking for affordable care.</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="hero-visual">
-    <div class="vc">
-      <div class="vc-badge">Example alert</div>
-      <div class="vc-name">Discounted spay opening</div>
-      <div class="vc-proc">Licensed clinic · Near your city</div>
-      <div class="vc-price-row">
-        <span class="vc-price">Lower price</span>
-        <span class="vc-save">Last-minute</span>
+  <section class="how section">
+    <div class="how-inner">
+      <p class="section-tag">How it works</p>
+      <h2 class="section-h">Quietly watching for the care your pet needs.</h2>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><h3>Sign up in 30 seconds</h3><p>Add your email, city, pet type, and procedure preferences. No account, app, or credit card.</p></div>
+        <div class="step"><div class="step-n">2</div><h3>We watch for openings</h3><p>When a licensed clinic posts a relevant discounted opening, Empty Slot sends the details.</p></div>
+        <div class="step"><div class="step-n">3</div><h3>You decide</h3><p>If the date, clinic, and price work for you, follow the clinic’s instructions in the alert.</p></div>
       </div>
-      <div class="vc-date">You get the date, clinic, price, and next steps by email.</div>
-      <div class="vc-note">No public booking required to sign up.</div>
     </div>
-    <div class="vc">
-      <div class="vc-badge">Example alert</div>
-      <div class="vc-name">Neuter cancellation slot</div>
-      <div class="vc-proc">Cat or dog · Matching your preferences</div>
-      <div class="vc-price-row">
-        <span class="vc-price">Local opening</span>
-        <span class="vc-save">Fast notice</span>
-      </div>
-      <div class="vc-date">Only useful alerts: city, distance, pet type, and procedure.</div>
-      <div class="vc-note">Free signup. Unsubscribe anytime.</div>
-    </div>
-  </div>
-</div>
-</div>
+  </section>
 
-<!-- HOW IT WORKS -->
-<div class="how">
-  <div class="how-inner">
-    <p class="section-tag">How it works</p>
-    <h2 class="section-h">Simple enough to explain<br><span>in three sentences.</span></h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">1</div>
-        <h3>Sign up in 30 seconds</h3>
-        <p>Your email, your city, your pet. No account, no app, no credit card.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">2</div>
-        <h3>We watch for openings</h3>
-        <p>When a nearby clinic has a discounted last-minute opening, you get an email with the details.</p>
-      </div>
-      <div class="step">
-        <div class="step-n">3</div>
-        <h3>Decide if it works for you</h3>
-        <p>If an opening matches your pet and schedule, you can follow the clinic instructions in the alert. No account or credit card needed to sign up.</p>
+  <section class="faq-section section">
+    <div class="faq-inner">
+      <p class="section-tag">Good to know</p>
+      <h2 class="section-h">Simple, free,<br><span>and low commitment.</span></h2>
+      <div class="faq-list">
+        <details class="faq-item"><summary class="faq-q">Is signing up free?</summary><p class="faq-a">Yes. Empty Slot alerts are free. No subscription, no account, and no credit card required to sign up.</p></details>
+        <details class="faq-item"><summary class="faq-q">What alerts will I get?</summary><p class="faq-a">Only practical alerts about nearby veterinary openings that match your city, distance, pet type, and procedure preferences.</p></details>
+        <details class="faq-item"><summary class="faq-q">Who provides the care?</summary><p class="faq-a">Care is provided by licensed veterinary clinics. Empty Slot sends the alert; the clinic provides the appointment details and final pricing.</p></details>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- TRUST / DETAILS -->
-<div class="faq-section">
-  <div class="faq-inner">
-    <p class="section-tag">Good to know</p>
-    <h2 class="section-h">Simple, free,<br><span>and low commitment.</span></h2>
-    <div class="faq-list">
-      <details class="faq-item">
-        <summary class="faq-q">Is signing up free?</summary>
-        <p class="faq-a">Yes. Empty Slot alerts are free. No subscription, no account, and no credit card required to sign up.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">What alerts will I get?</summary>
-        <p class="faq-a">Only practical alerts about nearby veterinary openings that match your city, distance, pet type, and procedure preferences.</p>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Who provides the care?</summary>
-        <p class="faq-a">Care is provided by licensed veterinary clinics. Empty Slot sends the alert; the clinic provides the appointment details and final pricing.</p>
-      </details>
+  <section class="banner">
+    <div class="banner-inner">
+      <div><p class="banner-tag">For veterinary clinics</p><h2>Have openings to fill?</h2><p>Apply to be included when Empty Slot sends alerts to signed-up local pet owners.</p></div>
+      <a href="clinic.html" class="banner-btn">Apply to join <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></a>
     </div>
-  </div>
-</div>
-
-<!-- CLINIC BANNER -->
-<div class="banner">
-  <div class="banner-inner">
-    <div>
-      <p class="banner-tag">For veterinary clinics</p>
-      <h2>Have openings to fill?</h2>
-      <p>Apply to be included when Empty Slot sends alerts to signed-up local pet owners.</p>
-    </div>
-    <a href="clinic.html" class="banner-btn">
-      Apply to join
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
-    </a>
-  </div>
-</div>
+  </section>
+</main>
 
 <footer>
   <div class="foot">
-    <a href="#" class="logo-wrap" aria-label="Empty Slot home">
-      <img class="logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot" style="height:34px">
-    </a>
+    <a href="#" class="logo-wrap" aria-label="Empty Slot home"><img class="logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot" style="height:34px"></a>
     <span class="foot-copy">&copy; 2026 Empty Slot · All rights reserved</span>
-    <div class="foot-links">
-      <a href="clinic.html">For Clinics</a>
-      <a href="#step1">Sign Up</a>
-    </div>
+    <div class="foot-links"><a href="clinic.html">For Clinics</a><a href="#step1">Sign Up</a></div>
   </div>
 </footer>
 
