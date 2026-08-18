@@ -12,10 +12,8 @@
     body { font-family: 'Inter', system-ui, sans-serif; background: #fff; color: #111827; min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
     nav { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; height: 60px; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; background: #fff; z-index: 50; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg,#15803d,#166534); display: flex; align-items: center; justify-content: center; }
-    .nav-logo-text { font-size: 18px; font-weight: 800; color: #111827; letter-spacing: -0.3px; }
-    .nav-logo-text span { color: #16a34a; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo-img { height: 40px; width: auto; display: block; }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .nav-link { font-size: 14px; font-weight: 600; color: #6b7280; text-decoration: none; }
     .nav-link:hover { color: #6b7280; }
@@ -134,12 +132,7 @@ window.siteTrack=function(name){try{if(window.clarity&&name)window.clarity("even
 
   <nav>
     <a href="index.html" class="nav-logo">
-      <div class="nav-logo-icon">
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-        </svg>
-      </div>
-      <span class="nav-logo-text">Empty<span>Slot</span></span>
+      <img class="nav-logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot">
     </a>
     <div class="nav-right">
       <a href="index.html" class="nav-link">For Pet Owners</a>

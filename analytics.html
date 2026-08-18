@@ -23,8 +23,8 @@
       padding: 0 32px; height: 56px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .logo { font-size: 16px; font-weight: 900; letter-spacing: -0.5px; }
-    .logo em { color: var(--green); font-style: normal; }
+    .logo { display: inline-flex; align-items: center; }
+    .logo img { height: 38px; width: auto; display: block; }
     .nav-badge { font-size: 11px; font-weight: 700; color: var(--muted); background: var(--bg); border: 1px solid var(--border); padding: 3px 10px; border-radius: 100px; }
     .container { max-width: 1000px; margin: 0 auto; padding: 40px 24px; }
     h1 { font-size: 24px; font-weight: 800; margin-bottom: 6px; }
@@ -74,7 +74,7 @@ window.siteTrack=function(name){try{if(window.clarity&&name)window.clarity("even
 <body>
 
 <nav>
-  <div class="logo">empty<em>slot</em></div>
+  <div class="logo"><img src="assets/emptyslot-wordmark.png" alt="Empty Slot"></div>
   <span class="nav-badge">Analytics</span>
 </nav>
 
