@@ -4,8 +4,27 @@ const EDGE_BASE = 'https://xacehhtgvubcqdoltazg.supabase.co/functions/v1';
 const SUPABASE_ANON_KEY = 'sb_publishable_1TNu5hqotJ7GGQXfjliivQ_ttK51EAA';
 const ROSSLYN_CLINIC_ID = '4e078398-9e45-441e-9771-91dca35be71c';
 
-// Initialize Supabase
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Initialize Supabase when the CDN SDK is available. Some in-app browsers and
+// blockers can fail the CDN request; the public alert signup still needs to work.
+const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+async function supabaseRestUpsert(table, payload, onConflict = 'email') {
+  const resp = await fetch(`${SUPABASE_URL}/rest/v1/${table}?on_conflict=${encodeURIComponent(onConflict)}`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'resolution=merge-duplicates,return=representation'
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!resp.ok) {
+    const text = await resp.text().catch(() => '');
+    throw new Error(`Supabase REST upsert failed: ${resp.status} ${text}`);
+  }
+  return resp.status === 204 ? true : await resp.json();
+}
 
 // API helpers
 const OpenSlotAPI = {
@@ -259,6 +278,10 @@ const OpenSlotAPI = {
     if (procedure_type !== undefined) payload.procedure_type = procedure_type || 'both';
     if (species !== undefined) payload.species = species || 'both';
     if (driving_range_km !== undefined) payload.driving_range_km = driving_range_km || 25;
+
+    if (!sb) {
+      return supabaseRestUpsert('vetslot_subscribers', payload, 'email');
+    }
 
     const { data, error } = await sb
       .from('vetslot_subscribers')

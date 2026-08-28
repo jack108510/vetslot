@@ -224,7 +224,7 @@ window.siteTrack=function(name){try{if(window.clarity&&name)window.clarity("even
 <body>
 
 <nav>
-  <a href="#" class="logo-wrap" aria-label="Empty Slot home">
+  <a href="/" class="logo-wrap" aria-label="Empty Slot home">
     <img class="logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot">
   </a>
   <div class="nav-right">
@@ -249,7 +249,7 @@ window.siteTrack=function(name){try{if(window.clarity&&name)window.clarity("even
             <label>Email address</label>
             <input type="email" id="f-email" placeholder="you@email.com" autocomplete="email">
           </div>
-          <button class="btn" id="step1-btn" onclick="handleStep1()">
+          <button type="button" class="btn" id="step1-btn" onclick="handleStep1()">
             Sign up for slot alerts
             <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
           </button>
@@ -275,9 +275,9 @@ window.siteTrack=function(name){try{if(window.clarity&&name)window.clarity("even
             <input type="range" id="f-range" min="5" max="100" value="25" step="5" oninput="document.getElementById('range-label').textContent = +this.value >= 100 ? 'Any distance' : this.value + ' km'">
             <div class="range-ticks"><span>5 km</span><span>50 km</span><span>Any</span></div>
           </div>
-          <div class="field"><label>Procedure needed</label><select id="f-procedure"><option value="any">Any procedure</option><option value="spay">Spay</option><option value="neuter">Neuter</option><option value="dental">Dental</option><option value="surgery">Surgery / Other</option></select></div>
-          <button class="btn" id="signup-btn" onclick="handleSignup()">Save my preferences <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></button>
-          <p style="text-align:center;font-size:12px;color:#71809a;margin-top:12px;cursor:pointer;font-weight:700" onclick="skipPrefs()">Skip — just send me everything near me</p>
+          <div class="field"><label>Procedure needed</label><select id="f-procedure"><option value="both">Any spay/neuter alert</option><option value="spay">Spay</option><option value="neuter">Neuter</option></select></div>
+          <button type="button" class="btn" id="signup-btn" onclick="handleSignup()">Save my preferences <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></button>
+          <button type="button" style="display:block;width:100%;border:0;background:transparent;text-align:center;font-size:12px;color:#71809a;margin-top:12px;cursor:pointer;font-weight:700;font-family:inherit" onclick="skipPrefs()">Skip — just send me everything near me</button>
         </div>
 
         <div class="success" id="success">
@@ -358,7 +358,7 @@ window.siteTrack=function(name){try{if(window.clarity&&name)window.clarity("even
 
 <footer>
   <div class="foot">
-    <a href="#" class="logo-wrap" aria-label="Empty Slot home"><img class="logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot" style="height:34px"></a>
+    <a href="/" class="logo-wrap" aria-label="Empty Slot home"><img class="logo-img" src="assets/emptyslot-wordmark.png" alt="Empty Slot" style="height:34px"></a>
     <span class="foot-copy">&copy; 2026 Empty Slot · All rights reserved</span>
     <div class="foot-links"><a href="clinic.html">For Clinics</a><a href="#step1">Sign Up</a></div>
   </div>
@@ -373,7 +373,7 @@ window.siteTrack=function(name){try{if(window.clarity&&name)window.clarity("even
   gtag('config', 'G-40K4N8Y1Y5');
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
+<script src="supabase-config.js?v=friction-fix-20260828"></script>
 <script>
   let _email = '';
 
